@@ -20,7 +20,10 @@ public class Singleton<T> where T : Singleton<T>, new()
 
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    static public T _Instance;
+    protected MonoSingleton()
+    {
+    }
+    static public T _Instance = null;
 
     public static T GetInstance()
     {
@@ -37,6 +40,8 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 _Instance = obj.GetComponent<T>();
             }
+
+            GameManager.GetInstance().SceneChanged = () => { _Instance = null; };
         }
         return _Instance;
     }

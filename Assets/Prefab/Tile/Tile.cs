@@ -264,7 +264,7 @@ public class Tile : Button
             enqueue((int)UnitInfo.Direction.Left, currTile);
             enqueue((int)UnitInfo.Direction.Right, currTile);
 
-            queue.OrderByDescending(x => x.Item1);
+            queue.OrderBy(x => x.Item1);
 
 
 

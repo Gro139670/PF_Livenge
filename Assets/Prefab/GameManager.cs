@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     #region variable
+    public delegate void EventHandler();
+
+    private EventHandler _SceneChanged;
+    public EventHandler SceneChanged { set { _SceneChanged += value; } }
+
 
     private BattleManager _BattleManager = null;
     private TileManager _TileManager = null;
@@ -43,6 +48,12 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangeScene(string sceneName)
     {
+        if(_SceneChanged != null)
+        {
+            _SceneChanged();
+            _SceneChanged = null;
+        }
+
         SceneManager.LoadScene(sceneName);
         Units.Initialize();
     }
