@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 356017315326301520}
   - component: {fileID: 2075489670670542045}
   - component: {fileID: 702795927098672791}
-  - component: {fileID: 1690582400559080653}
   - component: {fileID: 663264651046224373}
-  - component: {fileID: 4562838979542787558}
+  - component: {fileID: 6928828228961274514}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Team
@@ -113,20 +112,6 @@ MonoBehaviour:
   - {fileID: 1532088802, guid: 49e2ad6f6510a414abdf0e947c001025, type: 3}
   - {fileID: 922318528, guid: 49e2ad6f6510a414abdf0e947c001025, type: 3}
   _ETC: []
---- !u!114 &1690582400559080653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1936970615656138871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Library: []
-  m_SpriteLibraryAsset: {fileID: 0}
 --- !u!114 &663264651046224373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81987c6c4db663f4bb5d89e468f022a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4562838979542787558
+--- !u!114 &6928828228961274514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,27 +133,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1936970615656138871}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7597ca8447e574c4f9bf4d4fb7ae600f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cfc723662f743e4d94caeed734b05dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _PrevTile: {fileID: 0}
-  _ChaseUnit: {fileID: 0}
-  _UnitState: 1
-  _LookDir: -1
-  _Position: {x: 0, y: 0, z: 0}
-  _Name: Warriar
-  _UnitTear: 0
-  _TeamID: 1
-  _HP: 100
-  _Damage: 0
-  _Defense: 0
-  _AttackSpeed: 0
-  _MoveSpeed: 500
-  _Size: 2
-  _ManaCost: 0
-  _LifeCost: 0
-  _AttackRange: 1
-  _ChaseRange: 2
-  _SightRange: 0

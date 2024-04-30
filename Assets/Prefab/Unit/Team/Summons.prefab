@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8902563915740501000}
   - component: {fileID: 7183540137497372037}
   - component: {fileID: 8555788459909515215}
-  - component: {fileID: 7497005562079225237}
   - component: {fileID: 1268029085532491856}
   m_Layer: 0
   m_Name: Summons
@@ -108,20 +107,6 @@ MonoBehaviour:
   _Right:
   - {fileID: -1494684295, guid: ffec5f75b0b56904da26df5b968b710f, type: 3}
   _ETC: []
---- !u!114 &7497005562079225237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7322028262279350575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Library: []
-  m_SpriteLibraryAsset: {fileID: 0}
 --- !u!114 &1268029085532491856
 MonoBehaviour:
   m_ObjectHideFlags: 0

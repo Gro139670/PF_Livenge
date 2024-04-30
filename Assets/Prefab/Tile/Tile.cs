@@ -51,7 +51,7 @@ public class Tile : Button
             {
                 _TakedUnit = value;
                 info.SetCurrTile(this);
-                info.CurrIndex = _Index;
+                //info.CurrIndex = _Index;
             }
         }
     }
@@ -110,24 +110,24 @@ public class Tile : Button
                 UnitInfo take = null;
                 foreach (var unit in _PassingUnit)
                 {
-                    speed = unit.GetComponent<UnitInfo>().GetProgressPerSpeed();
-                    if (min > speed)
-                    {
-                        min = speed;
-                        take = unit;
-                    }
+                    //speed = unit.GetComponent<UnitInfo>().GetProgressPerSpeed();
+                    //if (min > speed)
+                    //{
+                    //    min = speed;
+                    //    take = unit;
+                    //}
 
                 }
                 _TakingExpectedUnit = take;
             }
             if (_TakingExpectedUnit != null)
             {
-                if (_TakingExpectedUnit.GetComponent<UnitInfo>().IsCompleteMove == true)
-                {
-                    _TakingExpectedUnit.GetComponent<UnitInfo>().DoMoveComplete();
-                    _TakedUnit = _TakingExpectedUnit;
-                    _TakingExpectedUnit = null;
-                }
+                //if (_TakingExpectedUnit.GetComponent<UnitInfo>().IsCompleteMove == true)
+                //{
+                //    _TakingExpectedUnit.GetComponent<UnitInfo>().DoMoveComplete();
+                //    _TakedUnit = _TakingExpectedUnit;
+                //    _TakingExpectedUnit = null;
+                //}
             }
         }
         else
@@ -137,10 +137,10 @@ public class Tile : Button
              
                 foreach (var unit in _PassingUnit)
                 {
-                    if(unit.GetComponent<UnitInfo>().IsCompleteMove)
-                    {
-                        unit.GetComponent<UnitInfo>().DoMoveComplete();
-                    }
+                    //if(unit.GetComponent<UnitInfo>().IsCompleteMove)
+                    //{
+                    //    unit.GetComponent<UnitInfo>().DoMoveComplete();
+                    //}
                 }
             }
         }
@@ -165,7 +165,7 @@ public class Tile : Button
             if (_IsPrevShowState != _IsShowRange)
             {
                 UnitInfo info = _TakedUnit.GetComponent<UnitInfo>();
-                ShowRange(0, _IsShowRange, info.AttackRange);
+                //ShowRange(0, _IsShowRange, info.AttackRange);
                 _IsPrevShowState = _IsShowRange;
             }
             
@@ -231,14 +231,14 @@ public class Tile : Button
                     UnitInfo info = tuple.Item1.AdjacentTiles[index].TakedUnit.GetComponent<UnitInfo>();
 
                     // 통행 불가 유닛일 때
-                    if (info.TeamID != selfTeamID)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        weight = tuple.Item2 + (speed / info.Size);
-                    }
+                    //if (info.TeamID != selfTeamID)
+                    //{
+                    //    return;
+                    //}
+                    //else
+                    //{
+                    //    weight = tuple.Item2 + (speed / info.Size);
+                    //}
 
                 }
                 else

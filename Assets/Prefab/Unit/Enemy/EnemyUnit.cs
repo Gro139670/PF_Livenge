@@ -21,19 +21,6 @@ public class EnemyUnit : UnitInfo
         base.Init();
     }
 
-    protected override void StateLogic(int teamID, Func<bool> condition)
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override void DoBattle()
-    {
-        if (IsInvade == true)
-        {
-            TeamLogic(1, TrueLambda);
-            BaseLogic(1);
-        }
-    }
     public static void AddChaseUnitAllias(UnitInfo unit)
     {
         _ChaseUnitAllias.Add(unit);
@@ -60,43 +47,43 @@ public class EnemyUnit : UnitInfo
     {
         
 
-        switch (_UnitState)
-        {
-            case State.Defulat:
-                {
-                    //_ChaseUnit = null;
-                    if(_ChaseUnit != null)
-                    {
-                        _UnitState = State.Chase;
-                        break;
-                    }
+        //switch (_UnitState)
+        //{
+        //    case State.Defulat:
+        //        {
+        //            //_ChaseUnit = null;
+        //            if(_ChaseUnit != null)
+        //            {
+        //                _UnitState = State.Chase;
+        //                break;
+        //            }
 
 
-                   if (_ChaseUnitAllias.Count <= 0)
-                   {
-                       _UnitState = State.Idle;
-                   }
-                   else
-                   {
-                       foreach(var unit in _ChaseUnitAllias)
-                       {
-                           if(unit.GetComponent<UnitInfo>().IsDead == true)
-                           {
-                               _ChaseUnitAllias.Remove(unit);
-                               continue;
-                           }
-                           else
-                           {
-                               _ChaseUnit = unit;
-                                break;
-                           }
-                       }
-                       _UnitState = State.Chase;
-                   }
-                    break;
-                }
+        //           if (_ChaseUnitAllias.Count <= 0)
+        //           {
+        //               _UnitState = State.Idle;
+        //           }
+        //           else
+        //           {
+        //               foreach(var unit in _ChaseUnitAllias)
+        //               {
+        //                   if(unit.GetComponent<UnitInfo>().IsDead == true)
+        //                   {
+        //                       _ChaseUnitAllias.Remove(unit);
+        //                       continue;
+        //                   }
+        //                   else
+        //                   {
+        //                       _ChaseUnit = unit;
+        //                        break;
+        //                   }
+        //               }
+        //               _UnitState = State.Chase;
+        //           }
+        //            break;
+        //        }
 
-        }
+        //}
 
     }
 

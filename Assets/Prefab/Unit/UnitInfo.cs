@@ -1,21 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using UnityEngine;
-public abstract class UnitInfo : MonoBehaviour
+public class UnitInfo : MonoBehaviour
 {
-
-    public enum State
-    {
-        Defulat,
-        Idle,
-        Attack,
-        Move,
-        Chase,
-    };
-
     public enum Direction
     {
         Up = 6,
@@ -25,81 +11,18 @@ public abstract class UnitInfo : MonoBehaviour
         None = -1,
     }
 
+
     public Tile _CurrTile = null;
-    public Tile _NextTile = null;
-    public Tile _PrevTile = null;
-    protected Tuple<int, int> _CurrIndex;
-    protected Tuple<int, int> _StartIndex;
-    [SerializeField] protected HashSet<UnitInfo> _AttackUnitList = new HashSet<UnitInfo>();
-    [SerializeField] protected HashSet<UnitInfo> _ChaseUnitList = new HashSet<UnitInfo>();
-
-    [SerializeField] protected UnitInfo _ChaseUnit = null;
-
-    [SerializeField] protected State _UnitState = State.Idle;
     [SerializeField] protected Direction _LookDir = Direction.None;
     public Vector3 _Position;
 
-    static protected Func<bool> TrueLambda = () => { return true; };
 
-    private bool _IsDead = false;
-    protected bool _IsCompleteMove = true;
-    public static float _TileDistance = 10000.0f;
-    private float _MoveProgress = 0;
-    private bool _IsTakingTile = false;
-
-
-
-
-
-    #region Status
-
-    [Header("Common")]
-    [SerializeField] private string _Name;
-    [SerializeField] private int _UnitTear;
-    [SerializeField] private int _TeamID;
-
-    [Header("Status")]
-    [SerializeField] private float _HP = 100;
-    [SerializeField] private float _Damage;
-    [SerializeField] private float _Defense;
-    [SerializeField] private float _AttackSpeed;
-    [SerializeField] private float _MoveSpeed;
-    [SerializeField] private float _Size = 2;
-
-    [Header("Cost")]
-    [SerializeField] private int _ManaCost;
-    [SerializeField] private int _LifeCost;
-
-    [Header("Range")]
-    [SerializeField] private float _AttackRange = 1;
-    [SerializeField] private float _ChaseRange = 1;
-    [SerializeField] private float _SightRange = 1;
-    #endregion
-    #region StatusFunc
-    public int TeamID
-    { get { return _TeamID; } }
-
-    public float Size
-    { get { return _Size; } }
-
-    public float AttackRange
-    { get { return _AttackRange; } }
-    public float SightRange
-    { get { return _SightRange; } }
-
-    public float ChaseRange
-    { get { return _ChaseRange; } }
-
-    #endregion
+    [SerializeField]
+    public UnitStatus _Status;
 
     protected virtual void Init()
     {
-        if (_ChaseRange <= 0)
-            _ChaseRange = _AttackRange + _UnitTear;
-        if (_SightRange <= 0)
-            _SightRange = 1 + (_UnitTear * 1.2f);
-
-        Units.Add(_TeamID, this);
+        //Units.Add(_TeamID, this);
     }
 
 
@@ -113,7 +36,6 @@ public abstract class UnitInfo : MonoBehaviour
     {
         if (BattleManager.GetInstance().IsBattle == true)
         {
-            Action();
         }
     }
 
@@ -121,24 +43,23 @@ public abstract class UnitInfo : MonoBehaviour
     {
         if (BattleManager.GetInstance().IsBattle == true)
         {
-            DoBattle();
         }    
     }
 
-    public State UnitState
-    {
-        get { return _UnitState; }
-        set
-        {
-            if (value == State.Move)
-            {
-                _IsCompleteMove = false;
-                _MoveProgress = 0;
-                _Position = gameObject.transform.localPosition;
-            }
-            _UnitState = value;
-        }
-    }
+    //public State UnitState
+    //{
+    //    get { return _UnitState; }
+    //    set
+    //    {
+    //        if (value == State.Move)
+    //        {
+    //            _IsCompleteMove = false;
+    //            _MoveProgress = 0;
+    //            _Position = gameObject.transform.localPosition;
+    //        }
+    //        _UnitState = value;
+    //    }
+    //}
 
     public Tile GetCurrTile()
     {
@@ -149,62 +70,45 @@ public abstract class UnitInfo : MonoBehaviour
         _CurrTile = tile;
     }
 
-    public bool IsCompleteMove
-    {
-        get { return _IsCompleteMove; }
-    }
+    //public bool IsCompleteMove
+    //{
+    //    get { return _IsCompleteMove; }
+    //}
 
-    public Tuple<int, int> CurrIndex
-    {
-        get { return _CurrIndex; }
-        set { _CurrIndex = value; }
-    }
+    //public Tuple<int, int> CurrIndex
+    //{
+    //    get { return _CurrIndex; }
+    //    set { _CurrIndex = value; }
+    //}
 
-    public UnitInfo ChaseUnit
-    {
-        get { return _ChaseUnit; }
-    }
+    //public UnitInfo ChaseUnit
+    //{
+    //    get { return _ChaseUnit; }
+    //}
 
-    public Tuple<int, int> GetStartIndex
-    {
-        get { return _StartIndex; }
-    }
+    //public Tuple<int, int> GetStartIndex
+    //{
+    //    get { return _StartIndex; }
+    //}
 
-    public bool IsDead
-    {
-        get
-        {
-            if (_HP <= 0)
-            {
-                _IsDead = true;
-                _CurrTile.RemovePassingUnit(this);
-            }
-            else
-            {
-                _IsDead = false;
-            }
-            return _IsDead;
-        }
-    }
 
-    public bool IsTakingTile
-    {
-        get
-        {
-            if (_CurrTile.TakedUnit == this)
-            {
-                _IsTakingTile = true;
-            }
-            else
-            {
-                _IsTakingTile = false;
-            }
-            return _IsTakingTile;
-        }
-    }
-    protected abstract void StateLogic(int teamID, Func<bool> condition);
-    protected abstract void DoBattle();
 
+    //public bool IsTakingTile
+    //{
+    //    get
+    //    {
+    //        if (_CurrTile.TakedUnit == this)
+    //        {
+    //            _IsTakingTile = true;
+    //        }
+    //        else
+    //        {
+    //            _IsTakingTile = false;
+    //        }
+    //        return _IsTakingTile;
+    //    }
+    //}
+    /*
     protected virtual void IDLELogic(int teamID)
     {
 
@@ -256,7 +160,7 @@ public abstract class UnitInfo : MonoBehaviour
         }
         foreach (var unit in _AttackUnitList)
         {
-            if (unit.IsDead == true)
+            if (unit.Status.IsDead == true)
             {
                 UnitState = State.Idle;
                 break;
@@ -660,5 +564,5 @@ public abstract class UnitInfo : MonoBehaviour
 
         return (x * x) + (y * y);
     }
-
-}
+    */
+}    

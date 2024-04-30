@@ -44,33 +44,33 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StartBattle()
     {
-        foreach (var unit in _Enemies)
-        {
-            unit.GetComponent<UnitInfo>().SetStartIndex();
-        }
-        foreach (var unit in _Teams)
-        {
-            unit.GetComponent<UnitInfo>().SetStartIndex();
-        }
+        //foreach (var unit in _Enemies)
+        //{
+        //    unit.GetComponent<UnitInfo>().SetStartIndex();
+        //}
+        //foreach (var unit in _Teams)
+        //{
+        //    unit.GetComponent<UnitInfo>().SetStartIndex();
+        //}
     }
 
     public void DoBattle()
     {
-        foreach (GameObject unit in _Enemies)
-        {
-            if (unit.GetComponent<UnitInfo>().IsDead == true)
-            {
-                _Enemies.Remove(unit);
-            }
-        }
+        //foreach (GameObject unit in _Enemies)
+        //{
+        //    if (unit.GetComponent<UnitInfo>().IsDead == true)
+        //    {
+        //        _Enemies.Remove(unit);
+        //    }
+        //}
 
-        foreach (GameObject unit in _Teams)
-        {
-            if (unit.GetComponent<UnitInfo>().IsDead == true)
-            {
-                _Enemies.Remove(unit);
-            }
-        }
+        //foreach (GameObject unit in _Teams)
+        //{
+        //    if (unit.GetComponent<UnitInfo>().IsDead == true)
+        //    {
+        //        _Enemies.Remove(unit);
+        //    }
+        //}
 
 
 
@@ -111,8 +111,8 @@ public class StageManager : MonoSingleton<StageManager>
 
             foreach (var unit in _Teams)
             {
-                index = unit.GetComponent<UnitInfo>().GetStartIndex;
-                TileManager.GetInstance().SetUnit(index.Item1, index.Item2, unit);
+                //index = unit.GetComponent<UnitInfo>().GetStartIndex;
+                //TileManager.GetInstance().SetUnit(index.Item1, index.Item2, unit);
             }
 
         }
