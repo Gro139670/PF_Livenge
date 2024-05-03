@@ -2,18 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 /// <summary>
 /// 240321 : 가능하면 맵 에디터를 만들고 적 유닛 배치할 수 있게 하고싶다.
 /// </summary>
 
-public class StageManager : MonoSingleton<StageManager>
+public class StageSystem : MonoSystem
 {
     [SerializeField]
     private GameObject[] _EnemiesPrefab;
-    private List<GameObject> _Enemies = new List<GameObject>();
-    private List<GameObject> _Teams = new List<GameObject>();
+
+    private int _TeamID = 0;
+    private int _EnemyID = 0;
+
 
     public float[] _CastleHP;
     private float _CurrRoundCastleHP;
@@ -25,14 +29,13 @@ public class StageManager : MonoSingleton<StageManager>
 
     private bool _IsPlayerWin = false;
     private bool _IsEnemyWin = false;
-    private bool _IsBattleEnd = false;
 
-    public bool IsBattleEnd
-    {  get { return _IsBattleEnd; } }
+    public bool IsBattle { get; set; }
     
 
     private void Awake()
     {
+        GameManager.Instance.RegistSystem(this);
         _MaxRound = _CastleHP.Length;
     }
 
@@ -42,23 +45,12 @@ public class StageManager : MonoSingleton<StageManager>
 
     }
 
-    public void StartBattle()
-    {
-        //foreach (var unit in _Enemies)
-        //{
-        //    unit.GetComponent<UnitInfo>().SetStartIndex();
-        //}
-        //foreach (var unit in _Teams)
-        //{
-        //    unit.GetComponent<UnitInfo>().SetStartIndex();
-        //}
-    }
 
     public void DoBattle()
     {
         //foreach (GameObject unit in _Enemies)
         //{
-        //    if (unit.GetComponent<UnitInfo>().IsDead == true)
+        //    if (unit.GetComponent<Unit>().IsDead == true)
         //    {
         //        _Enemies.Remove(unit);
         //    }
@@ -66,7 +58,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         //foreach (GameObject unit in _Teams)
         //{
-        //    if (unit.GetComponent<UnitInfo>().IsDead == true)
+        //    if (unit.GetComponent<Unit>().IsDead == true)
         //    {
         //        _Enemies.Remove(unit);
         //    }
@@ -74,7 +66,7 @@ public class StageManager : MonoSingleton<StageManager>
 
 
 
-        if (_Enemies.Count <= 0)
+        if (UnitManager.Instance.GetUnits(_EnemyID).Count <= 0)
         {
             _IsAllEnemyDead = true;
             _IsPlayerWin = true;
@@ -84,20 +76,20 @@ public class StageManager : MonoSingleton<StageManager>
             _IsCastleDestory = true;
             _IsPlayerWin = true;
         }
-        if (_Teams.Count <= 0)
+        if (UnitManager.Instance.GetUnits(_TeamID).Count <= 0)
         {
             _IsEnemyWin = true;
         }
 
         if(_IsPlayerWin == true || _IsEnemyWin == true)
         {
-            _IsBattleEnd = true;
+            IsBattle = true;
         }
     }
 
     public void EndBattle()
     {
-        TileManager.GetInstance().ClearTiles();
+        GameManager.Instance.GetSystem<TileSystem>().ClearTiles();
 
         Tuple<int, int> index;
         
@@ -109,11 +101,11 @@ public class StageManager : MonoSingleton<StageManager>
 
             }
 
-            foreach (var unit in _Teams)
-            {
-                //index = unit.GetComponent<UnitInfo>().GetStartIndex;
-                //TileManager.GetInstance().SetUnit(index.Item1, index.Item2, unit);
-            }
+            //foreach (var unit in _Teams)
+            //{
+            //    //index = unit.GetComponent<Unit>().GetStartIndex;
+            //    //TileSystem.Instance.SetUnit(index.Item1, index.Item2, unit);
+            //}
 
         }
         else if (_IsEnemyWin == true)
@@ -139,7 +131,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void InitFlag()
     {
-        _IsAllEnemyDead = _IsCastleDestory = _IsPlayerWin = _IsEnemyWin = _IsBattleEnd = false;
+        _IsAllEnemyDead = _IsCastleDestory = _IsPlayerWin = _IsEnemyWin = IsBattle = false;
     }
 
     public void AttackCastle(float damage)
@@ -152,18 +144,26 @@ public class StageManager : MonoSingleton<StageManager>
     {
         // 일단 적을 소환한다.
         // 나중에 기회가 되면 라운드마다 적 유닛을 배치하는 툴을 만들고 거기서 정보를 받아 유닛을 배치하고 싶다.
-        GameObject Enemy = TileManager.GetInstance().SummonUnit(5, TileManager.GetInstance().Height, _EnemiesPrefab[0]);
-        if (Enemy != null)
+
+        var enemy = _EnemiesPrefab[0];
+        var unit = enemy.GetComponent<Unit>();
+        GameManager.Instance.GetSystem<TileSystem>().SummonUnit(5, GameManager.Instance.GetSystem<TileSystem>().Height, enemy);
+        _EnemyID = unit.Status.TeamID;
+        UnitManager.Instance.AddUnit(_EnemyID, unit);
+    }
+
+    public void SummonTeam(GameObject team)
+    {
+        if (team != null)
         {
-            _Enemies.Add(Enemy);
+            var unit = team.GetComponent<Unit>();
+            _TeamID = unit.Status.TeamID;
+            UnitManager.Instance.AddUnit(_TeamID, unit);
         }
     }
 
-    public void SummonTeam(GameObject unit)
+    public override bool Initialize()
     {
-        if (unit != null)
-        {
-            _Teams.Add(unit);
-        }
+        throw new NotImplementedException();
     }
 }

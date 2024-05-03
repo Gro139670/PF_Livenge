@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-public class UnitInfo : MonoBehaviour
+public class Unit : MonoBehaviour
 {
     public enum Direction
     {
@@ -18,7 +18,19 @@ public class UnitInfo : MonoBehaviour
 
 
     [SerializeField]
-    public UnitStatus _Status;
+    private UnitStatus _Status;
+
+    public UnitStatus Status
+    {
+        get
+        {
+            if(_Status == null)
+            {
+                _Status = new UnitStatus();
+            }
+            return _Status;
+        }
+    }
 
     protected virtual void Init()
     {
@@ -34,14 +46,14 @@ public class UnitInfo : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (BattleManager.GetInstance().IsBattle == true)
+        if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == true)
         {
         }
     }
 
     private void Update()
     {
-        if (BattleManager.GetInstance().IsBattle == true)
+        if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == true)
         {
         }    
     }
@@ -81,7 +93,7 @@ public class UnitInfo : MonoBehaviour
     //    set { _CurrIndex = value; }
     //}
 
-    //public UnitInfo ChaseUnit
+    //public Unit ChaseUnit
     //{
     //    get { return _ChaseUnit; }
     //}
@@ -131,7 +143,7 @@ public class UnitInfo : MonoBehaviour
             {
                 int x, y, result, min;
                 result = int.MaxValue;
-                UnitInfo nextUnit = null;
+                Unit nextUnit = null;
                 foreach (var tile in Tile._FarTile)
                 {
 
@@ -216,7 +228,7 @@ public class UnitInfo : MonoBehaviour
 
         if (_NextTile.TakedUnit != null)
         {
-            moveSpeed = _MoveSpeed / _NextTile.TakedUnit.GetComponent<UnitInfo>()._Size;
+            moveSpeed = _MoveSpeed / _NextTile.TakedUnit.GetComponent<Unit>()._Size;
         }
 
         _MoveProgress += moveSpeed;
@@ -288,7 +300,7 @@ public class UnitInfo : MonoBehaviour
         }
     }
     
-    void FindUnit(float range, int teamID, HashSet<UnitInfo> target)
+    void FindUnit(float range, int teamID, HashSet<Unit> target)
     {
 
         Units.GetList(teamID,
@@ -305,7 +317,7 @@ public class UnitInfo : MonoBehaviour
     }
 
 
-    protected bool FindTile(float range, int teamID,Tile tile, Func<bool> condition, List<UnitInfo> target,Direction lookDir, float cost = 0)
+    protected bool FindTile(float range, int teamID,Tile tile, Func<bool> condition, List<Unit> target,Direction lookDir, float cost = 0)
     {
         if (target.Count > 0)
         {
@@ -368,7 +380,7 @@ public class UnitInfo : MonoBehaviour
             }
             if (tile.AdjacentTiles[tileIndex] != null)
             {
-                Action<UnitInfo> find = unit =>
+                Action<Unit> find = unit =>
                 {
                     if (cost + Tile._NextTileCost[tileIndex] <= range && unit.TeamID == teamID)
                     {
@@ -440,11 +452,11 @@ public class UnitInfo : MonoBehaviour
         return result;
     }
 
-    protected bool IsCanMoveAttackUnit(float range,UnitInfo unit, Func<bool> condition, bool isOrder = true)
+    protected bool IsCanMoveAttackUnit(float range,Unit unit, Func<bool> condition, bool isOrder = true)
     {
 
         bool result = false;
-        List<UnitInfo> _EmptyTile = new List<UnitInfo>(); 
+        List<Unit> _EmptyTile = new List<Unit>(); 
 
         // 추격 목표를 해당 유닛이 공격 할 수 있다면
         if(FindTile(range, 0, unit.GetCurrTile(), condition, _EmptyTile,Direction.None) == true)
@@ -480,7 +492,7 @@ public class UnitInfo : MonoBehaviour
         return true;
     }
 
-    protected void SortTargetList(HashSet<UnitInfo> tiles, bool isOrder, Func<UnitInfo, int> condition)
+    protected void SortTargetList(HashSet<Unit> tiles, bool isOrder, Func<Unit, int> condition)
     {
         if (isOrder == true)
         {
@@ -556,7 +568,7 @@ public class UnitInfo : MonoBehaviour
         return false;
     }
 
-    public float GetDistance(UnitInfo other)
+    public float GetDistance(Unit other)
     {
         float x, y;
         x = (float)_CurrIndex.Item1 - other._CurrIndex.Item1;

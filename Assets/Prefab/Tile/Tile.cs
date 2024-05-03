@@ -10,9 +10,9 @@ public class Tile : Button
     public static Tuple<int, int> _MaxTileSize;
     private Tile[] _AdjacentTiles = new Tile[9];
 
-    [SerializeField] private UnitInfo _TakedUnit = null;
-    [SerializeField] private UnitInfo _TakingExpectedUnit = null;
-    private List<UnitInfo> _PassingUnit = new List<UnitInfo>();
+    [SerializeField] private Unit _TakedUnit = null;
+    [SerializeField] private Unit _TakingExpectedUnit = null;
+    private List<Unit> _PassingUnit = new List<Unit>();
     private SpriteRenderer _SpriteRenderer = null;
     public static GameObject[] _FarTile;
 
@@ -30,12 +30,12 @@ public class Tile : Button
 
     #region Property
 
-    public UnitInfo TakingExpectedUnit
+    public Unit TakingExpectedUnit
     {
         get { return _TakingExpectedUnit; }
     }
 
-    public UnitInfo TakedUnit
+    public Unit TakedUnit
     {
         get { return _TakedUnit; }
         set
@@ -46,7 +46,7 @@ public class Tile : Button
                 return;
             }
 
-            UnitInfo info = value.GetComponent<UnitInfo>();
+            Unit info = value.GetComponent<Unit>();
             if (info != null)
             {
                 _TakedUnit = value;
@@ -55,17 +55,17 @@ public class Tile : Button
             }
         }
     }
-    public List<UnitInfo> GetPassingUnit()
+    public List<Unit> GetPassingUnit()
     {
         return _PassingUnit;
 
     }
-    public void SetPassingUnit(UnitInfo unit)
+    public void SetPassingUnit(Unit unit)
     {
         _PassingUnit.Add(unit);
     }
 
-    public void RemovePassingUnit(UnitInfo unit)
+    public void RemovePassingUnit(Unit unit)
     {
         _PassingUnit.Remove(unit);
     }
@@ -107,10 +107,10 @@ public class Tile : Button
             {
                 float speed;
                 float min = float.MaxValue;
-                UnitInfo take = null;
+                Unit take = null;
                 foreach (var unit in _PassingUnit)
                 {
-                    //speed = unit.GetComponent<UnitInfo>().GetProgressPerSpeed();
+                    //speed = unit.GetComponent<Unit>().GetProgressPerSpeed();
                     //if (min > speed)
                     //{
                     //    min = speed;
@@ -122,9 +122,9 @@ public class Tile : Button
             }
             if (_TakingExpectedUnit != null)
             {
-                //if (_TakingExpectedUnit.GetComponent<UnitInfo>().IsCompleteMove == true)
+                //if (_TakingExpectedUnit.GetComponent<Unit>().IsCompleteMove == true)
                 //{
-                //    _TakingExpectedUnit.GetComponent<UnitInfo>().DoMoveComplete();
+                //    _TakingExpectedUnit.GetComponent<Unit>().DoMoveComplete();
                 //    _TakedUnit = _TakingExpectedUnit;
                 //    _TakingExpectedUnit = null;
                 //}
@@ -137,12 +137,14 @@ public class Tile : Button
              
                 foreach (var unit in _PassingUnit)
                 {
-                    //if(unit.GetComponent<UnitInfo>().IsCompleteMove)
+                    //if(unit.GetComponent<Unit>().IsCompleteMove)
                     //{
-                    //    unit.GetComponent<UnitInfo>().DoMoveComplete();
+                    //    unit.GetComponent<Unit>().DoMoveComplete();
                     //}
                 }
             }
+
+            _TakedUnit.SetCurrTile(this);
         }
         base.Update();
 
@@ -164,7 +166,7 @@ public class Tile : Button
 
             if (_IsPrevShowState != _IsShowRange)
             {
-                UnitInfo info = _TakedUnit.GetComponent<UnitInfo>();
+                Unit info = _TakedUnit.GetComponent<Unit>();
                 //ShowRange(0, _IsShowRange, info.AttackRange);
                 _IsPrevShowState = _IsShowRange;
             }
@@ -182,8 +184,6 @@ public class Tile : Button
                 _SpriteRenderer.color = _TileBaseColor[_TileNum];
             }
         }
-
-
     }
 
     public void SetAdjacentTile(Tile tile, int index)
@@ -228,7 +228,7 @@ public class Tile : Button
                 // 유닛이 있을경우
                 if (tuple.Item1.AdjacentTiles[index].TakedUnit != null)
                 {
-                    UnitInfo info = tuple.Item1.AdjacentTiles[index].TakedUnit.GetComponent<UnitInfo>();
+                    Unit info = tuple.Item1.AdjacentTiles[index].TakedUnit.GetComponent<Unit>();
 
                     // 통행 불가 유닛일 때
                     //if (info.TeamID != selfTeamID)
@@ -259,10 +259,10 @@ public class Tile : Button
                 return result;
             }
             currTile = queue.Dequeue();
-            enqueue((int)UnitInfo.Direction.Up, currTile);
-            enqueue((int)UnitInfo.Direction.Down, currTile);
-            enqueue((int)UnitInfo.Direction.Left, currTile);
-            enqueue((int)UnitInfo.Direction.Right, currTile);
+            enqueue((int)Unit.Direction.Up, currTile);
+            enqueue((int)Unit.Direction.Down, currTile);
+            enqueue((int)Unit.Direction.Left, currTile);
+            enqueue((int)Unit.Direction.Right, currTile);
 
             queue.OrderBy(x => x.Item1);
 
@@ -287,5 +287,19 @@ public class Tile : Button
     {
         _TakedUnit = null;
         _PassingUnit.Clear();
+    }
+
+    public bool SummonUnit(GameObject gameObject)
+    {
+        if(_TakedUnit == null)
+        {
+            Instantiate(gameObject, transform);
+            _TakedUnit = gameObject.GetComponent<Unit>();
+            _TakedUnit.SetCurrTile(this);
+            UnitManager.Instance.AddUnit(_TakedUnit.Status.TeamID, _TakedUnit);
+            return true;
+        }
+
+        return false;
     }
 }

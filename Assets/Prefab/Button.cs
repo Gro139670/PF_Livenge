@@ -43,7 +43,7 @@ public class Button : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) == true)
             {
-                if (BattleManager.GetInstance().IsBattleStart == false)
+                if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
                 {
                     _IsMouseDown = true;
                 }

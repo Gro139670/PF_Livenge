@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyUnit : UnitInfo
+public class EnemyUnit : Unit
 {
-    private static List<UnitInfo> _ChaseUnitAllias = new List<UnitInfo>();
+    private static List<Unit> _ChaseUnitAllias = new List<Unit>();
 
     private static bool _IsInvade = false;
 
@@ -21,7 +21,7 @@ public class EnemyUnit : UnitInfo
         base.Init();
     }
 
-    public static void AddChaseUnitAllias(UnitInfo unit)
+    public static void AddChaseUnitAllias(Unit unit)
     {
         _ChaseUnitAllias.Add(unit);
     }
@@ -30,7 +30,7 @@ public class EnemyUnit : UnitInfo
     {
         get
         {
-            if(BattleManager.GetInstance().IsBattleStart == false)
+            if(GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
             {
                 _IsInvade = false;
             }
@@ -67,7 +67,7 @@ public class EnemyUnit : UnitInfo
         //           {
         //               foreach(var unit in _ChaseUnitAllias)
         //               {
-        //                   if(unit.GetComponent<UnitInfo>().IsDead == true)
+        //                   if(unit.GetComponent<Unit>().IsDead == true)
         //                   {
         //                       _ChaseUnitAllias.Remove(unit);
         //                       continue;

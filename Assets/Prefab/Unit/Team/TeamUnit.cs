@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TeamUnit : UnitInfo
+public abstract class TeamUnit : Unit
 {
 
     private bool _IsInvadeLimitLine = false;

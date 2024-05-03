@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
+[RequireComponent(typeof(Unit))]
 public class StateMachine : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -20,7 +19,7 @@ public class StateMachine : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (BattleManager.GetInstance().IsBattle == true)
+        if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == true)
         {
             _CurrState?.FixedLogic();
         }
@@ -69,27 +68,28 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    public T AddState<T>() where T : MonoBehaviour, IState, new()
+    public T AddState<T>() where T : IState, new()
     {
         string name = typeof(T).Name;
         if (_States.ContainsKey(name))
         {
             return (T)_States[name];
         }
-        T state = gameObject.AddComponent<T>();
-        state.SetUnitInfo(gameObject.GetComponent<UnitInfo>());
+        T state = new T();
+        state.SetUnit(gameObject.GetComponent<Unit>());
         state.Initialize();
+        state.Owner = gameObject;
 
-        if(_AllianceStates.ContainsKey(typeof(CommonStateDead).Name) == false)
+        if (_AllianceStates.ContainsKey(typeof(AllianceStateDead).Name) == false)
         {
-            var alliance =  AddAlliancetState<CommonStateDead>();
+            var alliance =  AddAlliancetState<AllianceStateDead>();
             alliance.AddTransition(name);
         }
         _States.Add(name, state);
         return state;
     }
 
-    public T AddAlliancetState<T>() where T : MonoBehaviour, IAllianceState, new()
+    public T AddAlliancetState<T>() where T : IAllianceState, new()
     {
         string name = typeof(T).Name;
         if (_AllianceStates.ContainsKey(name))
@@ -97,9 +97,13 @@ public class StateMachine : MonoBehaviour
             return (T)_AllianceStates[name];
         }
 
-        T alliance = gameObject.AddComponent<T>();
-        alliance.SetUnitInfo(gameObject.GetComponent<UnitInfo>());
+        T alliance = new T();
+
+        alliance.SetUnit(gameObject.GetComponent<Unit>());
+
         alliance.Initialize();
+        alliance.Owner = gameObject;
+
         _AllianceStates.Add(name, alliance);
         return alliance;
     }
@@ -109,14 +113,16 @@ public class StateMachine : MonoBehaviour
 
         _CurrState?.Exit();
         _CurrState = _States[name];
-
+        _CurrState.IsStateFinish = false;
         _CurrState.Enter();
+
     }
 
     private void ChangeState(IState state)
     {
         _CurrState.Exit();
         _CurrState = state;
+        _CurrState.IsStateFinish = false;
         _CurrState.Enter();
     }
 }

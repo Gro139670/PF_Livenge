@@ -69,6 +69,5 @@ public class UnitStatus
     public void Test()
     {
         _HP -= 1f;
-        Debug.Log(_HP);
     }
 }

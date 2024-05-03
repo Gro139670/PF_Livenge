@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopSystem : MonoBehaviour
+public class ShopSystem : MonoSystem
 {
     #region variable
     public int debugint;
@@ -33,6 +33,10 @@ public class ShopSystem : MonoBehaviour
     #region property
 
     #endregion
+    private void Awake()
+    {
+        GameManager.Instance.RegistSystem(this);
+    }
 
     private void Start()
     {
@@ -46,18 +50,18 @@ public class ShopSystem : MonoBehaviour
         // debug
         if(Input.GetKeyDown(KeyCode.R))
         {
-            BattleManager.GetInstance().IsBattleStart = false;
+            GameManager.Instance.GetSystem<StageSystem>().IsBattle = false;
             _ShopUI.SetActive(true);
         }
             
 
-        if (BattleManager.GetInstance().IsBattleStart == true)
+        if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == true)
         {
             return;
         }
         if(_RoundStartButton.GetComponent<ShopButton>().IsMouseDown == true)
         {
-            BattleManager.GetInstance().IsBattleStart = true;
+            GameManager.Instance.GetSystem<StageSystem>().IsBattle = true;
             _Shop.transform.localPosition = _DefaultShopPosition;
             _ShopUI.SetActive(false);
             return;
@@ -108,7 +112,7 @@ public class ShopSystem : MonoBehaviour
             {
                 // 카드를 사용했다.
 
-                if(GameManager.GetInstance().Player.Add_Mana(-Mouse.SelectedCard.Cost) && Mouse.SelectedCard != null)
+                if(GameManager.Instance.Player.Add_Mana(-Mouse.SelectedCard.Cost) && Mouse.SelectedCard != null)
                 {
                     BuyUnit();
 
@@ -134,8 +138,8 @@ public class ShopSystem : MonoBehaviour
             if (_LevelUPButton.GetComponent<ShopButton>().IsMouseDown == true)
             {
 
-                    GameManager.GetInstance().Player.BuyEXP(1.0f, _BuyEXPCost);
-                    if(GameManager.GetInstance().Player.IsLevelUp == true)
+                    GameManager.Instance.Player.BuyEXP(1.0f, _BuyEXPCost);
+                    if(GameManager.Instance.Player.IsLevelUp == true)
                     {
                         Reroll();
                     }
@@ -145,7 +149,7 @@ public class ShopSystem : MonoBehaviour
             if (_RerollButton.GetComponent<ShopButton>().IsMouseDown == true)
             {
                
-                    if (GameManager.GetInstance().Player.Add_Mana(-_BuyRerollCost) == true)
+                    if (GameManager.Instance.Player.Add_Mana(-_BuyRerollCost) == true)
                     {
                         Reroll();
                         return;
@@ -166,9 +170,9 @@ public class ShopSystem : MonoBehaviour
 
     private void Reroll()
     {
-        Card.SetUnitNum(_Units.Length - ((GameManager.GetInstance().Player.MaxLevel - GameManager.GetInstance().Player.Level) / 2));
+        Card.SetUnitNum(_Units.Length - ((GameManager.Instance.Player.MaxLevel - GameManager.Instance.Player.Level) / 2));
 
-        _HandCard = 4 + GameManager.GetInstance().Player.Level;
+        _HandCard = 4 + GameManager.Instance.Player.Level;
 
         for (int hand = 0; hand < _HandCard; hand++)
         {
@@ -179,23 +183,26 @@ public class ShopSystem : MonoBehaviour
 
     private bool BuyUnit()
     {
-        GameObject summoner = null;
+        var unit = _Units[debugint];
         for (int height = 4; height >= 0; height--)
         {
-            for (int width = 0; width <= TileManager.GetInstance().Width; width++)
+            for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
             {
-                summoner = TileManager.GetInstance().SummonUnit(width, height, _Units[debugint]);
-
-                if (summoner != null)
+                if(GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit) ==true)
                 {
-                    StageManager.GetInstance().SummonTeam(summoner);
+                    GameManager.Instance.GetSystem<StageSystem>().SummonTeam(unit);
                     return true;
                 }
-
             }
         }
         // 타일이 가득 찼다.
         // 오류 메세지 출력
         return false;
+    }
+
+    public override bool Initialize()
+    {
+        return true;
+        throw new System.NotImplementedException();
     }
 }

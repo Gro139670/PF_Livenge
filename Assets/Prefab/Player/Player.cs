@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.GetInstance().Player = this;
+        GameManager.Instance.Player = this;
         Init();
     }
 

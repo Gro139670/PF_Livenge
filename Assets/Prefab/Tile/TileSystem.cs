@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class TileManager : MonoSingleton<TileManager>
+public class TileSystem : MonoSystem
 {
     public GameObject _Tile;
     public Color[] _TileColor;
@@ -25,6 +25,7 @@ public class TileManager : MonoSingleton<TileManager>
 
     private void Awake()
     {
+        GameManager.Instance.RegistSystem(this);
         Tile.SetTileBaseColor(_TileColor);
         _Height = _TileHeightNum;
         _Width = _TileWidthNum;
@@ -123,30 +124,17 @@ public class TileManager : MonoSingleton<TileManager>
         #endregion
     }
 
-    private void Start()
-    {
-
-    }
 
 
-
-    public GameObject SummonUnit(int width, int height, GameObject unit)
+    public bool SummonUnit(int width, int height, GameObject unit)
     {
         // 예외처리
         if( 0 > width || width > Width || 0 > height ||height > Height )
         {
-            return null;
+            return false;
         }
 
-        GameObject summons = null;
-
-        if (_TileContainer[height, width].GetComponent<Tile>().TakedUnit == null)
-        {
-             summons = Instantiate(unit, _TileContainer[height, width].transform);
-            _TileContainer[height, width].GetComponent<Tile>().TakedUnit = summons.GetComponent<UnitInfo>();
-        }
-
-        return summons;
+        return _TileContainer[height, width].GetComponent<Tile>().SummonUnit(unit);
     }
 
     public bool SetUnit(int width, int height, GameObject unit)
@@ -161,7 +149,7 @@ public class TileManager : MonoSingleton<TileManager>
         bool result = false;
         if (_TileContainer[height, width].GetComponent<Tile>().TakedUnit == null)
         {
-            _TileContainer[height, width].GetComponent<Tile>().TakedUnit = unit.GetComponent<UnitInfo>();
+            _TileContainer[height, width].GetComponent<Tile>().TakedUnit = unit.GetComponent<Unit>();
             result = true;
         }
 
@@ -178,4 +166,8 @@ public class TileManager : MonoSingleton<TileManager>
         }
     }
 
+    public override bool Initialize()
+    {
+        throw new NotImplementedException();
+    }
 }

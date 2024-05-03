@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IState
+public interface IState : IInitializeable
 {
-    bool SetUnitInfo(UnitInfo info);
-    bool Initialize();
     void Enter();
     void FixedLogic();
     void Logic();
@@ -16,10 +14,14 @@ public interface IState
     /// <returns></returns>
     string CheckTransition();
 
+    bool SetUnit(Unit info);
+
     bool IsStateFinish
     {
-        get;
+        get; set;
     }
+
+    GameObject Owner { set; }
 }
 
 
@@ -39,22 +41,26 @@ public interface IAllianceState : IState
     /// <returns></returns>
     string CheckAlliance();
 }
-[RequireComponent(typeof(UnitInfo))]
-public abstract class State : MonoBehaviour, IState
+public abstract class State : IState
 {
-    protected UnitInfo _UnitInfo = null;
+    protected Unit _Unit = null;
+
+    public GameObject Owner
+    {
+        protected get; set;
+    }
     public abstract string CheckTransition();
     public abstract void Enter();
     public abstract void Exit();
     public abstract void FixedLogic();
     public abstract bool Initialize();
-    public bool SetUnitInfo(UnitInfo info)
+    public bool SetUnit(Unit info)
     {
         if (info == null)
         {
             return false;
         }
-        _UnitInfo = info;
+        _Unit = info;
 
         return true;
     }
@@ -64,7 +70,7 @@ public abstract class State : MonoBehaviour, IState
     public bool IsStateFinish
     {
         get;
-        protected set;
+        set;
     }
 }
 
@@ -73,10 +79,67 @@ public abstract class AllianceState : State, IAllianceState
     public SortedSet<string> _Transition = new();
     public void AddTransition(string state)
     {
-        Debug.Log(_Transition);
         _Transition.Add(state);
     }
     public abstract string CheckAlliance();
     public SortedSet<string> GetAllianceStates()
     { return _Transition; }
+}
+
+public class CommonStateDefault : State
+{
+    public override string CheckTransition()
+    {
+        return null;
+    }
+
+    public override void Enter()
+    {
+    }
+
+    public override void Exit()
+    {
+    }
+
+    public override void FixedLogic()
+    {
+    }
+
+    public override bool Initialize()
+    {
+        return true;
+    }
+
+    public override void Logic()
+    {
+    }
+}
+
+public class CommonStateAttack : State
+{
+    public override string CheckTransition()
+    {
+        return null;
+    }
+
+    public override void Enter()
+    {
+    }
+
+    public override void Exit()
+    {
+    }
+
+    public override void FixedLogic()
+    {
+    }
+
+    public override bool Initialize()
+    {
+        return true;
+    }
+
+    public override void Logic()
+    {
+    }
 }

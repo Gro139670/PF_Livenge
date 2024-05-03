@@ -5,7 +5,12 @@ public class CommonStateIdle : State
 {   
     public override string CheckTransition()
     {
-        return null;
+        if(_Unit)
+        {
+
+        }
+
+        return typeof(CommonStateSearch).Name;
     }
 
     public override void Enter()
@@ -18,7 +23,7 @@ public class CommonStateIdle : State
 
     public override void FixedLogic()
     {
-        _UnitInfo._Status.Test();
+        _Unit.Status.Test();
     }
 
     public override bool Initialize()
