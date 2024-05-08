@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 702795927098672791}
   - component: {fileID: 663264651046224373}
   - component: {fileID: 6928828228961274514}
+  - component: {fileID: 5796764781696880162}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Team
@@ -136,3 +137,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cfc723662f743e4d94caeed734b05dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5796764781696880162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936970615656138871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _CurrTile: {fileID: 0}
+  _NextTile: {fileID: 0}
+  _Position: {x: 0, y: 0, z: 0}
+  _EnemTeamID: 1
+  _Status:
+    _Name: 
+    _UnitTear: 0
+    _TeamID: 0
+    _HP: 100
+    _Damage: 0
+    _Defense: 0
+    _Size: 2
+    _AttackSpeed: 0
+    _MoveSpeed: 0
+    _SearchSpeed: 4
+    _ManaCost: 0
+    _LifeCost: 0
+    _AttackRange: 1
+    _ChaseRange: 7
+    _SightRange: 1

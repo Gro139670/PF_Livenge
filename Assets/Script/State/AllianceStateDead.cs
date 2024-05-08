@@ -1,0 +1,41 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+public class AllianceStateDead : AllianceState
+{
+    public override string CheckAlliance()
+    {
+        if (_OwnerInfo?.Status.IsDead == true)
+        {
+            return typeof(AllianceStateDead).Name; ;
+        }
+        return null;
+    }
+
+    public override string CheckTransition()
+    {
+        return null;
+    }
+
+    public override void Enter()
+    {
+    }
+
+    public override void Exit()
+    {
+    }
+
+    public override void FixedLogic()
+    {
+    }
+
+
+    public override bool Initialize()
+    {
+        return true;
+    }
+
+    public override void Logic()
+    {
+    }
+}

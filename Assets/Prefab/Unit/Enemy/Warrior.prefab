@@ -123,26 +123,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d512d609dd1bf4459a53204e857f35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _PrevTile: {fileID: 0}
-  _AttackUnitList: []
-  _ChaseUnitList: []
-  _ChaseUnit: {fileID: 0}
-  _UnitState: 1
-  _LookDir: -1
   _Position: {x: 0, y: 0, z: 0}
-  _Name: 
-  _UnitTear: 0
-  _TeamID: 2
-  _HP: 100
-  _Damage: 0
-  _Defense: 0
-  _AttackSpeed: 0
-  _MoveSpeed: 500
-  _Size: 0
-  _ManaCost: 0
-  _LifeCost: 0
-  _AttackRange: 1.5
-  _ChaseRange: 1
-  _SightRange: 1
+  _EnemTeamID: 0
+  _Status:
+    _Name: 
+    _UnitTear: 0
+    _TeamID: 1
+    _HP: 100
+    _Damage: 0
+    _Defense: 0
+    _AttackSpeed: 0
+    _MoveSpeed: 0
+    _Size: 2
+    _ManaCost: 0
+    _LifeCost: 0
+    _AttackRange: 1
+    _ChaseRange: 1
+    _SightRange: 1
