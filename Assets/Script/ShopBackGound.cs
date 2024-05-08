@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class ShopBackGound : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Vector3 _DefaultShopPosition;
+    private Vector3 _InterectiveShopPosition;
+    private void Awake()
+    {
+        _DefaultShopPosition = _InterectiveShopPosition = transform.localPosition;
+        _InterectiveShopPosition.y = -250;
+    }
     void Start()
     {
-        
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if(GameManager.Instance.GetSystem<ShopSystem>().ShopToggle)
+        {
+            gameObject.transform.localPosition = _InterectiveShopPosition;
+        }
+        else
+        {
+            gameObject.transform.localPosition = _DefaultShopPosition;
+        }
         
     }
 }

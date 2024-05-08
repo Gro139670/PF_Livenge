@@ -40,7 +40,7 @@ public class TileSystem : MonoSystem
             {
 
 
-                tile = Instantiate(_Tile, this.transform);
+                tile = Instantiate(_Tile, transform);
                 Tile tileComponent = tile.GetComponent<Tile>();
                 tileNum++;
                 tileNum %= _TileColor.Length;
@@ -50,8 +50,8 @@ public class TileSystem : MonoSystem
 
                 tileComponent.Index = new(tile_WidthIndex, tile_HeightIndex);
 
-                tile.transform.position = new Vector3(tile.transform.position.x + (_Tile.transform.localScale.x * tile_WidthIndex),
-                    tile.transform.position.y + (_Tile.transform.localScale.y * tile_HeightIndex * transform.localScale.y));
+                tile.transform.localPosition = new Vector3(tile.transform.localPosition.x + (tile.transform.localScale.x * tile_WidthIndex),
+                    tile.transform.localPosition.y + (_Tile.transform.localScale.y * tile_HeightIndex));
 
                 _TileContainer[tile_HeightIndex, tile_WidthIndex] = tile;
 

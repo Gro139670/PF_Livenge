@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class StateMachine : UnitHelper
+public abstract class StateMachine : UnitHelper, IInitializeable
 {
     // Start is called before the first frame update
     private IState _CurrState = null;
@@ -11,14 +11,9 @@ public class StateMachine : UnitHelper
 
     private void Start()
     {
-        AddState<CommonStateIdle>();
-        AddState<CommonStateAttack>();
-        AddState<CommonStateSearch>();
-        AddState<CommonStateMove>();
-        AddState<CommonStateDefault>();
-        ChangeState(typeof(CommonStateIdle).Name);
+        Initialize();
+        ChangeState("Idle");
     }
-
 
     private void FixedUpdate()
     {
@@ -109,7 +104,7 @@ public class StateMachine : UnitHelper
         return alliance;
     }
 
-    private void ChangeState(string name)
+    private bool ChangeState(string name)
     {
         _CurrState?.Exit();
         if(_States.ContainsKey(name) == false)
@@ -121,22 +116,25 @@ public class StateMachine : UnitHelper
                     _CurrState = state.Value;
                     break;
                 }
-
             }
+            return false;
         }
         else
         {
             _CurrState = _States[name];
         }
-        _CurrState.IsStateFinish = false;
-        _CurrState.Enter();
 
+        _CurrState.Enter();
+        return true;
     }
 
-    private void ChangeState(IState state)
+    private bool ChangeState(IState state)
     {
         _CurrState?.Exit();
         _CurrState = state;
         _CurrState.Enter();
+        return true;
     }
+
+    public abstract bool Initialize();
 }

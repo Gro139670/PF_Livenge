@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     public int Level { get { return _Level; } }
     public int MaxLevel { get { return _MaxLevel; } }
 
+    public int UnitTear { get { return (_MaxLevel - _Level) / 2; } }
+
     public bool IsLevelUp
     { 
         get

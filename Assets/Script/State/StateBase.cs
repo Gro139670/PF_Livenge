@@ -65,7 +65,7 @@ public abstract class State : IState
     public bool IsStateFinish
     {
         get;
-        set ;
+        set;
     }
 }
 
@@ -85,7 +85,7 @@ public class CommonStateDefault : State
 {
     public override string CheckTransition()
     {
-        return null;
+        return "Idle";
     }
 
     public override void Enter()
@@ -114,12 +114,11 @@ public class CommonStateAttack : State
 {
     public override string CheckTransition()
     {
-        return null;
+        return "Idle";
     }
 
     public override void Enter()
     {
-        Debug.Log("Attack");
     }
 
     public override void Exit()

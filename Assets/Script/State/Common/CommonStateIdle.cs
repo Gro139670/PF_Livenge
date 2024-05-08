@@ -15,6 +15,7 @@ public class CommonStateIdle : State
 
     public override void Enter()
     {
+        IsStateFinish = true;
     }
 
     public override void Exit()

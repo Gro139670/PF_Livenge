@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Card : MyButton
+public class Card : MonoBehaviour
 {
     #region variable
-    public Sprite[] _CardImage;
-    public Sprite[] _CardExplain;
 
+
+    [SerializeField] Sprite[] _CardImage;
+    [SerializeField] Sprite[] _CardExplain;
+    Image _Image;
 
 
 
@@ -22,37 +25,33 @@ public class Card : MyButton
     {
         _MaxUnitNum = num;
     }
-    public int UnitNum
-    {
-        get { return _UnitNum; }
-    }
-    public int Cost
-    { get { return _Cost; } }
 
     #endregion
-
-
-
-   
-    protected override void Update()
+    private void Awake()
     {
-        base.Update();
-        if (Mouse.SelectedCard != null)
-        {
-            _IsMouseDown = false;
-            return;
-        }
-        if ( _IsMouseDown == true )
-        {
-            Mouse.SelectedCard = this;
-        }
+        _Image = GetComponent<Image>();
     }
 
     public void SetUnitIndex()
     {
         _UnitNum = Random.Range(0,_MaxUnitNum);
         _Cost = _UnitNum * 2;
-        _Renderer.sprite = _CardImage[_UnitNum];
+        _Image.sprite = _CardImage[_UnitNum];
+    }
+
+    public void BuyUnit()
+    {
+        if (GameManager.Instance.Player.Add_Mana(-_Cost))
+        {
+            if(GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(0) == false)
+            {
+                // 구매 불가 ui 출력
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
     }
     
 }
