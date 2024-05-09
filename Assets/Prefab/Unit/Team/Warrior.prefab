@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.2, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -143,20 +143,21 @@ MonoBehaviour:
   _EnemTeamID: 1
   _Status:
     _Name: 
-    _UnitTear: 0
+    _UnitTear: 1
     _TeamID: 0
-    _HP: 100
-    _Damage: 0
-    _Defense: 0
+    _HP: 120
+    _Damage: 24
+    _Defense: 6
     _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 4
-    _ManaCost: 0
-    _LifeCost: 0
+    _AttackSpeed: 2.6
+    _MoveSpeed: 250
+    _SearchSpeed: 10
+    _ManaCost: 5
+    _LifeCost: 5
     _AttackRange: 1
-    _ChaseRange: 7
+    _ChaseRange: 3
     _SightRange: 1
+  _AttackUnitList: []
 --- !u!114 &2096204516966657784
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,8 +6,8 @@ public class Player : MonoBehaviour
 {
     int _HP;
     int _Mana;
-    public int _MaxHP = 100;
-    public int _MaxMana = 100;
+    public int _MaxHP = 10000;
+    public int _MaxMana = 10000;
 
     private float _EXP = 0;
     private float _NextEXP = 10;
@@ -17,12 +17,6 @@ public class Player : MonoBehaviour
     public int _Level = 0;
     public int _MaxLevel = 6;
     private bool _IsLevelUp = false;
-
-    private void Awake()
-    {
-        GameManager.Instance.Player = this;
-        Init();
-    }
 
     public int Level { get { return _Level; } }
     public int MaxLevel { get { return _MaxLevel; } }
@@ -39,6 +33,12 @@ public class Player : MonoBehaviour
 
             return result; 
         } 
+    }
+
+    private void Awake()
+    {
+        Init();
+        GameManager.Instance.Player = this;
     }
 
     public void RoundClear(float exp)
@@ -81,6 +81,7 @@ public class Player : MonoBehaviour
 
     public bool Add_Mana(int mana)
     {
+        Debug.Log(_Mana);
         _Mana += mana;
         if (_Mana <= 0)
             return false;
@@ -92,6 +93,4 @@ public class Player : MonoBehaviour
     {
         _HP = _MaxHP; _Mana = _MaxMana;
     }
-
-
 }

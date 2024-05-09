@@ -51,15 +51,18 @@ public class UnitManager : Singleton<UnitManager>
 
     public List<Unit> GetUnitList(int teamID, Func<Unit, bool> condition)
     {
-        var list = new List<Unit>();
-        foreach (var item in _Units[teamID])
+        List<Unit> list = null;
+        if (_Units[teamID] != null)
         {
-            if (condition(item) == true)
-                list.Add(item);
+            list = new List<Unit>();
+            foreach (var item in _Units[teamID])
+            {
+                if (condition(item) == true)
+                    list.Add(item);
+            }
+            if (list.Count <= 0)
+                list = null;
         }
-        if (list.Count <= 0)
-            list = null;
-
         return list;
     }
 

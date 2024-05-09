@@ -37,10 +37,15 @@ public class CommonStateIdle : State
 
     private bool IsCanAttack()
     {
+        if(_OwnerInfo.AttackUnitList?.Count > 0)
+        {
+            return true;
+        }
+
         var attackList = UnitManager.Instance.GetUnitList(_OwnerInfo.EnenmyTeamID,
            unit =>
            {
-               if (_OwnerInfo.CurrTile.GetDistance(unit.CurrTile) <= _OwnerInfo.Status.AttackRange)
+               if (_OwnerInfo.CurrTile.GetDistance(unit.CurrTile) <= _OwnerInfo.Status.AttackRange * _OwnerInfo.Status.AttackRange)
                {
                    return true;
                }

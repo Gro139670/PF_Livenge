@@ -51,7 +51,7 @@ public class UnitStatus
     private bool _IsDead = false;
 
 
-    #region StatusFunc
+    #region Property
     public int TeamID
     { get { return _TeamID; } set { _TeamID = value; } }
 
@@ -65,6 +65,12 @@ public class UnitStatus
 
     public float ChaseRange
     { get { return _ChaseRange; } }
+
+    public int ManaCost
+    {  get { return _ManaCost; } }
+
+    public float MoveSpeed
+    { get { return 200/_MoveSpeed; } }
 
     public bool IsDead
     {

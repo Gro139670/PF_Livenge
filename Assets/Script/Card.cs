@@ -41,16 +41,13 @@ public class Card : MonoBehaviour
 
     public void BuyUnit()
     {
-        if (GameManager.Instance.Player.Add_Mana(-_Cost))
+        if (GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(_UnitNum) == false)
         {
-            if(GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(0) == false)
-            {
-                // 구매 불가 ui 출력
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
+            // 구매 불가 ui 출력
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
     

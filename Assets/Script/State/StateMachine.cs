@@ -106,6 +106,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
 
     private bool ChangeState(string name)
     {
+        bool result = false;
         _CurrState?.Exit();
         if(_States.ContainsKey(name) == false)
         {
@@ -114,10 +115,14 @@ public abstract class StateMachine : UnitHelper, IInitializeable
                 if(state.Key.Contains(name) == true)
                 {
                     _CurrState = state.Value;
+                    result = true;
                     break;
                 }
             }
-            return false;
+            if(result == false)
+            {
+                return result;
+            }
         }
         else
         {
@@ -125,7 +130,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
         }
 
         _CurrState.Enter();
-        return true;
+        return result;
     }
 
     private bool ChangeState(IState state)

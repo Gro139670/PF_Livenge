@@ -131,20 +131,21 @@ MonoBehaviour:
   _EnemTeamID: 0
   _Status:
     _Name: 
-    _UnitTear: 0
-    _TeamID: 0
+    _UnitTear: 1
+    _TeamID: 1
     _HP: 100
-    _Damage: 0
-    _Defense: 0
+    _Damage: 20
+    _Defense: 5
     _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 4
-    _ManaCost: 0
-    _LifeCost: 0
+    _AttackSpeed: 2
+    _MoveSpeed: 210
+    _SearchSpeed: 10
+    _ManaCost: 5
+    _LifeCost: 10
     _AttackRange: 1
-    _ChaseRange: 1
+    _ChaseRange: 3
     _SightRange: 1
+  _AttackUnitList: []
 --- !u!114 &7942750181827537922
 MonoBehaviour:
   m_ObjectHideFlags: 0

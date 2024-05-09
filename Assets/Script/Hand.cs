@@ -21,16 +21,13 @@ public class Hand : MonoBehaviour
 
     private void Start()
     {
-        if(Reroll()== true)
-        {
-            var shop = GameManager.Instance.GetSystem<ShopSystem>();
-            GameManager.Instance.Player.Add_Mana(shop.BuyRerollCost);
-        }
+        Reroll();
+        var shop = GameManager.Instance.GetSystem<ShopSystem>();
+        GameManager.Instance.Player.Add_Mana(shop.BuyRerollCost);
     }
 
-    public bool Reroll()
+    public void Reroll()
     {
-        bool result = false;
         var shop = GameManager.Instance.GetSystem<ShopSystem>();
 
 
@@ -46,8 +43,6 @@ public class Hand : MonoBehaviour
                 _Cards[hand].SetActive(true);
                 _Cards[hand].GetComponent<Card>().SetUnitIndex();
             }
-            result = true;
         }
-        return result;
     }
 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6309246063834734958}
   - component: {fileID: 374656942248862808}
   - component: {fileID: -1117762683431106733}
-  - component: {fileID: 2576241418101787948}
   - component: {fileID: 635372699380972348}
   m_Layer: 0
   m_Name: Ballistar_Tower
@@ -125,20 +124,21 @@ MonoBehaviour:
   _EnemTeamID: 0
   _Status:
     _Name: 
-    _UnitTear: 0
-    _TeamID: 0
-    _HP: 100
-    _Damage: 0
-    _Defense: 0
+    _UnitTear: 3
+    _TeamID: 1
+    _HP: 200
+    _Damage: 100
+    _Defense: 10
     _Size: 2
-    _AttackSpeed: 0
+    _AttackSpeed: 3
     _MoveSpeed: 0
-    _SearchSpeed: 4
-    _ManaCost: 0
+    _SearchSpeed: 0
+    _ManaCost: 25
     _LifeCost: 0
     _AttackRange: 1
-    _ChaseRange: 1
+    _ChaseRange: 0
     _SightRange: 1
+  _AttackUnitList: []
 --- !u!114 &-1117762683431106733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,38 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d512d609dd1bf4459a53204e857f35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2576241418101787948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3208417798178512206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 0
-  _Status:
-    _Name: 
-    _UnitTear: 0
-    _TeamID: 0
-    _HP: 100
-    _Damage: 0
-    _Defense: 0
-    _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 0
-    _ManaCost: 0
-    _LifeCost: 0
-    _AttackRange: 1
-    _ChaseRange: 1
-    _SightRange: 1
 --- !u!114 &635372699380972348
 MonoBehaviour:
   m_ObjectHideFlags: 0

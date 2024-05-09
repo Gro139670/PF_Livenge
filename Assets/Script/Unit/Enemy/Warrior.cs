@@ -1,21 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Script.Unit.Enemy
+namespace Enemy
 {
-    public class Warrior : MonoBehaviour
+    public class Warrior : StateMachine
     {
 
-        // Use this for initialization
-        void Start()
+        public override bool Initialize()
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            return true;
         }
     }
 }

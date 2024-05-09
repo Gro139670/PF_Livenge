@@ -62,18 +62,25 @@ public class ShopSystem : MonoSystem
     public bool BuyUnit(int unitNum)
     {
         var unit = _TeamUnits[unitNum];
-        for (int height = 4; height >= 0; height--)
+        if (GameManager.Instance.Player.Add_Mana(-unit.GetComponent<Unit>().Status.ManaCost) == true)
         {
-            for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
+
+
+            for (int height = 4; height >= 0; height--)
             {
-                if(GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit) ==true)
+                for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
                 {
-                    return true;
+                    if (GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit) == true)
+                    {
+                        return true;
+                    }
                 }
             }
+            // 타일이 가득 찼다.
+            // 오류 메세지 출력
+            return false;
         }
-        // 타일이 가득 찼다.
-        // 오류 메세지 출력
+        // 플레이어 마나가 부족하다.
         return false;
     }
 

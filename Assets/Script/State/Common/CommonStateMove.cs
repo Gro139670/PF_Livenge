@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class CommonStateMove : State
 {
-    private float dsad;
     private bool _IsMove = false;
+    private float _MoveTime = 0;
+    private Vector3 _PrevPosition;
     public override string CheckTransition()
     {
         return "Idle";
@@ -17,9 +18,7 @@ public class CommonStateMove : State
     {
         IsStateFinish = false;
         _IsMove = false;
-        // test
-       
-
+        _MoveTime = 0;
     }
 
     public override void Exit()
@@ -33,10 +32,18 @@ public class CommonStateMove : State
         if (_IsMove == false)
             return;
 
-        _OwnerInfo.NextTile.SetTakedUnit(_OwnerInfo);
-        _Owner.transform.SetParent(_OwnerInfo.CurrTile.gameObject.transform);
-        _Owner.transform.localPosition = _OwnerInfo._Position;
-        IsStateFinish = true;
+
+
+
+        _MoveTime += Time.deltaTime;
+
+
+        _Owner.transform.localPosition = Vector3.Lerp(_PrevPosition, _OwnerInfo._Position, _MoveTime / _OwnerInfo.Status.MoveSpeed);
+        if(_MoveTime >= _OwnerInfo.Status.MoveSpeed)
+        {
+            IsStateFinish = true;
+            _MoveTime = _OwnerInfo.Status.MoveSpeed;
+        }
     }
 
     public override bool Initialize()
@@ -61,6 +68,9 @@ public class CommonStateMove : State
                         break;
                     }
                 }
+                _OwnerInfo.NextTile.SetTakedUnit(_OwnerInfo);
+                _Owner.transform.SetParent(_OwnerInfo.CurrTile.gameObject.transform);
+                _PrevPosition = _Owner.transform.localPosition;
                 _IsMove = true;
             }
             else

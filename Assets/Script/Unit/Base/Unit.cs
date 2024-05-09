@@ -7,7 +7,7 @@ public class Unit : MonoBehaviour, IInitializeable
 {
     public Unit()
     {
-        Initialize();
+        
     }
 
     public enum Direction
@@ -72,19 +72,14 @@ public class Unit : MonoBehaviour, IInitializeable
 
     public Stack<Direction> MovePath { get; set; }
 
+    [SerializeField] List<Unit> _AttackUnitList = new();
     public List<Unit> AttackUnitList
     {
-        get; set;
+        get { return _AttackUnitList; }
+        set { _AttackUnitList = value; }
     }
 
-    public bool Initialize()
-    {
-        CurrTile = null;
-        ChaseUnit = null;
-        LookDir = Direction.Down;
-        MovePath = new();
-        return true;
-    }
+
 
     public static Direction GetNextDirection(Direction dir)
     {
@@ -106,4 +101,18 @@ public class Unit : MonoBehaviour, IInitializeable
         return dir;
     }
 
+    void Start()
+    {
+        Initialize();
+    }
+
+    public bool Initialize()
+    {
+        _Position = transform.localPosition;
+        CurrTile = null;
+        ChaseUnit = null;
+        LookDir = Direction.Down;
+        MovePath = new();
+        return true;
+    }
 }

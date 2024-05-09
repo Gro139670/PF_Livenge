@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 1059210963975701794}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -140,23 +140,23 @@ MonoBehaviour:
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
   _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 0
+  _EnemTeamID: 1
   _Status:
     _Name: 
-    _UnitTear: 0
+    _UnitTear: 2
     _TeamID: 0
-    _HP: 100
-    _Damage: 0
-    _Defense: 0
+    _HP: 168
+    _Damage: 96
+    _Defense: 1
     _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 4
-    _ManaCost: 0
-    _LifeCost: 0
-    _AttackRange: 1
-    _ChaseRange: 1
-    _SightRange: 1
+    _AttackSpeed: 2
+    _MoveSpeed: 270
+    _SearchSpeed: 12
+    _ManaCost: 15
+    _LifeCost: 10
+    _AttackRange: 1.5
+    _ChaseRange: 4.5
+    _SightRange: 0
 --- !u!114 &8549525957878121761
 MonoBehaviour:
   m_ObjectHideFlags: 0

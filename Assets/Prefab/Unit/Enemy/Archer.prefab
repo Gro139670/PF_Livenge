@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6362635794392177213}
   - component: {fileID: 5256469114559435350}
   - component: {fileID: 5668508067820449250}
-  - component: {fileID: 8551469682345275140}
   - component: {fileID: 1031187424408175298}
   m_Layer: 0
   m_Name: Archer
@@ -132,20 +131,21 @@ MonoBehaviour:
   _EnemTeamID: 0
   _Status:
     _Name: 
-    _UnitTear: 0
-    _TeamID: 0
-    _HP: 100
-    _Damage: 0
-    _Defense: 0
+    _UnitTear: 1
+    _TeamID: 1
+    _HP: 80
+    _Damage: 40
+    _Defense: 2
     _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 4
+    _AttackSpeed: 4
+    _MoveSpeed: 210
+    _SearchSpeed: 8
     _ManaCost: 0
     _LifeCost: 0
     _AttackRange: 1
     _ChaseRange: 1
     _SightRange: 1
+  _AttackUnitList: []
 --- !u!114 &5668508067820449250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,38 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d512d609dd1bf4459a53204e857f35c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8551469682345275140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2321981166069637512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 0
-  _Status:
-    _Name: 
-    _UnitTear: 0
-    _TeamID: 0
-    _HP: 100
-    _Damage: 0
-    _Defense: 0
-    _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 0
-    _ManaCost: 0
-    _LifeCost: 0
-    _AttackRange: 1
-    _ChaseRange: 1
-    _SightRange: 1
 --- !u!114 &1031187424408175298
 MonoBehaviour:
   m_ObjectHideFlags: 0

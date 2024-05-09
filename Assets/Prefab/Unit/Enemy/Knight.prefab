@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 3097077976774151042}
   - component: {fileID: 2592580338093856608}
   - component: {fileID: 2699536947719353018}
+  - component: {fileID: 5092540940117380426}
   - component: {fileID: 7838174196599215880}
   - component: {fileID: 8166894950344602107}
-  - component: {fileID: 6052586379936742553}
-  - component: {fileID: 5092540940117380426}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Enemy
@@ -114,6 +113,18 @@ MonoBehaviour:
   - {fileID: -1477796547, guid: 67be8fc901937e149a9a83a8f1ffc075, type: 3}
   - {fileID: -1215298978, guid: 67be8fc901937e149a9a83a8f1ffc075, type: 3}
   _ETC: []
+--- !u!114 &5092540940117380426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7823042891910338699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1449a4a503a73b14d9c6dee6febfd029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7838174196599215880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,20 +143,21 @@ MonoBehaviour:
   _EnemTeamID: 0
   _Status:
     _Name: 
-    _UnitTear: 0
-    _TeamID: 0
+    _UnitTear: 2
+    _TeamID: 1
     _HP: 100
     _Damage: 0
     _Defense: 0
     _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 4
-    _ManaCost: 0
-    _LifeCost: 0
-    _AttackRange: 1
-    _ChaseRange: 1
+    _AttackSpeed: 3
+    _MoveSpeed: 250
+    _SearchSpeed: 12
+    _ManaCost: 10
+    _LifeCost: 10
+    _AttackRange: 1.5
+    _ChaseRange: 4.5
     _SightRange: 1
+  _AttackUnitList: []
 --- !u!114 &8166894950344602107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,49 +168,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d512d609dd1bf4459a53204e857f35c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6052586379936742553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7823042891910338699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 0
-  _Status:
-    _Name: 
-    _UnitTear: 0
-    _TeamID: 0
-    _HP: 100
-    _Damage: 0
-    _Defense: 0
-    _Size: 2
-    _AttackSpeed: 0
-    _MoveSpeed: 0
-    _SearchSpeed: 0
-    _ManaCost: 0
-    _LifeCost: 0
-    _AttackRange: 1
-    _ChaseRange: 1
-    _SightRange: 1
---- !u!114 &5092540940117380426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7823042891910338699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1449a4a503a73b14d9c6dee6febfd029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

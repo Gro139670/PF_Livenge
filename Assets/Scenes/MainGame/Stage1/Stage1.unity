@@ -552,11 +552,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4452913302593196844, guid: 18e9e40049a813b49a8dc9130f60af69, type: 3}
       propertyPath: _Level
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4452913302593196844, guid: 18e9e40049a813b49a8dc9130f60af69, type: 3}
       propertyPath: _MaxHP
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4452913302593196844, guid: 18e9e40049a813b49a8dc9130f60af69, type: 3}
       propertyPath: _EXPScop
@@ -564,7 +564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4452913302593196844, guid: 18e9e40049a813b49a8dc9130f60af69, type: 3}
       propertyPath: _MaxMana
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4951393751423128668, guid: 18e9e40049a813b49a8dc9130f60af69, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1191,6 +1191,14 @@ PrefabInstance:
       propertyPath: _Buttons
       value: 
       objectReference: {fileID: 1026623930}
+    - target: {fileID: 7209171178526834662, guid: d6af432dcd20dc242b6e36374759eb2d, type: 3}
+      propertyPath: _TeamUnits.Array.data[2]
+      value: 
+      objectReference: {fileID: 6245946458907286207, guid: f13c6c1c8d35d474894a4d47524af98d, type: 3}
+    - target: {fileID: 7209171178526834662, guid: d6af432dcd20dc242b6e36374759eb2d, type: 3}
+      propertyPath: _TeamUnits.Array.data[3]
+      value: 
+      objectReference: {fileID: 1059210963975701794, guid: 009f25eb377450b4cbd19cf45124f5d0, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
