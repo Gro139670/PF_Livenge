@@ -7,7 +7,7 @@ public class AllianceStateDead : AllianceState
     {
         if (_OwnerInfo?.Status.IsDead == true)
         {
-            return typeof(AllianceStateDead).Name; ;
+            return typeof(AllianceStateDead).Name;
         }
         return null;
     }
@@ -30,6 +30,7 @@ public class AllianceStateDead : AllianceState
 
     public override void FixedLogic()
     {
+
     }
 
 

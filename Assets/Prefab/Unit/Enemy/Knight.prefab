@@ -139,15 +139,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 0
   _Status:
     _Name: 
     _UnitTear: 2
     _TeamID: 1
     _HP: 100
-    _Damage: 0
-    _Defense: 0
+    _Damage: 80
+    _Defense: 3
     _Size: 2
     _AttackSpeed: 3
     _MoveSpeed: 250
@@ -157,7 +155,6 @@ MonoBehaviour:
     _AttackRange: 1.5
     _ChaseRange: 4.5
     _SightRange: 1
-  _AttackUnitList: []
 --- !u!114 &8166894950344602107
 MonoBehaviour:
   m_ObjectHideFlags: 0

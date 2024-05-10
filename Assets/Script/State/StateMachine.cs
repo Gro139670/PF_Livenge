@@ -12,7 +12,10 @@ public abstract class StateMachine : UnitHelper, IInitializeable
     private void Start()
     {
         Initialize();
-        ChangeState("Default");
+        if(ChangeState("Default") == false)
+        {
+            ChangeState("Idle");
+        }
     }
 
     private void FixedUpdate()

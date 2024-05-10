@@ -8,6 +8,7 @@ public class CommonStateIdle : State
     {
        if(IsCanAttack() == true)
         {
+            _OwnerInfo.SetLookDirection(_OwnerInfo.AttackUnit.CurrTile);
             return "Attack";
         }
 
@@ -16,6 +17,7 @@ public class CommonStateIdle : State
 
     public override void Enter()
     {
+        _OwnerInfo._State = state.Idle;
     }
 
     public override void Exit()
@@ -37,42 +39,46 @@ public class CommonStateIdle : State
 
     private bool IsCanAttack()
     {
-        if(_OwnerInfo.AttackUnitList?.Count > 0)
+        if (_OwnerInfo.AttackUnitList?.Count > 0)
         {
-            if(_OwnerInfo.AttackUnit == null)
+            if (_OwnerInfo.AttackUnitList != null)
             {
                 _OwnerInfo.AttackUnitList.OrderBy(
                 unit =>
                 {
-                    return _OwnerInfo.CurrTile.GetDistance(unit.CurrTile);
+                    return _OwnerInfo.CurrTile.GetDistance(unit?.CurrTile);
                 });
                 _OwnerInfo.AttackUnit = _OwnerInfo.AttackUnitList.First();
             }
-            else
+
             {
-                Debug.Log(_OwnerInfo.AttackUnitList.First());
-                if(_OwnerInfo.AttackUnitList.First() == null)
+                if (_OwnerInfo.AttackUnitList?.Count > 0)
                 {
-                    Debug.Log("Attack Unit null");
-                    _OwnerInfo.AttackUnitList.Clear();
-                    return false;
-                }
-
-                foreach(var unit in _OwnerInfo.AttackUnitList)
-                {
-                    if(unit == null)
+                    foreach (var unit in _OwnerInfo.AttackUnitList)
                     {
-                        _OwnerInfo.AttackUnitList.Remove(unit);
-                        Debug.Log("Attack Unit Remove");
-                    }
+                        if (unit == null)
+                        {
+                            _OwnerInfo.AttackUnitList.Remove(unit);
+                            break;
 
-                    if(_OwnerInfo.CurrTile.GetDistance(unit.CurrTile) > _OwnerInfo.Status.AttackRange * _OwnerInfo.Status.AttackRange)
-                    {
-                        _OwnerInfo.AttackUnitList.Remove(unit);
+                        }
+
+                        if (_OwnerInfo.CurrTile.GetDistance(unit.CurrTile) > _OwnerInfo.Status.AttackRange * _OwnerInfo.Status.AttackRange)
+                        {
+                            _OwnerInfo.AttackUnitList.Remove(unit);
+                            break;
+
+                        }
                     }
                 }
             }
-            
+
+            if (_OwnerInfo.AttackUnit == null)
+            {
+                _OwnerInfo.AttackUnitList = null;
+                return false;
+            }
+
             return true;
         }
 
@@ -84,8 +90,10 @@ public class CommonStateIdle : State
                    return true;
                }
                return false;
-           }
-       );
+           });
+
+        
+
         return false;
     }
 }

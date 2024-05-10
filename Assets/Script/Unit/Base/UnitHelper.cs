@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class UnitStatus
+public class UnitStatus : IInitializeable
 {
     #region Status
 
@@ -14,6 +14,7 @@ public class UnitStatus
 
     [Header("Status")]
     [SerializeField] private float _HP = 100;
+    private float _MaxHP = 0;
     [SerializeField] private float _Damage = 1;
     [SerializeField] private float _Defense = 1;
     [SerializeField] private float _Size = 2;
@@ -43,7 +44,7 @@ public class UnitStatus
     #region Property
     public float Damage
     {
-        get { return _Damage; }
+        get {return 0; return _Damage; }
     }
 
     public int TeamID
@@ -75,14 +76,13 @@ public class UnitStatus
     { get { return _AttackSpeed * SpeedDebuff; } }
 
     public float MoveSpeed
-    { get { return 200/(_MoveSpeed * SpeedDebuff); } }
+    { get { return 200/(_MoveSpeed * SpeedDebuff * 10); } }
 
     public float SearchSpeed
     {
         get
         {
             if (_SearchSpeed == 0) _SearchSpeed = 1;
-            // debug
             return 1;
             return 100 / (_SearchSpeed * SpeedDebuff);
         }
@@ -113,9 +113,25 @@ public class UnitStatus
 
     #endregion
 
-    public void Damaged(float value)
+    public float Damaged(float value)
     {
-        _HP -= value / (1+_Defense);
+        float AllDamage = 0;
+        AllDamage = value / (1 + _Defense);
+        _HP -= AllDamage;
+        return AllDamage;
+    }
+
+    public void AddHP(float hp)
+    {
+        _HP += hp;
+
+        if (_HP > _MaxHP) _HP = _MaxHP;
+    }
+
+    public bool Initialize()
+    {
+        _MaxHP = _HP;
+        return true;
     }
 }
 

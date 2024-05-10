@@ -140,11 +140,12 @@ MonoBehaviour:
     _AttackSpeed: 4
     _MoveSpeed: 210
     _SearchSpeed: 8
-    _ManaCost: 0
-    _LifeCost: 0
+    _ManaCost: 5
+    _LifeCost: 10
     _AttackRange: 2.5
     _ChaseRange: 6
     _SightRange: 1
+    _IsDead: 0
   _AttackUnitList: []
 --- !u!114 &5668508067820449250
 MonoBehaviour:

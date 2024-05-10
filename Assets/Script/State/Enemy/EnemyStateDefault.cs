@@ -12,6 +12,7 @@ public class EnemyStateDefault : State
 
     public override void Enter()
     {
+        _OwnerInfo._State = state.Default;
         IsStateFinish = IsInvade;
     }
 

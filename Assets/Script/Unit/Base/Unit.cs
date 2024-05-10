@@ -1,12 +1,20 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
-
+public enum state
+{
+    Attack,
+    Idle,
+    Search,
+    Move,
+    Default
+}
 public class Unit : MonoBehaviour, IInitializeable
 {
-
-    public enum Direction
+    public enum Direction : int
     {
         Up = 6,
         Left = 4,
@@ -14,10 +22,27 @@ public class Unit : MonoBehaviour, IInitializeable
         Down = 0,
         None = -1,
     }
-
-
     [SerializeField] private Tile _CurrTile = null;
     [SerializeField] private Tile _NextTile = null;
+    [SerializeField] private List<Unit> _AttackUnitList = null;
+    [SerializeField] private Unit _AttackUnit = null;
+    [SerializeField] private Direction _LookDir;
+    [SerializeField] private Unit _ChaseUnit;
+
+
+    #region Debug
+
+
+    [SerializeField] private Direction _NextLookDir;
+    [SerializeField] private Direction _PathDir;
+
+    [SerializeField] private int _NextLookDirNum;
+    [SerializeField] public state _State = 0;
+
+    #endregion
+
+
+
 
     public Tile CurrTile
     {
@@ -31,12 +56,14 @@ public class Unit : MonoBehaviour, IInitializeable
         set { _NextTile = value; }
     }
     public Direction LookDir
+    {
+        get { return _LookDir; }
+        set { _LookDir = value; }
+    }
+
+    public Vector3 Position
     { get; set; }
 
-
-    public Vector3 _Position;
-
-    [SerializeField]    
     protected int _EnemyTeamID;
 
 
@@ -62,17 +89,17 @@ public class Unit : MonoBehaviour, IInitializeable
     }
 
     public Unit ChaseUnit
-    { get; set; }
+    { get { return _ChaseUnit; } set { _ChaseUnit = value; } }
 
     public Unit IgnoreUnit
     { get; set; }
 
     public Unit AttackUnit
-    { get; set; }
+    { get { return _AttackUnit; } set { _AttackUnit = value; } }
 
     public Stack<Direction> MovePath { get; set; }
 
-    [SerializeField] List<Unit> _AttackUnitList = new();
+
     public List<Unit> AttackUnitList
     {
         get { return _AttackUnitList; }
@@ -80,25 +107,52 @@ public class Unit : MonoBehaviour, IInitializeable
     }
 
 
-
-    public static Direction GetNextDirection(Direction dir)
+    /// <summary>
+    /// set clockwise
+    /// </summary>
+    public void SetLookDirection()
     {
-        switch (dir)
+        switch (LookDir)
         {
             case Unit.Direction.Up:
-                return Direction.Right;
-
+                LookDir = Direction.Right;
+                return;
             case Unit.Direction.Down:
-                return Direction.Left;
-
+                LookDir = Direction.Left;
+                return;
             case Unit.Direction.Right:
-                return Direction.Down;
-
+                LookDir = Direction.Down;
+                return;
             case Unit.Direction.Left:
-                return Direction.Up;
+                LookDir = Direction.Up;
+                return;
         }
+    }
 
-        return dir;
+    public void SetLookDirection(Tile tile)
+    {
+        for (int index = 0; index < _CurrTile.AdjacentTiles.Length; index++)
+        {
+            if (_CurrTile.AdjacentTiles[index] == tile)
+            {
+                if(index <= 3)
+                {
+                    _NextLookDir = Unit.Direction.Down;
+
+                }
+                else if(index >= 6)
+                {
+                    _NextLookDir = Unit.Direction.Up;
+                }
+                else
+                {
+                    _NextLookDir = (Unit.Direction)index;
+                }
+                _NextLookDirNum = index;
+                LookDir = _NextLookDir;
+                break;
+            }
+        }
     }
 
     void Start()
@@ -108,8 +162,10 @@ public class Unit : MonoBehaviour, IInitializeable
 
     public bool Initialize()
     {
+        _AttackUnitList = new List<Unit>();
+        _Status.Initialize();
         _Status.SpeedDebuff = 0;
-        _Position = transform.localPosition;
+        Position = transform.localPosition;
         CurrTile = null;
         ChaseUnit = null;
         AttackUnit = null;
@@ -118,9 +174,10 @@ public class Unit : MonoBehaviour, IInitializeable
         return true;
     }
 
-    public void Attack(Unit target)
+    public float Attack(Unit target)
     {
-        target.Status.Damaged(_Status.Damage);
-        //Debug.Log(gameObject.name + " Attack : " + target.gameObject.name);
+        return target.Status.Damaged(_Status.Damage);
     }
+
+
 }

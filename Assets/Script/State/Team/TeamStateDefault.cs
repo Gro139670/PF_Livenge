@@ -11,6 +11,7 @@ public class TeamStateDefault : State
 
     public override void Enter()
     {
+        _OwnerInfo._State = state.Default;
         IsStateFinish = false;
     }
 

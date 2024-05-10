@@ -81,7 +81,6 @@ public class PlayerSystem : MonoSystem
 
     public bool Add_Mana(int mana)
     {
-        Debug.Log(_Mana);
         _Mana += mana;
         if (_Mana <= 0)
             return false;

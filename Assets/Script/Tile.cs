@@ -156,12 +156,16 @@ public class Tile : MyButton
 
     public float GetDistance(Tile other)
     {
+        if (other == null)
+            return float.MaxValue;
         float x, y;
         x = (float)Index.Item1 - other.Index.Item1;
         y = (float)Index.Item2 - other.Index.Item2;
 
         return (x * x) + (y * y);
     }
+
+   
 
     private class AstarData
     {

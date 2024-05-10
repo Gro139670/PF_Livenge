@@ -21,6 +21,7 @@ public class CommonStateSearch : State
 
     public override void Enter()
     {
+        _OwnerInfo._State = state.Search;
         IsStateFinish = false;
         _Start = _OwnerInfo.LookDir;
         _SearchCount = _OwnerInfo.Status.SearchSpeed;
@@ -114,7 +115,7 @@ public class CommonStateSearch : State
                 }
             }
 
-            _OwnerInfo.LookDir = Unit.GetNextDirection(_OwnerInfo.LookDir);
+            _OwnerInfo.SetLookDirection();
             _IsSearched = true;
         }
 

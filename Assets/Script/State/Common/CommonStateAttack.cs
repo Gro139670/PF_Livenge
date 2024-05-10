@@ -1,20 +1,16 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CommonStateAttack : UseSpeedState
+public class CommonStateAttack : StateAttack
 {
-    private float _AttackTime = 0;
+
 
     public override string CheckTransition()
     {
         return "Idle";
     }
 
-    public override void Enter()
-    {
-        IsStateFinish = false;
-        _AttackTime = 0;
-    }
+   
 
     public override void Exit()
     {
@@ -24,10 +20,7 @@ public class CommonStateAttack : UseSpeedState
         }
     }
 
-    public override void FixedLogic()
-    {
-        IsStateFinish = SetTime(ref _AttackTime, _OwnerInfo.Status.AttackSpeed);
-    }
+    
 
     public override bool Initialize()
     {

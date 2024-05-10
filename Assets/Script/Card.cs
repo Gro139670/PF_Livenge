@@ -17,7 +17,6 @@ public class Card : MonoBehaviour
     // ÃÑ À¯´Ö ¼ö
     private static int _MaxUnitNum = 0;
     private int _UnitNum = 0;
-    private int _Cost = 0;
 
     #endregion
     #region property
@@ -35,12 +34,14 @@ public class Card : MonoBehaviour
     public void SetUnitIndex()
     {
         _UnitNum = Random.Range(0,_MaxUnitNum);
-        _Cost = _UnitNum * 2;
         _Image.sprite = _CardImage[_UnitNum];
     }
 
     public void BuyUnit()
     {
+        // debug
+        _UnitNum = 3;
+
         if (GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(_UnitNum) == false)
         {
             // ±¸¸Å ºÒ°¡ ui Ãâ·Â

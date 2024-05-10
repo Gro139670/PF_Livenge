@@ -110,19 +110,71 @@ public class CommonStateDefault : State
     }
 }
 
-public abstract class UseSpeedState : State
+public abstract class StateMove : State
 {
-    protected bool SetTime(ref float time, float speed)
+    protected bool _IsMove = false;
+    protected float _MoveTime = 0;
+    protected Vector3 _PrevPosition;
+
+    public override void Enter()
     {
-        bool result = false;
-        time += Time.deltaTime;
-        if (time >= speed)
-        {
-            result = true;
-            time = speed;
-        }
-        return result;
+        _OwnerInfo._State = state.Move;
+        IsStateFinish = false;
+        _IsMove = false;
+        _MoveTime = 0;
+
     }
 
+    public override void Exit()
+    {
+        _OwnerInfo.NextTile = null;
+    }
+
+    protected void DoMove()
+    {
+        if (_IsMove == false)
+            return;
+
+
+        IsStateFinish = TimeManager.Instance.SetTime(ref _MoveTime, _OwnerInfo.Status.MoveSpeed);
+
+
+        _Owner.transform.localPosition = Vector3.Lerp(_PrevPosition, _OwnerInfo.Position, _MoveTime / _OwnerInfo.Status.MoveSpeed);
+    }
+
+    protected void IsMove()
+    {
+        if (_IsMove == true) return;
+        if (_OwnerInfo.NextTile.GetTakedUnit() == null)
+        {
+            _OwnerInfo.SetLookDirection(_OwnerInfo.NextTile);
+            _OwnerInfo.NextTile.SetTakedUnit(_OwnerInfo);
+            _Owner.transform.SetParent(_OwnerInfo.CurrTile.gameObject.transform);
+            _PrevPosition = _Owner.transform.localPosition;
+            _IsMove = true;
+
+        }
+        else
+        {
+
+            IsStateFinish = true;
+            _OwnerInfo.MovePath = null;
+        }
+    }
 }
 
+public abstract class StateAttack : State
+{
+    protected float _AttackTime = 0;
+    public override void Enter()
+    {
+        _OwnerInfo._State = state.Attack;
+        IsStateFinish = false;
+        _AttackTime = 0;
+    }
+
+    public override void FixedLogic()
+    {
+        IsStateFinish = TimeManager.Instance.SetTime(ref _AttackTime, _OwnerInfo.Status.AttackSpeed);
+    }
+}
