@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class CommonStateIdle : State
@@ -15,7 +16,6 @@ public class CommonStateIdle : State
 
     public override void Enter()
     {
-        IsStateFinish = true;
     }
 
     public override void Exit()
@@ -39,10 +39,44 @@ public class CommonStateIdle : State
     {
         if(_OwnerInfo.AttackUnitList?.Count > 0)
         {
+            if(_OwnerInfo.AttackUnit == null)
+            {
+                _OwnerInfo.AttackUnitList.OrderBy(
+                unit =>
+                {
+                    return _OwnerInfo.CurrTile.GetDistance(unit.CurrTile);
+                });
+                _OwnerInfo.AttackUnit = _OwnerInfo.AttackUnitList.First();
+            }
+            else
+            {
+                Debug.Log(_OwnerInfo.AttackUnitList.First());
+                if(_OwnerInfo.AttackUnitList.First() == null)
+                {
+                    Debug.Log("Attack Unit null");
+                    _OwnerInfo.AttackUnitList.Clear();
+                    return false;
+                }
+
+                foreach(var unit in _OwnerInfo.AttackUnitList)
+                {
+                    if(unit == null)
+                    {
+                        _OwnerInfo.AttackUnitList.Remove(unit);
+                        Debug.Log("Attack Unit Remove");
+                    }
+
+                    if(_OwnerInfo.CurrTile.GetDistance(unit.CurrTile) > _OwnerInfo.Status.AttackRange * _OwnerInfo.Status.AttackRange)
+                    {
+                        _OwnerInfo.AttackUnitList.Remove(unit);
+                    }
+                }
+            }
+            
             return true;
         }
 
-        var attackList = UnitManager.Instance.GetUnitList(_OwnerInfo.EnenmyTeamID,
+        _OwnerInfo.AttackUnitList = UnitManager.Instance.GetUnitList(_OwnerInfo.EnemyTeamID,
            unit =>
            {
                if (_OwnerInfo.CurrTile.GetDistance(unit.CurrTile) <= _OwnerInfo.Status.AttackRange * _OwnerInfo.Status.AttackRange)
@@ -52,12 +86,6 @@ public class CommonStateIdle : State
                return false;
            }
        );
-
-        if (attackList != null)
-        {
-            _OwnerInfo.AttackUnitList = attackList;
-            return true;
-        }
         return false;
     }
 }

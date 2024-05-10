@@ -18,3 +18,9 @@ public interface ISystem : IInitializeable
 {
 
 }
+
+public interface ITeamSetting
+{
+    void SetEnemyID();
+    void SetTeamID();
+}

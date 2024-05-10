@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class TileSystem : MonoSystem
 {
-    public GameObject _Tile;
-    public Color[] _TileColor;
+    [SerializeField] private GameObject _Tile;
+    [SerializeField] private Color[] _TileColor;
+    [SerializeField] private GameObject _TileGeneratePoint;
     
     private GameObject[,] _TileContainer;
 
@@ -29,7 +30,11 @@ public class TileSystem : MonoSystem
         _Height = _TileHeightNum;
         _Width = _TileWidthNum;
         #region TileGenerator
-
+        Vector3 tilePoint = new();
+        if(_TileGeneratePoint != null)
+        {
+            tilePoint = _TileGeneratePoint.transform.position;
+        }
         _TileContainer = new GameObject[_Height, _Width];
         int tileNum = 0;
         GameObject tile;
@@ -50,8 +55,8 @@ public class TileSystem : MonoSystem
 
                 tileComponent.Index = new(tile_WidthIndex, tile_HeightIndex);
 
-                tile.transform.localPosition = new Vector3(tile.transform.localPosition.x + (tile.transform.localScale.x * tile_WidthIndex),
-                    tile.transform.localPosition.y + (_Tile.transform.localScale.y * tile_HeightIndex));
+                tile.transform.localPosition = new Vector3(tile.transform.localPosition.x + (tile.transform.localScale.x * tile_WidthIndex) + tilePoint.x,
+                    tile.transform.localPosition.y + (_Tile.transform.localScale.y * tile_HeightIndex) + tilePoint.y);
 
                 _TileContainer[tile_HeightIndex, tile_WidthIndex] = tile;
 

@@ -140,7 +140,7 @@ MonoBehaviour:
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
   _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 1
+  _EnemyTeamID: 1
   _Status:
     _Name: 
     _UnitTear: 1
@@ -155,7 +155,7 @@ MonoBehaviour:
     _ManaCost: 5
     _LifeCost: 5
     _AttackRange: 2.5
-    _ChaseRange: 7.5
+    _ChaseRange: 6
     _SightRange: 0
   _AttackUnitList: []
 --- !u!114 &2678254068225503130

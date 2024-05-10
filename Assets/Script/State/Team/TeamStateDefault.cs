@@ -11,8 +11,7 @@ public class TeamStateDefault : State
 
     public override void Enter()
     {
-        _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Up];
-        IsStateFinish = true;
+        IsStateFinish = false;
     }
 
     public override void Exit()
@@ -21,6 +20,23 @@ public class TeamStateDefault : State
 
     public override void FixedLogic()
     {
+        if (IsStateFinish == true)
+            return;
+
+        if(_OwnerInfo.CurrTile != null)
+        {
+            _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Up];
+            if (_OwnerInfo.NextTile?.GetTakedUnit() != null)
+            {
+                _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Left];
+                if (_OwnerInfo.NextTile?.GetTakedUnit() != null)
+                {
+                    _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Right];
+                }
+            }
+            IsStateFinish = true;
+        }
+
     }
 
     public override bool Initialize()

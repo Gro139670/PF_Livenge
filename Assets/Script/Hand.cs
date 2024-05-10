@@ -23,7 +23,7 @@ public class Hand : MonoBehaviour
     {
         Reroll();
         var shop = GameManager.Instance.GetSystem<ShopSystem>();
-        GameManager.Instance.Player.Add_Mana(shop.BuyRerollCost);
+        GameManager.Instance.GetSystem<PlayerSystem>().Add_Mana(shop.BuyRerollCost);
     }
 
     public void Reroll()
@@ -31,12 +31,12 @@ public class Hand : MonoBehaviour
         var shop = GameManager.Instance.GetSystem<ShopSystem>();
 
 
-        if (GameManager.Instance.Player.Add_Mana(-shop.BuyRerollCost) == true)
+        if (GameManager.Instance.GetSystem<PlayerSystem>().Add_Mana(-shop.BuyRerollCost) == true)
         {
             int _HandCard;
-            Card.SetUnitNum(shop.UnitLegth - GameManager.Instance.Player.UnitTear);
+            Card.SetUnitNum(shop.UnitLegth - GameManager.Instance.GetSystem<PlayerSystem>().UnitTear);
 
-            _HandCard = 4 + GameManager.Instance.Player.Level;
+            _HandCard = 4 + GameManager.Instance.GetSystem<PlayerSystem>().Level;
 
             for (int hand = 0; hand < _HandCard; hand++)
             {

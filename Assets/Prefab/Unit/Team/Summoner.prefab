@@ -137,7 +137,7 @@ MonoBehaviour:
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
   _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 1
+  _EnemyTeamID: 1
   _Status:
     _Name: 
     _UnitTear: 4
@@ -154,6 +154,7 @@ MonoBehaviour:
     _AttackRange: 1
     _ChaseRange: 0
     _SightRange: 0
+  _AttackUnitList: []
 --- !u!114 &5166603682488878898
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,10 +19,13 @@ public class AllianceStateDead : AllianceState
 
     public override void Enter()
     {
+        _OwnerInfo.CurrTile.SetTakedUnit(null);
+        _Owner.SetActive(false);
     }
 
     public override void Exit()
     {
+
     }
 
     public override void FixedLogic()

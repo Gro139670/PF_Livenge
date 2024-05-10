@@ -24,8 +24,8 @@ public class ShopButton : MyButton
     {
         var shop = GameManager.Instance.GetSystem<ShopSystem>();
 
-        GameManager.Instance.Player.BuyEXP(1.0f, shop._BuyEXPCost);
-        if (GameManager.Instance.Player.IsLevelUp == true)
+        GameManager.Instance.GetSystem<PlayerSystem>().BuyEXP(1.0f, shop._BuyEXPCost);
+        if (GameManager.Instance.GetSystem<PlayerSystem>().IsLevelUp == true)
         {
             shop.Reroll = true;
         }

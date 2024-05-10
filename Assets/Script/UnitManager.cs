@@ -51,6 +51,7 @@ public class UnitManager : Singleton<UnitManager>
 
     public List<Unit> GetUnitList(int teamID, Func<Unit, bool> condition)
     {
+        // todo new로 생성 말고 리스트 레퍼런스를 받아서 쓰자.
         List<Unit> list = null;
         if (_Units[teamID] != null)
         {
@@ -66,7 +67,7 @@ public class UnitManager : Singleton<UnitManager>
         return list;
     }
 
-    public List<Unit> GetUnit(int teamID)
+    public List<Unit> GetAllUnit(int teamID)
     {
         return _Units[teamID];
     }
@@ -80,6 +81,7 @@ public class UnitManager : Singleton<UnitManager>
                 if (unit.gameObject.activeSelf == false)
                 {
                     item.Value.Remove(unit);
+                    GameObject.Destroy(unit.gameObject);
                     break;
                 }
             }

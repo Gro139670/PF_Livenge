@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour, IInitializeable
 {
-    public Unit()
-    {
-        
-    }
 
     public enum Direction
     {
@@ -41,7 +37,7 @@ public class Unit : MonoBehaviour, IInitializeable
     public Vector3 _Position;
 
     [SerializeField]    
-    protected int _EnemTeamID;
+    protected int _EnemyTeamID;
 
 
     [SerializeField]
@@ -59,15 +55,19 @@ public class Unit : MonoBehaviour, IInitializeable
         }
     }
 
-    public int EnenmyTeamID
+    public int EnemyTeamID
     {
-        get { return _EnemTeamID; }
+        get { return _EnemyTeamID; }
+        set { _EnemyTeamID = value; }
     }
 
-    [SerializeField] public Unit ChaseUnit
+    public Unit ChaseUnit
     { get; set; }
 
     public Unit IgnoreUnit
+    { get; set; }
+
+    public Unit AttackUnit
     { get; set; }
 
     public Stack<Direction> MovePath { get; set; }
@@ -108,11 +108,19 @@ public class Unit : MonoBehaviour, IInitializeable
 
     public bool Initialize()
     {
+        _Status.SpeedDebuff = 0;
         _Position = transform.localPosition;
         CurrTile = null;
         ChaseUnit = null;
-        LookDir = Direction.Down;
+        AttackUnit = null;
+
         MovePath = new();
         return true;
+    }
+
+    public void Attack(Unit target)
+    {
+        target.Status.Damaged(_Status.Damage);
+        //Debug.Log(gameObject.name + " Attack : " + target.gameObject.name);
     }
 }

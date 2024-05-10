@@ -18,8 +18,6 @@ public class GameManager : Singleton<GameManager>
     #endregion
     #region Property
 
-    public Player Player { get; set; }
-
     #endregion
 
 

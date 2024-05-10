@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class CommonStateMove : State
+
+public class CommonStateMove : UseSpeedState
 {
     private bool _IsMove = false;
     private float _MoveTime = 0;
@@ -24,7 +25,6 @@ public class CommonStateMove : State
     public override void Exit()
     {
         _OwnerInfo.NextTile = null;
-        _IsMove = false;
     }
 
     public override void FixedLogic()
@@ -33,17 +33,13 @@ public class CommonStateMove : State
             return;
 
 
+        IsStateFinish = SetTime(ref _MoveTime, _OwnerInfo.Status.MoveSpeed);
 
-
-        _MoveTime += Time.deltaTime;
+        // debug
+        _MoveTime = _OwnerInfo.Status.MoveSpeed;
 
 
         _Owner.transform.localPosition = Vector3.Lerp(_PrevPosition, _OwnerInfo._Position, _MoveTime / _OwnerInfo.Status.MoveSpeed);
-        if(_MoveTime >= _OwnerInfo.Status.MoveSpeed)
-        {
-            IsStateFinish = true;
-            _MoveTime = _OwnerInfo.Status.MoveSpeed;
-        }
     }
 
     public override bool Initialize()

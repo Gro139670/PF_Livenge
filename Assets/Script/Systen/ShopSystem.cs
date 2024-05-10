@@ -59,10 +59,10 @@ public class ShopSystem : MonoSystem
     }
 
 
-    public bool BuyUnit(int unitNum)
+    public bool BuyUnit(int unitNum)    
     {
         var unit = _TeamUnits[unitNum];
-        if (GameManager.Instance.Player.Add_Mana(-unit.GetComponent<Unit>().Status.ManaCost) == true)
+        if (GameManager.Instance.GetSystem<PlayerSystem>().Add_Mana(-unit.GetComponent<Unit>().Status.ManaCost) == true)
         {
 
 

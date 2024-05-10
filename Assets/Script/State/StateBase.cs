@@ -110,31 +110,19 @@ public class CommonStateDefault : State
     }
 }
 
-public class CommonStateAttack : State
+public abstract class UseSpeedState : State
 {
-    public override string CheckTransition()
+    protected bool SetTime(ref float time, float speed)
     {
-        return "Idle";
+        bool result = false;
+        time += Time.deltaTime;
+        if (time >= speed)
+        {
+            result = true;
+            time = speed;
+        }
+        return result;
     }
 
-    public override void Enter()
-    {
-    }
-
-    public override void Exit()
-    {
-    }
-
-    public override void FixedLogic()
-    {
-    }
-
-    public override bool Initialize()
-    {
-        return true;
-    }
-
-    public override void Logic()
-    {
-    }
 }
+

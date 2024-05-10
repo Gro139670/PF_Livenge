@@ -26,9 +26,6 @@ public abstract class Singleton<T> : ISingleton<T> where T : Singleton<T>, new()
 
 public abstract class MonoSingleton<T> : MonoBehaviour, ISingleton<T> where T : MonoSingleton<T>
 {
-    protected MonoSingleton()
-    {
-    }
     static public T _Instance = null;
 
     public static T Instance

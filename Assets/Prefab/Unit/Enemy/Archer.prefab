@@ -128,7 +128,7 @@ MonoBehaviour:
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
   _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 0
+  _EnemyTeamID: 0
   _Status:
     _Name: 
     _UnitTear: 1
@@ -142,8 +142,8 @@ MonoBehaviour:
     _SearchSpeed: 8
     _ManaCost: 0
     _LifeCost: 0
-    _AttackRange: 1
-    _ChaseRange: 1
+    _AttackRange: 2.5
+    _ChaseRange: 6
     _SightRange: 1
   _AttackUnitList: []
 --- !u!114 &5668508067820449250

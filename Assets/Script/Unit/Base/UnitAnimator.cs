@@ -6,13 +6,12 @@ using UnityEngine;
 public class UnitAnimator : UnitHelper
 {
     [SerializeField] private Sprite[] _Front, _Behind,_Left, _Right, _ETC;
-    private Sprite[] _CurrSprite;
+    private Sprite[] _CurrSprite = null;
     private SpriteRenderer _SpriteRenderer;
 
 
     private void Start()
     {
-        _OwnerInfo = GetComponent<Unit>();
         _SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -44,6 +43,10 @@ public class UnitAnimator : UnitHelper
             case Unit.Direction.None:
                 setDir(_Behind);
                 break;
+        }
+        if(_CurrSprite == null)
+        {
+            setDir(_ETC);
         }
         _SpriteRenderer.sprite = _CurrSprite[0];
     }

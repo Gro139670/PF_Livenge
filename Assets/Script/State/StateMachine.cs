@@ -12,7 +12,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
     private void Start()
     {
         Initialize();
-        ChangeState("Idle");
+        ChangeState("Default");
     }
 
     private void FixedUpdate()
@@ -77,7 +77,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
         T state = new T();
         state.Initialize();
         state.Owner = gameObject;
-
+        state.IsStateFinish = true;
         if (_AllianceStates.ContainsKey(typeof(AllianceStateDead).Name) == false)
         {
             var alliance =  AddAlliancetState<AllianceStateDead>();
@@ -99,6 +99,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
 
         alliance.Initialize();
         alliance.Owner = gameObject;
+        alliance.IsStateFinish = true;
 
         _AllianceStates.Add(name, alliance);
         return alliance;
@@ -121,6 +122,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
             }
             if(result == false)
             {
+                // todo : 찾는 상태가 없다면 기본 상태중에서 맞는것을 찾아서 추가한다.
                 return result;
             }
         }
@@ -128,7 +130,6 @@ public abstract class StateMachine : UnitHelper, IInitializeable
         {
             _CurrState = _States[name];
         }
-
         _CurrState.Enter();
         return result;
     }

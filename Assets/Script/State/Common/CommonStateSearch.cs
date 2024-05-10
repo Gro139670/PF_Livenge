@@ -6,7 +6,7 @@ using UnityEngine;
 public class CommonStateSearch : State
 {
     private Unit.Direction _Start;
-    private int _SearchCount = 0;
+    private float _SearchCount = 0;
     private bool _IsSearched = true;
     private bool _IsSearchFailed = false;
     public override string CheckTransition()
@@ -65,7 +65,7 @@ public class CommonStateSearch : State
 
 
 
-            var list = UnitManager.Instance.GetUnitList(_OwnerInfo.EnenmyTeamID, unit =>
+            var list = UnitManager.Instance.GetUnitList(_OwnerInfo.EnemyTeamID, unit =>
             {
                 if (_OwnerInfo.CurrTile.GetDistance(unit.CurrTile) <= _OwnerInfo.Status.ChaseRange * _OwnerInfo.Status.ChaseRange)
                 {

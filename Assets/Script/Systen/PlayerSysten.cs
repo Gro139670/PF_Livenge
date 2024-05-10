@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerSystem : MonoSystem
 {
     int _HP;
     int _Mana;
-    public int _MaxHP = 10000;
-    public int _MaxMana = 10000;
+    [SerializeField] int _MaxHP = 10000;
+    [SerializeField] int _MaxMana = 10000;
 
     private float _EXP = 0;
     private float _NextEXP = 10;
     // 경험치 배율
-    public float _EXPScop = 1;
+    [SerializeField] private float _EXPScop = 1.5f;
 
-    public int _Level = 0;
-    public int _MaxLevel = 6;
+    [SerializeField] int _Level = 0;
+    [SerializeField] int _MaxLevel = 6;
     private bool _IsLevelUp = false;
 
     public int Level { get { return _Level; } }
@@ -37,8 +37,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Init();
-        GameManager.Instance.Player = this;
+        Initialize();
+        GameManager.Instance.RegistSystem(this);
     }
 
     public void RoundClear(float exp)
@@ -89,8 +89,9 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    public void Init()
+    public override bool Initialize()
     {
         _HP = _MaxHP; _Mana = _MaxMana;
+        return true;
     }
 }

@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
-public class TeamUnit : MonoBehaviour
+namespace Team
 {
-    // Start is called before the first frame update
-    void Start()
+    public class TeamUnit : TeamHelper
     {
-        
-    }
+        public override void SetEnemyID()
+        {
+            _OwnerInfo.EnemyTeamID = GetTeamID("Enemy");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void SetTeamID()
+        {
+            _OwnerInfo.EnemyTeamID = GetTeamID("Our");
+        }
+
+        private new void Start()
+        {
+            base.Start();
+            _OwnerInfo.LookDir = Unit.Direction.Up;
+        }
     }
 }
