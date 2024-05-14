@@ -16,7 +16,7 @@ public class CommonStateAttack : StateAttack
     {
         if(_OwnerInfo.AttackUnit != null)
         {
-            _OwnerInfo.Attack(_OwnerInfo.AttackUnit);
+            _OwnerInfo.AttackEnemy(_OwnerInfo.AttackUnit);
         }
     }
 

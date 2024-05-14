@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6904643812307908175
+--- !u!1 &6245946458907286207
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4738749604476119912}
-  - component: {fileID: 6484663049758481125}
-  - component: {fileID: 5544895791953688751}
-  - component: {fileID: 8008344341814736360}
-  - component: {fileID: 5187931427801650745}
-  - component: {fileID: 2678254068225503130}
+  - component: {fileID: 5242010100580960152}
+  - component: {fileID: 5801218436374050325}
+  - component: {fileID: 5012324525602509919}
+  - component: {fileID: 5173633421936698779}
+  - component: {fileID: 425868279296298380}
+  - component: {fileID: 1509782667457376430}
   m_Layer: 0
-  m_Name: Archer
+  m_Name: Reaper
   m_TagString: Team
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4738749604476119912
+--- !u!4 &5242010100580960152
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6904643812307908175}
+  m_GameObject: {fileID: 6245946458907286207}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0.1, y: 0.5, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6484663049758481125
+--- !u!212 &5801218436374050325
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6904643812307908175}
+  m_GameObject: {fileID: 6245946458907286207}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1782324283, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
+  m_Sprite: {fileID: -439141209, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,50 +88,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5544895791953688751
+--- !u!114 &5012324525602509919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6904643812307908175}
+  m_GameObject: {fileID: 6245946458907286207}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4f536a855c4fc74089a072a4ab272f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Front:
-  - {fileID: 1782324283, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
-  - {fileID: 2039747724, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
+  - {fileID: -439141209, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
+  - {fileID: 1567743111, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
   _Behind:
-  - {fileID: 1413311311, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
-  - {fileID: -2049622176, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
+  - {fileID: 1229517341, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
+  - {fileID: 1054510774, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
   _Left:
-  - {fileID: -393303866, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
-  - {fileID: -272969705, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
+  - {fileID: -920199158, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
+  - {fileID: -416930119, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
   _Right:
-  - {fileID: -403345511, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
-  - {fileID: -1425510065, guid: 0b488995d23daa341a79f15a2ac69032, type: 3}
+  - {fileID: 42837919, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
+  - {fileID: -2039097809, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
   _ETC: []
---- !u!114 &8008344341814736360
+--- !u!114 &5173633421936698779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6904643812307908175}
+  m_GameObject: {fileID: 6245946458907286207}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a829949348e660143a9b83cb4c1d242d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5187931427801650745
+--- !u!114 &425868279296298380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6904643812307908175}
+  m_GameObject: {fileID: 6245946458907286207}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
@@ -139,34 +139,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemyTeamID: 1
+  _AttackUnitList: []
+  _AttackUnit: {fileID: 0}
+  _LookDir: 0
+  _ChaseUnit: {fileID: 0}
+  _SummonUnit:
+  - {fileID: 5929995386770506273, guid: d1493f3b080e7754687273b2ab9dc8a3, type: 3}
+  _State: 0
   _Status:
-    _Name: 
-    _UnitTear: 1
+    _Name: Reaper
+    _UnitTear: 3
     _TeamID: 0
-    _HP: 96
-    _Damage: 48
-    _Defense: 2.4
+    _HP: 60
+    _Damage: 120
+    _Defense: 3
     _Size: 2
-    _AttackSpeed: 5.2
-    _MoveSpeed: 195
+    _AttackSpeed: 3
+    _MoveSpeed: 210
     _SearchSpeed: 8
-    _ManaCost: 5
-    _LifeCost: 5
+    _ManaCost: 25
+    _LifeCost: 20
     _AttackRange: 2.5
     _ChaseRange: 6
     _SightRange: 0
-  _AttackUnitList: []
---- !u!114 &2678254068225503130
+--- !u!114 &1509782667457376430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6904643812307908175}
+  m_GameObject: {fileID: 6245946458907286207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73ecd24a6df09af4c9719175d3d90ada, type: 3}
+  m_Script: {fileID: 11500000, guid: 4642417d6169bbd45b9eba774d34a7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public enum state
@@ -12,7 +9,7 @@ public enum state
     Move,
     Default
 }
-public class Unit : MonoBehaviour, IInitializeable
+public class Unit : MonoBehaviour
 {
     public enum Direction : int
     {
@@ -28,20 +25,16 @@ public class Unit : MonoBehaviour, IInitializeable
     [SerializeField] private Unit _AttackUnit = null;
     [SerializeField] private Direction _LookDir;
     [SerializeField] private Unit _ChaseUnit;
+    [SerializeField] private GameObject[] _SummonUnit = null;
 
 
     #region Debug
-
-
-    [SerializeField] private Direction _NextLookDir;
-    [SerializeField] private Direction _PathDir;
-
-    [SerializeField] private int _NextLookDirNum;
     [SerializeField] public state _State = 0;
 
     #endregion
 
-
+    public GameObject[] SummonUnit
+    { get { return _SummonUnit; } } 
 
 
     public Tile CurrTile
@@ -131,53 +124,60 @@ public class Unit : MonoBehaviour, IInitializeable
 
     public void SetLookDirection(Tile tile)
     {
+        if(tile == null)
+        {
+            return;
+        }
+
         for (int index = 0; index < _CurrTile.AdjacentTiles.Length; index++)
         {
             if (_CurrTile.AdjacentTiles[index] == tile)
             {
                 if(index <= 3)
                 {
-                    _NextLookDir = Unit.Direction.Down;
+                    LookDir = Unit.Direction.Down;
 
                 }
                 else if(index >= 6)
                 {
-                    _NextLookDir = Unit.Direction.Up;
+                    LookDir = Unit.Direction.Up;
                 }
                 else
                 {
-                    _NextLookDir = (Unit.Direction)index;
+                    LookDir = (Unit.Direction)index;
                 }
-                _NextLookDirNum = index;
-                LookDir = _NextLookDir;
                 break;
             }
         }
     }
-
     void Start()
-    {
-        Initialize();
-    }
-
-    public bool Initialize()
     {
         _AttackUnitList = new List<Unit>();
         _Status.Initialize();
         _Status.SpeedDebuff = 0;
         Position = transform.localPosition;
-        CurrTile = null;
-        ChaseUnit = null;
-        AttackUnit = null;
+        //CurrTile = null;
+        //ChaseUnit = null;
+        //AttackUnit = null;
 
         MovePath = new();
-        return true;
     }
 
-    public float Attack(Unit target)
+
+    public float AttackEnemy(Unit target)
     {
-        return target.Status.Damaged(_Status.Damage);
+        if (target == null)
+            return 0;
+        float damage = 0;
+
+        if(target.Status.TeamID == _EnemyTeamID)
+        {
+            damage = target.Status.Damaged(_Status.Damage);
+        }
+        return damage;
     }
 
 
 }
+
+

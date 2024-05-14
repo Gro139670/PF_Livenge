@@ -17,8 +17,11 @@ public class Card : MonoBehaviour
     // ÃÑ À¯´Ö ¼ö
     private static int _MaxUnitNum = 0;
     private int _UnitNum = 0;
-
     #endregion
+    #region debug
+    public int _DebugUnitNum = 4;
+    #endregion
+
     #region property
     public static void SetUnitNum (int num)
     {
@@ -37,10 +40,10 @@ public class Card : MonoBehaviour
         _Image.sprite = _CardImage[_UnitNum];
     }
 
-    public void BuyUnit()
+    public void BuyUnit()   
     {
         // debug
-        _UnitNum = 3;
+        _UnitNum = _DebugUnitNum;
 
         if (GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(_UnitNum) == false)
         {

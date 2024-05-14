@@ -136,25 +136,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemyTeamID: 1
+  _AttackUnitList: []
+  _AttackUnit: {fileID: 0}
+  _LookDir: 0
+  _ChaseUnit: {fileID: 0}
+  _SummonUnit:
+  - {fileID: 3081465376132618191, guid: 96a67f537146a8c45a9e0518f7a69b14, type: 3}
+  _State: 0
   _Status:
-    _Name: 
+    _Name: Summoner
     _UnitTear: 4
     _TeamID: 0
     _HP: 50
     _Damage: 0
     _Defense: 2
     _Size: 2
-    _AttackSpeed: 0.33
-    _MoveSpeed: 0
+    _AttackSpeed: 8
+    _MoveSpeed: 100
     _SearchSpeed: 0
     _ManaCost: 25
     _LifeCost: 25
     _AttackRange: 1
     _ChaseRange: 0
     _SightRange: 0
-  _AttackUnitList: []
 --- !u!114 &5166603682488878898
 MonoBehaviour:
   m_ObjectHideFlags: 0

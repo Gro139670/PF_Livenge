@@ -126,12 +126,12 @@ public class TileSystem : MonoSystem
 
 
 
-    public bool SummonUnit(int width, int height, GameObject unit)
+    public GameObject SummonUnit(int width, int height, GameObject unit)
     {
         // 예외처리
         if( 0 > width || width > Width || 0 > height ||height > Height )
         {
-            return false;
+            return null;
         }
         return _TileContainer[height, width].GetComponent<Tile>().SummonUnit(unit);
     }

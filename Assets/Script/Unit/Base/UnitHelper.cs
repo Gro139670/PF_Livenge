@@ -44,7 +44,8 @@ public class UnitStatus : IInitializeable
     #region Property
     public float Damage
     {
-        get {return 0; return _Damage; }
+        get {return _Damage; }
+        set { _Damage = value; }
     }
 
     public int TeamID
@@ -76,14 +77,13 @@ public class UnitStatus : IInitializeable
     { get { return _AttackSpeed * SpeedDebuff; } }
 
     public float MoveSpeed
-    { get { return 200/(_MoveSpeed * SpeedDebuff * 10); } }
+    { get { return 200/(_MoveSpeed * SpeedDebuff); } }
 
     public float SearchSpeed
     {
         get
         {
             if (_SearchSpeed == 0) _SearchSpeed = 1;
-            return 1;
             return 100 / (_SearchSpeed * SpeedDebuff);
         }
         set { _SearchSpeed = value; }

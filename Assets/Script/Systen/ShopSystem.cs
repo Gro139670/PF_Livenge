@@ -65,8 +65,8 @@ public class ShopSystem : MonoSystem
         if (GameManager.Instance.GetSystem<PlayerSystem>().Add_Mana(-unit.GetComponent<Unit>().Status.ManaCost) == true)
         {
 
-
             for (int height = 4; height >= 0; height--)
+            //for (int height = 0; height < 4; height++)
             {
                 for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
                 {

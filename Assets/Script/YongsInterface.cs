@@ -24,3 +24,8 @@ public interface ITeamSetting
     void SetEnemyID();
     void SetTeamID();
 }
+
+public interface ISubUnit
+{
+    void SetOwner();
+}

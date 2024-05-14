@@ -12,9 +12,12 @@ public abstract class StateMachine : UnitHelper, IInitializeable
     private void Start()
     {
         Initialize();
-        if(ChangeState("Default") == false)
+        if (_CurrState == null)
         {
-            ChangeState("Idle");
+            if (ChangeState("Default") == false)
+            {
+                ChangeState("Idle");
+            }
         }
     }
 
@@ -78,9 +81,9 @@ public abstract class StateMachine : UnitHelper, IInitializeable
             return (T)_States[name];
         }
         T state = new T();
-        state.Initialize();
         state.Owner = gameObject;
         state.IsStateFinish = true;
+        state.Initialize();
         if (_AllianceStates.ContainsKey(typeof(AllianceStateDead).Name) == false)
         {
             var alliance =  AddAlliancetState<AllianceStateDead>();
@@ -88,6 +91,13 @@ public abstract class StateMachine : UnitHelper, IInitializeable
         _AllianceStates[typeof(AllianceStateDead).Name].AddTransition(name);
         _States.Add(name, state);
         return state;
+    }
+
+    public T GetState<T>() where T : IState, new()
+    {
+        string name = typeof(T).Name;
+        
+        return (T)_States[name];
     }
 
     public T AddAlliancetState<T>() where T : IAllianceState, new()
@@ -100,15 +110,16 @@ public abstract class StateMachine : UnitHelper, IInitializeable
 
         T alliance = new T();
 
-        alliance.Initialize();
         alliance.Owner = gameObject;
         alliance.IsStateFinish = true;
 
+        alliance.Initialize();
         _AllianceStates.Add(name, alliance);
+        _States.Add(name, alliance);
         return alliance;
     }
 
-    private bool ChangeState(string name)
+    protected bool ChangeState(string name)
     {
         bool result = false;
         _CurrState?.Exit();
@@ -137,10 +148,18 @@ public abstract class StateMachine : UnitHelper, IInitializeable
         return result;
     }
 
-    private bool ChangeState(IState state)
+    protected bool ChangeState(IState state)
     {
         _CurrState?.Exit();
         _CurrState = state;
+        _CurrState.Enter();
+        return true;
+    }
+
+    protected bool ChangeState<T>() where T : class, IState
+    {
+        _CurrState?.Exit();
+        _CurrState = _States[typeof(T).Name];
         _CurrState.Enter();
         return true;
     }

@@ -115,6 +115,8 @@ public abstract class StateMove : State
     protected bool _IsMove = false;
     protected float _MoveTime = 0;
     protected Vector3 _PrevPosition;
+    protected bool _IsIgnoreUnit = false;
+    protected bool _IsIgnoreTeamUnit = false;
 
     public override void Enter()
     {
@@ -135,30 +137,72 @@ public abstract class StateMove : State
         if (_IsMove == false)
             return;
 
-
         IsStateFinish = TimeManager.Instance.SetTime(ref _MoveTime, _OwnerInfo.Status.MoveSpeed);
 
 
         _Owner.transform.localPosition = Vector3.Lerp(_PrevPosition, _OwnerInfo.Position, _MoveTime / _OwnerInfo.Status.MoveSpeed);
     }
 
-    protected void IsMove()
+    protected virtual void IsMove()
     {
+        // todo 다형성을 이용해 소환수에서 함수를 오버라이딩 하자.
         if (_IsMove == true) return;
-        if (_OwnerInfo.NextTile.GetTakedUnit() == null)
+
+        _OwnerInfo.SetLookDirection(_OwnerInfo.NextTile);
+        if (_IsIgnoreUnit == true || _IsIgnoreTeamUnit == true)
         {
-            _OwnerInfo.SetLookDirection(_OwnerInfo.NextTile);
-            _OwnerInfo.NextTile.SetTakedUnit(_OwnerInfo);
+            if (_OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir]?.GetTakedUnit()?.Status.TeamID == _OwnerInfo.EnemyTeamID)
+            {
+                if(_IsIgnoreTeamUnit == true)
+                {
+                    IsStateFinish = true;
+                    _OwnerInfo.MovePath = null;
+                    _IsIgnoreTeamUnit = false;
+                    return;
+                }
+            }
+
+
+            if(_OwnerInfo.CurrTile.GetTakedUnit() == _OwnerInfo)
+            {
+                _OwnerInfo.CurrTile.SetTakedUnit(null);
+            }
+            if(_OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir] != null)
+            {
+                _OwnerInfo.CurrTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir];
+                if (_OwnerInfo.CurrTile.GetTakedUnit() == null && _IsIgnoreTeamUnit == true)
+                {
+                    _OwnerInfo.CurrTile.SetTakedUnit(_OwnerInfo);
+                }
+            }
+            else
+            {
+                IsStateFinish = true;
+                _OwnerInfo.MovePath = null;
+                _IsIgnoreTeamUnit = false;
+                return;
+            }
+
+
             _Owner.transform.SetParent(_OwnerInfo.CurrTile.gameObject.transform);
             _PrevPosition = _Owner.transform.localPosition;
             _IsMove = true;
-
         }
         else
         {
+            if (_OwnerInfo.NextTile?.GetTakedUnit() == null)
+            {
+                _OwnerInfo.NextTile.SetTakedUnit(_OwnerInfo);
+                _Owner.transform.SetParent(_OwnerInfo.CurrTile.gameObject.transform);
+                _PrevPosition = _Owner.transform.localPosition;
+                _IsMove = true;
 
-            IsStateFinish = true;
-            _OwnerInfo.MovePath = null;
+            }
+            else
+            {
+                IsStateFinish = true;
+                _OwnerInfo.MovePath = null;
+            }
         }
     }
 }
@@ -176,5 +220,59 @@ public abstract class StateAttack : State
     public override void FixedLogic()
     {
         IsStateFinish = TimeManager.Instance.SetTime(ref _AttackTime, _OwnerInfo.Status.AttackSpeed);
+    }
+}
+
+public abstract class ProjectileStateMove : StateMove
+{
+    public override void Enter()
+    {
+        base.Enter();
+        if (_OwnerInfo.LookDir == Unit.Direction.Up)
+        {
+            _Owner.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if (_OwnerInfo.LookDir == Unit.Direction.Left)
+        {
+            _Owner.transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+
+            if (_OwnerInfo.LookDir == Unit.Direction.Down)
+        {
+            _Owner.transform.rotation = Quaternion.Euler(0, 0, 180);
+        }
+
+
+        if (_OwnerInfo.LookDir == Unit.Direction.Right)
+        {
+            _Owner.transform.rotation = Quaternion.Euler(0, 0, 270);
+        }
+
+        _IsIgnoreUnit = true;
+    }
+
+    protected override void IsMove()
+    {
+        if (_IsMove == true)
+            return;
+        if (_OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir] != null)
+        {
+            _OwnerInfo.CurrTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir];
+            _Owner.transform.SetParent(_OwnerInfo.CurrTile.transform);
+            _PrevPosition = _Owner.transform.localPosition;
+            _IsMove = true;
+        }
+        else
+        {
+            _Owner.SetActive(false);
+        }
+    }
+
+    protected bool IsWidth(Unit.Direction dir)
+    {
+        if (dir == Unit.Direction.Left || dir == Unit.Direction.Right)
+            return false;
+        return false;
     }
 }

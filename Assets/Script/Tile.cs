@@ -12,21 +12,17 @@ public class QuadTree<T>
 
 public class Tile : MyButton
 {
+
     private Tile[] _AdjacentTiles = new Tile[9];
 
     [SerializeField] private Unit _TakedUnit = null;
-
-
     private SpriteRenderer _SpriteRenderer = null;
     public static GameObject[] _FarTile;
 
     [SerializeField]private float _Weight = 1.0f;
 
     // 현재 타일로부터 각 타일까지의 거리를 나타낸다.
-    private static float[] _NextTileCost = { 1, 1.414f, 1.414f,1, 1, 1, 1.414f, 1.414f };
-
-    private static int[,] _TilePriority = { { 0, 1 }, { -1, 1 }, { 1, 1 }, { -1, 0 }, { 1, 0 }, { 0, -1 }, { -1, -1 }, { 1, -1 } };
-
+    
     private bool _IsShowRange = false;
     private bool _IsShowRangeTogether = false;
     private bool _IsPrevShowState = false;
@@ -85,17 +81,6 @@ public class Tile : MyButton
 
     protected override void Update()
     {
-
-        if(_TakedUnit == null)
-        {
-           
-        }
-        else
-        {
-   
-
-            _TakedUnit.CurrTile = this;
-        }
         base.Update();
 
     }
@@ -304,17 +289,34 @@ public class Tile : MyButton
         _TakedUnit = null;
     }
 
-    public bool SummonUnit(GameObject gameObject)
+    public GameObject SummonUnit(GameObject gameObject)
     {
+        if (gameObject == null)
+        {
+            throw new System.Exception("GameObject is Null");
+            return null;
+        }
         if(_TakedUnit == null)
         {
             var unit = Instantiate(gameObject, transform);
             _TakedUnit = unit.GetComponent<Unit>();
             _TakedUnit.CurrTile = this;
             UnitManager.Instance.AddUnit(_TakedUnit.Status.TeamID, _TakedUnit);
-            return true;
+            return unit;
         }
 
-        return false;
+        return null;
+    }
+
+    public void SummonProjectile(GameObject gameObject, Unit.Direction direction)
+    {
+
+        var info = gameObject.GetComponent<Unit>();
+        gameObject.GetComponent<Unit>().CurrTile = this;
+
+        info.LookDir = direction;
+
+        gameObject.transform.parent = this.transform;
+        gameObject.SetActive(true);
     }
 }

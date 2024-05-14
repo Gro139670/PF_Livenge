@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
-using static UnityEngine.EventSystems.EventTrigger;
 
 
 /// <summary>
@@ -12,6 +11,14 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class StageSystem : MonoSystem
 {
+    public delegate void RoundEndEvent();
+    private event RoundEndEvent _RoundEnd;
+    public RoundEndEvent RoundEnd
+    { get { return _RoundEnd; } set { _RoundEnd = value; } }
+
+
+
+
 
     [SerializeField]
     private GameObject[] _EnemiesPrefab;
@@ -45,6 +52,11 @@ public class StageSystem : MonoSystem
     private void FixedUpdate()
     {
         UnitManager.Instance.Logic();
+
+        if(IsBattle == false)
+        {
+            _RoundEnd?.Invoke();
+        }
     }
 
 

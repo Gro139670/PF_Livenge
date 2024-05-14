@@ -12,11 +12,6 @@ public class CommonStateMove : StateMove
     {
         return "Idle";
     }
-
-   
-
-    
-
     public override void FixedLogic()
     {
         DoMove();
@@ -60,7 +55,6 @@ public class CommonStateMove : StateMove
                     _OwnerInfo.ChaseUnit = null;
                     _OwnerInfo.MovePath = null;
                     IsStateFinish = true;
-
                 }
             }
         }
