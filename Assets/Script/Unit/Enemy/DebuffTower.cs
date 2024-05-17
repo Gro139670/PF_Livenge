@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
@@ -8,39 +9,50 @@ namespace Enemy
         public override bool Initialize()
         {
             AddState<CommonStateIdle>();
-            AddState<CommonStateAttack>();
-            AddState<TowerStateSearch>();
+            AddState<DebuffTowerStateAttack>();
 
             return true;
         }
-    }
 
-    public class TowerStateSearch : State
-    {
-        public override string CheckTransition()
+        private class DebuffTowerStateAttack : StateAttack
         {
-            return "Idle";
-        }
+            HashSet<Unit> _DebuffUnit;
+            public override string CheckTransition()
+            {
+                return "CommonStateIdle";
+            }
 
-        public override void Enter()
-        {
-        }
+            public override void Exit()
+            {
+                foreach (Unit unit in _OwnerInfo.AttackUnitList)
+                {
+                    _DebuffUnit.Add(unit);
+                }
 
-        public override void Exit()
-        {
-        }
+                foreach (Unit unit in _DebuffUnit)
+                {
+                    unit.Status.SpeedDebuff = 20;
+                }
+            }
 
-        public override void FixedLogic()
-        {
-        }
+            public override bool Initialize()
+            {
+                _DebuffUnit = new HashSet<Unit>();
 
-        public override bool Initialize()
-        {
-            return true;
-        }
+                _OwnerInfo.AddDeadEvent += () => {
+                    foreach (Unit unit in _DebuffUnit)
+                    {
+                        unit.Status.SpeedDebuff = 0;
+                    }
+                };
 
-        public override void Logic()
-        {
+                return true;
+            }
+
+            public override void Logic()
+            {
+                
+            }
         }
     }
 }

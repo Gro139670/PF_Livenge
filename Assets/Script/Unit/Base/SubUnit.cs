@@ -15,5 +15,10 @@ public class SubUnit : Unit
         {
             gameObject.SetActive(false);
         }
+
+        if(GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

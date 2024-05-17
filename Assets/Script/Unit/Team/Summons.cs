@@ -26,13 +26,14 @@ namespace Team
                 base.Enter();
                 _OwnerInfo.LookDir = Unit.Direction.Up;
                 _IsIgnoreTeamUnit = true;
+                
 
             }
 
             public override void Exit()
             {
                 base.Exit();
-              
+
             }
 
             public override string CheckTransition()
@@ -41,17 +42,24 @@ namespace Team
                 {
                     return "SummonsStateForward";
                 }
-
+                _OwnerInfo.Status.SpeedDebuff = 0;
                 return "CommonStateIdle";
             }
 
             public override void FixedLogic()
             {
-                DoMove();
+                if (_IsMove == false)
+                    return;
+
+                IsStateFinish = TimeManager.Instance.SetTime(ref _MoveTime, _OwnerInfo.Status.MoveSpeed);
+
+
+                _Owner.transform.localPosition = Vector3.Lerp(_PrevPosition, _OwnerInfo.Position, _MoveTime / _OwnerInfo.Status.MoveSpeed);
             }
 
             public override bool Initialize()
             {
+                _OwnerInfo.Status.SpeedDebuff = -100;
                 _OwnerInfo.CurrTile.SetTakedUnit(null);
 
                 return true;

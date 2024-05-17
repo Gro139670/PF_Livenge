@@ -74,7 +74,7 @@ public class UnitStatus : IInitializeable
 
 
     public float AttackSpeed
-    { get { return _AttackSpeed * SpeedDebuff; } }
+    { get { return _AttackSpeed * (2 - SpeedDebuff); } }
 
     public float MoveSpeed
     { get { return 200/(_MoveSpeed * SpeedDebuff); } }

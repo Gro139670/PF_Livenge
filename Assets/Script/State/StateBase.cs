@@ -190,8 +190,16 @@ public abstract class StateMove : State
         }
         else
         {
+            if(_OwnerInfo.NextTile == null)
+            {
+                IsStateFinish = true;
+                _OwnerInfo.MovePath = null;
+                return;
+            }
+
             if (_OwnerInfo.NextTile?.GetTakedUnit() == null)
             {
+                _OwnerInfo.CurrTile.SetTakedUnit(null);
                 _OwnerInfo.NextTile.SetTakedUnit(_OwnerInfo);
                 _Owner.transform.SetParent(_OwnerInfo.CurrTile.gameObject.transform);
                 _PrevPosition = _Owner.transform.localPosition;
@@ -256,6 +264,7 @@ public abstract class ProjectileStateMove : StateMove
     {
         if (_IsMove == true)
             return;
+        
         if (_OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir] != null)
         {
             _OwnerInfo.CurrTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir];
@@ -265,6 +274,7 @@ public abstract class ProjectileStateMove : StateMove
         }
         else
         {
+            IsStateFinish = true;
             _Owner.SetActive(false);
         }
     }
@@ -274,5 +284,34 @@ public abstract class ProjectileStateMove : StateMove
         if (dir == Unit.Direction.Left || dir == Unit.Direction.Right)
             return false;
         return false;
+    }
+}
+
+public class TowerStateSearch : State
+{
+    public override string CheckTransition()
+    {
+        return "Idle";
+    }
+
+    public override void Enter()
+    {
+    }
+
+    public override void Exit()
+    {
+    }
+
+    public override void FixedLogic()
+    {
+    }
+
+    public override bool Initialize()
+    {
+        return true;
+    }
+
+    public override void Logic()
+    {
     }
 }

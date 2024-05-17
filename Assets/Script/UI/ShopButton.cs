@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class ShopButton : MyButton
+public class ShopButton : MonoBehaviour
 {
-    protected override void Update() 
+    protected void Update() 
     {
-        base.Update();
     }
 
     public void BattleStart()

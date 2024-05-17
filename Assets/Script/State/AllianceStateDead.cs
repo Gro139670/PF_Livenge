@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿
 public class AllianceStateDead : AllianceState
 {
+
+
     public override string CheckAlliance()
     {
         if (_OwnerInfo?.Status.IsDead == true)

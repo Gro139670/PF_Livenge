@@ -43,7 +43,7 @@ public class Card : MonoBehaviour
     public void BuyUnit()   
     {
         // debug
-        _UnitNum = _DebugUnitNum;
+        //_UnitNum = _DebugUnitNum;
 
         if (GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(_UnitNum) == false)
         {

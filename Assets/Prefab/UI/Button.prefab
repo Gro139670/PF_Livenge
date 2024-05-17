@@ -172,6 +172,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7999218209381679945}
     m_Modifications:
+    - target: {fileID: 383381274996136841, guid: bb05d6e1259be7147848b8a42dc12667, type: 3}
+      propertyPath: m_RaycastPadding.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 383381274996136841, guid: bb05d6e1259be7147848b8a42dc12667, type: 3}
+      propertyPath: m_RaycastPadding.z
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3001021786587621198, guid: bb05d6e1259be7147848b8a42dc12667, type: 3}
       propertyPath: m_Name
       value: BattleStart
@@ -266,7 +274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8503603545111084210, guid: bb05d6e1259be7147848b8a42dc12667, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -555
+      value: 555
       objectReference: {fileID: 0}
     - target: {fileID: 8503603545111084210, guid: bb05d6e1259be7147848b8a42dc12667, type: 3}
       propertyPath: m_AnchoredPosition.y

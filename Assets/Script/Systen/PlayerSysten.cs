@@ -81,10 +81,13 @@ public class PlayerSystem : MonoSystem
 
     public bool Add_Mana(int mana)
     {
-        _Mana += mana;
-        if (_Mana <= 0)
+        int result = 0;
+        result =_Mana + mana;
+        if (result <= 0)
             return false;
-        if (_Mana > _MaxMana) _Mana = _MaxMana;
+        if (result > _MaxMana) _Mana = _MaxMana;
+
+        _Mana = result;
         return true;
     }
 

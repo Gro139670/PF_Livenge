@@ -7,13 +7,10 @@ public class TileSystem : MonoSystem
     [SerializeField] private Color[] _TileColor;
     [SerializeField] private GameObject _TileGeneratePoint;
     
-    private GameObject[,] _TileContainer;
+    private Tile[] _TileContainer;
 
-    public int _TileWidthNum = 0;
-    public int _TileHeightNum = 0;
-
-    private int _Width = 0;
-    private int _Height = 0;
+    [SerializeField] private int _Width = 0;
+    [SerializeField] private int _Height = 0;
 
     public int Width
     {
@@ -24,24 +21,27 @@ public class TileSystem : MonoSystem
         get { return _Height - 1; } 
     }
 
+    public int GetTileNum(int widthIndex, int heightIndex)
+    {
+        return (heightIndex * _Width) + widthIndex;
+    }
+
     private void Awake()
     {
         GameManager.Instance.RegistSystem(this);
-        _Height = _TileHeightNum;
-        _Width = _TileWidthNum;
         #region TileGenerator
         Vector3 tilePoint = new();
         if(_TileGeneratePoint != null)
         {
             tilePoint = _TileGeneratePoint.transform.position;
         }
-        _TileContainer = new GameObject[_Height, _Width];
+        _TileContainer = new Tile[_Height * _Width];
         int tileNum = 0;
         GameObject tile;
-        for (int tile_HeightIndex = 0; tile_HeightIndex < _Height; tile_HeightIndex++)
+        for (int HeightIndex = 0; HeightIndex < _Height; HeightIndex++)
         {
             int startNum = tileNum;
-            for (int tile_WidthIndex = 0; tile_WidthIndex < _Width; tile_WidthIndex++)
+            for (int WidthIndex = 0; WidthIndex < _Width; WidthIndex++)
             {
 
 
@@ -53,15 +53,20 @@ public class TileSystem : MonoSystem
 
 
 
-                tileComponent.Index = new(tile_WidthIndex, tile_HeightIndex);
+                tileComponent.Index = new(WidthIndex, HeightIndex);
 
-                tile.transform.localPosition = new Vector3(tile.transform.localPosition.x + (tile.transform.localScale.x * tile_WidthIndex) + tilePoint.x,
-                    tile.transform.localPosition.y + (_Tile.transform.localScale.y * tile_HeightIndex) + tilePoint.y);
+                tile.transform.localPosition = new Vector3(tile.transform.localPosition.x + (tile.transform.localScale.x * WidthIndex) + tilePoint.x,
+                    tile.transform.localPosition.y + (_Tile.transform.localScale.y * HeightIndex) + tilePoint.y);
 
-                _TileContainer[tile_HeightIndex, tile_WidthIndex] = tile;
+                _TileContainer[GetTileNum(WidthIndex,HeightIndex)] = tileComponent;
 
                 // 타일 색을 지정한다.
-                tileComponent.BaseColor = _TileColor[(tile_WidthIndex + (tile_HeightIndex & 1)) % _TileColor.Length];
+                tileComponent.BaseColor = _TileColor[(WidthIndex + (HeightIndex & 1)) % _TileColor.Length];
+
+                if(HeightIndex < 5)
+                {
+                    tileComponent.IsPlayerTile = true;
+                }
             }
 
             
@@ -70,85 +75,88 @@ public class TileSystem : MonoSystem
 
 
 
-        Action<int, int, int, GameObject> SetTile = (width, height, line, tile) =>
+        Action<int, int, int, Tile> SetTile = (widthIndex, heightIndex, line, tile) =>
         {
             Tile tileComponent;
             // left
-            if (width - 1 >= 0)
+            if (widthIndex - 1 >= 0)
             {
-                tileComponent = _TileContainer[height, width - 1].GetComponent<Tile>();
-                tile.GetComponent<Tile>().SetAdjacentTile(tileComponent, (1 + (line * 3)));
+                tileComponent = _TileContainer[GetTileNum(widthIndex, heightIndex) - 1];
+                tile.SetAdjacentTile(tileComponent, (1 + (line * 3)));
             }
 
             // mid
-            tileComponent = _TileContainer[height, width].GetComponent<Tile>();
-            tile.GetComponent<Tile>().SetAdjacentTile(tileComponent, (0 + (line * 3)));
+            tileComponent = _TileContainer[GetTileNum(widthIndex, heightIndex)];
+            tile.SetAdjacentTile(tileComponent, (0 + (line * 3)));
 
             // right
-            if (width + 1 < _Width)
+            if (widthIndex + 1 < _Width)
             {
-                tileComponent = _TileContainer[height, width + 1].GetComponent<Tile>();
-                tile.GetComponent<Tile>().SetAdjacentTile(tileComponent, (2 + (line * 3)));
+                tileComponent = _TileContainer[GetTileNum(widthIndex, heightIndex) + 1] ;
+                tile.SetAdjacentTile(tileComponent, (2 + (line * 3)));
             }
         };
 
 
-        for (int tile_HeightIndex = 0; tile_HeightIndex < _Height; tile_HeightIndex++)
+        for (int HeightIndex = 0; HeightIndex < _Height; HeightIndex++)
         {
-            for (int tile_WidthIndex = 0; tile_WidthIndex < _Width; tile_WidthIndex++)
+            for (int WidthIndex = 0; WidthIndex < _Width; WidthIndex++)
             {
                 // top
-                if (tile_HeightIndex - 1 >= 0)
+                if (HeightIndex - 1 >= 0)
                 {
-                    SetTile(tile_WidthIndex, tile_HeightIndex - 1, 0, _TileContainer[tile_HeightIndex, tile_WidthIndex]);
+                    SetTile(WidthIndex, HeightIndex - 1, 0, _TileContainer[GetTileNum(WidthIndex, HeightIndex)]);
                 }
 
                 // mid
-                SetTile(tile_WidthIndex, tile_HeightIndex, 1, _TileContainer[tile_HeightIndex, tile_WidthIndex]);
+                SetTile(WidthIndex, HeightIndex, 1, _TileContainer[GetTileNum(WidthIndex, HeightIndex)]);
 
                 // bottom
-                if (tile_HeightIndex + 1 < _Height)
+                if (HeightIndex + 1 < _Height)
                 {
-                    SetTile(tile_WidthIndex, tile_HeightIndex + 1, 2, _TileContainer[tile_HeightIndex, tile_WidthIndex]);
+                    SetTile(WidthIndex, HeightIndex + 1, 2, _TileContainer[GetTileNum(WidthIndex, HeightIndex)]);
                 }
 
 
             }
         }
-        Tile._FarTile = new GameObject[4];
-        Tile._FarTile[0] = _TileContainer[1, 1];
-        Tile._FarTile[1] = _TileContainer[1, 1];
-        Tile._FarTile[2]= _TileContainer[1, 1];
-        Tile._FarTile[3] = _TileContainer[1, 1];
         
         #endregion
     }
 
 
 
-    public GameObject SummonUnit(int width, int height, GameObject unit)
+    public GameObject SummonUnit(int widthIndex, int heightIndex, GameObject unit, bool isBuy)
     {
         // 예외처리
-        if( 0 > width || width > Width || 0 > height ||height > Height )
+        if( 0 > widthIndex || widthIndex > Width || 0 > heightIndex ||heightIndex > Height )
         {
             return null;
         }
-        return _TileContainer[height, width].GetComponent<Tile>().SummonUnit(unit);
+        if(isBuy == true )
+        {
+            if(_TileContainer[GetTileNum(widthIndex, heightIndex)].IsPlayerTile == true)
+            {
+                return _TileContainer[GetTileNum(widthIndex, heightIndex)].SummonUnit(unit);
+            }
+        }
+
+        return _TileContainer[GetTileNum(widthIndex, heightIndex)].SummonUnit(unit);
     }
 
-    public bool SetUnit(int width, int height, GameObject unit)
+    public bool SetUnit(int widthIndex, int heightIndex, GameObject unit)
     {
         // 예외처리
-        if (0 > width || width > Width || 0 > height || height > Height || unit == null)
+        if (0 > widthIndex || widthIndex > Width || 0 > heightIndex || heightIndex > Height || unit == null)
         {
             // 오류 메세지 출력
             return false;
         }
 
         bool result = false;
-        if (_TileContainer[height, width].GetComponent<Tile>().GetTakedUnit() == null)
+        if (_TileContainer[GetTileNum(widthIndex, heightIndex)].GetTakedUnit() == null)
         {
-            _TileContainer[height, width].GetComponent<Tile>().SetTakedUnit(unit.GetComponent<Unit>());
+            _TileContainer[GetTileNum(widthIndex, heightIndex)].SetTakedUnit(unit.GetComponent<Unit>());
             result = true;
         }
 
@@ -161,7 +169,7 @@ public class TileSystem : MonoSystem
     {
         foreach (var tile in _TileContainer)
         {
-            tile.GetComponent<Tile>().ClearTile();
+            tile.ClearTile();
         }
     }
 

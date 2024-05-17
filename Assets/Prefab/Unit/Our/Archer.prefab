@@ -143,9 +143,8 @@ MonoBehaviour:
   _AttackUnit: {fileID: 0}
   _LookDir: 0
   _ChaseUnit: {fileID: 0}
-  _NextLookDir: 0
-  _PathDir: 0
-  _NextLookDirNum: 0
+  _SummonUnit:
+  - {fileID: 6389864443358890061, guid: a0054a1ce45212949ad580a3ff4e5ee9, type: 3}
   _State: 0
   _Status:
     _Name: SkeletonArcher
@@ -153,9 +152,9 @@ MonoBehaviour:
     _TeamID: 0
     _HP: 96
     _Damage: 48
-    _Defense: 2.4
+    _Defense: 3
     _Size: 2
-    _AttackSpeed: 5.2
+    _AttackSpeed: 1
     _MoveSpeed: 195
     _SearchSpeed: 8
     _ManaCost: 5

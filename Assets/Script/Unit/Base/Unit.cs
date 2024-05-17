@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ public enum state
 }
 public class Unit : MonoBehaviour
 {
+    private event Action _DeadEvent;
+    public Action AddDeadEvent { get { return _DeadEvent; } set { _DeadEvent = value; } }
+
+
     public enum Direction : int
     {
         Up = 6,
@@ -55,7 +60,7 @@ public class Unit : MonoBehaviour
     }
 
     public Vector3 Position
-    { get; set; }
+    { get; private set; }
 
     protected int _EnemyTeamID;
 
@@ -163,6 +168,11 @@ public class Unit : MonoBehaviour
         MovePath = new();
     }
 
+    private void OnDestroy()
+    {
+        _DeadEvent?.Invoke();
+    }
+
 
     public float AttackEnemy(Unit target)
     {
@@ -175,6 +185,19 @@ public class Unit : MonoBehaviour
             damage = target.Status.Damaged(_Status.Damage);
         }
         return damage;
+    }
+
+    public float AttackEnemy(Unit target, float damage)
+    {
+        if (target == null)
+            return 0;
+        float result = 0;
+
+        if (target.Status.TeamID == _EnemyTeamID)
+        {
+            result = target.Status.Damaged(damage);
+        }
+        return result;
     }
 
 

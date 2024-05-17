@@ -2,43 +2,101 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class QuadTree<T>
+
+public class Tile : MouseHover
 {
-    public T _Data;
-    public QuadTree<T>[] _Children = new QuadTree<T>[4];
-    public QuadTree<T> _Parent;
-}
-
-public class Tile : MyButton
-{
-
     private Tile[] _AdjacentTiles = new Tile[9];
+
+    private static readonly Color _HoverColor = Color.cyan;
 
     [SerializeField] private Unit _TakedUnit = null;
     private SpriteRenderer _SpriteRenderer = null;
-    public static GameObject[] _FarTile;
 
-    [SerializeField]private float _Weight = 1.0f;
-
-    // 현재 타일로부터 각 타일까지의 거리를 나타낸다.
+    [SerializeField]private readonly float _Weight = 1.0f;
     
-    private bool _IsShowRange = false;
     private bool _IsShowRangeTogether = false;
-    private bool _IsPrevShowState = false;
+
+
 
     #region Property
+    public Color BaseColor { get; set; }
+    public Tile[] AdjacentTiles { get { return _AdjacentTiles; } }
+    public Tuple<int,int> Index { get; set; }
 
-    public float Weight
+
+    public float Weight {  get { return _Weight; } }
+    public bool IsShowRangeTogether { get; set; }
+    public bool IsPlayerTile {  get; set; }
+
+
+
+    #endregion
+
+
+    protected override void Awake()
     {
-        get { return _Weight; }
+        base.Awake();
+        _SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    public Color BaseColor
+    protected override void Update()
     {
-        get; set;
-    }
+        base.Update();
+        if (BaseColor != null)
+        {
+            _SpriteRenderer.color = BaseColor;
+        }
+        if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
+        {
+            if (_IsMouseHover == true)
+            {
+                Mouse.Instance.HoveredTile = this;
+                _SpriteRenderer.color = _HoverColor;
+            }
 
+            if (_IsShowRangeTogether == true)
+            {
+                _SpriteRenderer.color = new Color(1, 0, 0.5f);
+            }
+        }
+
+    }
+    private void LateUpdate()
+    {
+
+
+        //if (_TakedUnit != null)
+        //{
+
+        //    if (_IsMouseHover == true)
+        //    {
+        //        if(Input.GetMouseButtonDown(0))
+        //        {
+        //            Mouse.Instance.SelectedTile = this;
+        //            Mouse.Instance.SelectedUnit = _TakedUnit;
+
+        //        }
+        //        _IsShowRange = true;
+        //    }
+        //    else
+        //    {
+        //        _IsShowRange = false;
+        //    }
+
+
+        //    if (_IsPrevShowState != _IsShowRange)
+        //    {
+        //        Unit info = _TakedUnit.GetComponent<Unit>();
+        //        ShowRange(0, _IsShowRange, info.Status.AttackRange);
+        //        _IsPrevShowState = _IsShowRange;
+        //    }
+
+        //}
+       
+        
+    }
     public Unit GetTakedUnit()
     {
         return _TakedUnit;
@@ -55,70 +113,17 @@ public class Tile : MyButton
         Unit unit = value.GetComponent<Unit>();
         if (unit != null)
         {
-            unit.CurrTile.SetTakedUnit(null);
+            //unit.CurrTile.SetTakedUnit(null);
             _TakedUnit = value;
+            _TakedUnit.gameObject.transform.SetParent(transform);
             unit.CurrTile = this;
         }
     }
 
-
-    public Tile[] AdjacentTiles { get { return _AdjacentTiles; } }
-
-    public bool IsShowRangeTogether { set { _IsShowRangeTogether = value; } }
-
-    public Tuple<int,int> Index
+    public void SetUnit(Unit unit)
     {
-        get;set;
-    }
-
-    #endregion
-
-
-    protected override void Awake()
-    {
-        _SpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-    }
-    private void LateUpdate()
-    {
-        if(_TakedUnit != null)
-        {
-         
-            if (IsMouseHover == true)
-            {
-                _IsShowRange = true;
-            }
-            else
-            {
-                _IsShowRange = false;
-            }
-
-
-            if (_IsPrevShowState != _IsShowRange)
-            {
-                Unit info = _TakedUnit.GetComponent<Unit>();
-                //ShowRange(0, _IsShowRange, info.AttackRange);
-                _IsPrevShowState = _IsShowRange;
-            }
-            
-        }
-
-        if (_IsShowRangeTogether == true)
-        {
-            _SpriteRenderer.color = new Color(1, 0, 0.5f);
-        }
-        else
-        {
-            if(BaseColor != null)
-            {
-                _SpriteRenderer.color = BaseColor;
-            }
-        }
+        unit.CurrTile?.SetTakedUnit(null);
+        unit.CurrTile = this;
     }
 
     public void SetAdjacentTile(Tile tile, int index)
@@ -126,18 +131,18 @@ public class Tile : MyButton
         _AdjacentTiles[index] = tile;
     }
 
-    //public void ShowRange(float cost, bool isShow, float distance)
-    //{
-    //    for (int tileIndex = 0; tileIndex < _AdjacentTiles.Length; tileIndex++)
-    //    {
+    public void ShowRange(float cost, bool isShow, float distance)
+    {
+        for (int tileIndex = 0; tileIndex < _AdjacentTiles.Length; tileIndex++)
+        {
 
-    //        if (cost + 1 <= distance && _AdjacentTiles[tileIndex] != null)
-    //        {
-    //            _AdjacentTiles[tileIndex].IsShowRangeTogether = isShow;
-    //            _AdjacentTiles[tileIndex].ShowRange(cost + 1, isShow, distance);
-    //        }
-    //    }
-    //}
+            if (cost + 1 <= distance && _AdjacentTiles[tileIndex] != null)
+            {
+                _AdjacentTiles[tileIndex].IsShowRangeTogether = isShow;
+                _AdjacentTiles[tileIndex].ShowRange(cost + 1, isShow, distance);
+            }
+        }
+    }
 
     public float GetDistance(Tile other)
     {
@@ -294,7 +299,6 @@ public class Tile : MyButton
         if (gameObject == null)
         {
             throw new System.Exception("GameObject is Null");
-            return null;
         }
         if(_TakedUnit == null)
         {

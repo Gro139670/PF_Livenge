@@ -83,20 +83,24 @@ public abstract class StateMachine : UnitHelper, IInitializeable
         T state = new T();
         state.Owner = gameObject;
         state.IsStateFinish = true;
-        state.Initialize();
+        
         if (_AllianceStates.ContainsKey(typeof(AllianceStateDead).Name) == false)
         {
             var alliance =  AddAlliancetState<AllianceStateDead>();
         }
         _AllianceStates[typeof(AllianceStateDead).Name].AddTransition(name);
         _States.Add(name, state);
+        state.Initialize();
         return state;
     }
 
-    public T GetState<T>() where T : IState, new()
+    public T GetState<T>() where T : class, IState, new()
     {
         string name = typeof(T).Name;
-        
+        if(_States.ContainsKey(name) == false)
+        {
+            return null;
+        }
         return (T)_States[name];
     }
 

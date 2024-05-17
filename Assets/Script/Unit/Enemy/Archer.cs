@@ -8,7 +8,7 @@ namespace Enemy
         public override bool Initialize()
         {
             AddState<CommonStateIdle>();
-            AddState<CommonStateAttack>();
+            AddState<ArcherStateAttack>();
             AddState<CommonStateSearch>();
             AddState<CommonStateMove>();
             AddState<EnemyStateDefault>();

@@ -24,8 +24,10 @@ public abstract class Singleton<T> : ISingleton<T> where T : Singleton<T>, new()
     public abstract bool Initialize();
 }
 
-public abstract class MonoSingleton<T> : MonoBehaviour, ISingleton<T> where T : MonoSingleton<T>
+public abstract class MonoSingleton<T> : MonoBehaviour, ISingleton<T> where T : MonoSingleton<T>, new()
 {
+    protected MonoSingleton() { }
+
     static public T _Instance = null;
 
     public static T Instance
@@ -45,8 +47,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour, ISingleton<T> where T : 
                 {
                     _Instance = obj.GetComponent<T>();
                 }
-
-                //GameManager.Instance.AddSceneChangeEvent = () => { _Instance = null; };
+                DontDestroyOnLoad(obj);
             }
             return _Instance;
         }

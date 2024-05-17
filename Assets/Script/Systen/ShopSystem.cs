@@ -65,17 +65,17 @@ public class ShopSystem : MonoSystem
         if (GameManager.Instance.GetSystem<PlayerSystem>().Add_Mana(-unit.GetComponent<Unit>().Status.ManaCost) == true)
         {
 
-            for (int height = 4; height >= 0; height--)
-            //for (int height = 0; height < 4; height++)
+            for (int height = 0; height < GameManager.Instance.GetSystem<TileSystem>().Height; height++)
             {
                 for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
                 {
-                    if (GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit) == true)
+                    if (GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit,true) == true)
                     {
                         return true;
                     }
                 }
             }
+            GameManager.Instance.GetSystem<PlayerSystem>().Add_Mana(unit.GetComponent<Unit>().Status.ManaCost);
             // 타일이 가득 찼다.
             // 오류 메세지 출력
             return false;

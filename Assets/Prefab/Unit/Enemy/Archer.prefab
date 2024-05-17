@@ -127,8 +127,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemyTeamID: 0
+  _AttackUnitList: []
+  _AttackUnit: {fileID: 0}
+  _LookDir: 0
+  _ChaseUnit: {fileID: 0}
+  _SummonUnit:
+  - {fileID: 6389864443358890061, guid: a0054a1ce45212949ad580a3ff4e5ee9, type: 3}
+  _State: 0
   _Status:
     _Name: 
     _UnitTear: 1
@@ -145,8 +150,6 @@ MonoBehaviour:
     _AttackRange: 2.5
     _ChaseRange: 6
     _SightRange: 1
-    _IsDead: 0
-  _AttackUnitList: []
 --- !u!114 &5668508067820449250
 MonoBehaviour:
   m_ObjectHideFlags: 0

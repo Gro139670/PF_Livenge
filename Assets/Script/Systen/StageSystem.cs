@@ -88,12 +88,25 @@ public class StageSystem : MonoSystem
         // 일단 적을 소환한다.
         // 나중에 기회가 되면 라운드마다 적 유닛을 배치하는 툴을 만들고 거기서 정보를 받아 유닛을 배치하고 싶다.
 
-        var enemy = _EnemiesPrefab[0];
-        GameManager.Instance.GetSystem<TileSystem>().SummonUnit(0, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[0]);
-        GameManager.Instance.GetSystem<TileSystem>().SummonUnit(2, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[1]);
-        GameManager.Instance.GetSystem<TileSystem>().SummonUnit(4, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[2]);
-        GameManager.Instance.GetSystem<TileSystem>().SummonUnit(6, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[3]);
-        GameManager.Instance.GetSystem<TileSystem>().SummonUnit(8, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[4]);
+        //var enemy = _EnemiesPrefab[0];
+        //GameManager.Instance.GetSystem<TileSystem>().SummonUnit(0, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[0]);
+        //GameManager.Instance.GetSystem<TileSystem>().SummonUnit(2, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[1]);
+        //GameManager.Instance.GetSystem<TileSystem>().SummonUnit(4, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[2]);
+        //GameManager.Instance.GetSystem<TileSystem>().SummonUnit(6, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[3]);
+        //GameManager.Instance.GetSystem<TileSystem>().SummonUnit(8, GameManager.Instance.GetSystem<TileSystem>().Height, _EnemiesPrefab[4]);
+
+        for (int y = 0; y < 5; y++)
+        {
+            for (int x = 0; x < GameManager.Instance.GetSystem<TileSystem>().Width; x++)
+            {
+                int num = UnityEngine.Random.Range(0,10);
+                if((num & 1) == 0)
+                {
+                    GameManager.Instance.GetSystem<TileSystem>().SummonUnit
+                        (x, GameManager.Instance.GetSystem<TileSystem>().Height - y, _EnemiesPrefab[num / 2],false);
+                }
+            }
+        }
     }
 
 

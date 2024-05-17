@@ -139,13 +139,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CurrTile: {fileID: 0}
   _NextTile: {fileID: 0}
+  _AttackUnitList: []
+  _AttackUnit: {fileID: 0}
+  _LookDir: 0
+  _ChaseUnit: {fileID: 0}
+  _SummonUnit: []
+  _State: 0
   _Status:
     _Name: 
     _UnitTear: 2
     _TeamID: 1
-    _HP: 100
-    _Damage: 80
-    _Defense: 3
+    _HP: 140
+    _Damage: 120
+    _Defense: 8
     _Size: 2
     _AttackSpeed: 3
     _MoveSpeed: 250
