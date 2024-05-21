@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class TeamStateDefault : State
+public class OurStateDefault : State
 {
     public override string CheckTransition()
     {
@@ -27,13 +28,9 @@ public class TeamStateDefault : State
         if(_OwnerInfo.CurrTile != null)
         {
             _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Up];
-            if (_OwnerInfo.NextTile?.GetTakedUnit() != null)
+            if (_OwnerInfo.NextTile == null)
             {
-                _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Left];
-                if (_OwnerInfo.NextTile?.GetTakedUnit() != null)
-                {
-                    _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Right];
-                }
+                _OwnerInfo.ChaseUnit = _OwnerInfo.SearchedUnit?.First();
             }
             IsStateFinish = true;
         }

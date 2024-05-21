@@ -143,6 +143,7 @@ MonoBehaviour:
   _SummonUnit:
   - {fileID: 3081465376132618191, guid: 96a67f537146a8c45a9e0518f7a69b14, type: 3}
   _State: 0
+  _SearchedUnit: []
   _Status:
     _Name: Summoner
     _UnitTear: 4
@@ -151,7 +152,7 @@ MonoBehaviour:
     _Damage: 0
     _Defense: 2
     _Size: 2
-    _AttackSpeed: 8
+    _AttackSpeed: 12
     _MoveSpeed: 100
     _SearchSpeed: 0
     _ManaCost: 25

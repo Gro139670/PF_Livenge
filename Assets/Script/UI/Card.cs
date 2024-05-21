@@ -1,26 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class Card : MonoBehaviour
+using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
+using Unity.VisualScripting;
+using static UnityEditor.PlayerSettings;
+public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     #region variable
-
+    private event Action UseCardEvent;
+    public Action AddUseCardEvent
+    {
+        set { UseCardEvent += value; }
+    }
 
     [SerializeField] Sprite[] _CardImage;
     [SerializeField] Sprite[] _CardExplain;
     Image _Image;
 
 
+    private Vector3 _DefaultPosition;
+    private Vector3 _InterectivePosition;
 
     // ÃÑ À¯´Ö ¼ö
     private static int _MaxUnitNum = 0;
     private int _UnitNum = 0;
+
+    private bool _IsMosueHover = false;
+    private bool _IsCanBuy = false;
+    private bool _IsSetPosition = false;
+
     #endregion
-    #region debug
-    public int _DebugUnitNum = 4;
-    #endregion
+
 
     #region property
     public static void SetUnitNum (int num)
@@ -32,6 +45,31 @@ public class Card : MonoBehaviour
     private void Awake()
     {
         _Image = GetComponent<Image>();
+       
+    }
+
+    void Update()
+    {
+        if(_IsMosueHover == false)
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                _IsCanBuy = false;
+                _IsSetPosition = false;
+            }
+        }
+    }
+
+    void LateUpdate()
+    {
+        if(_IsCanBuy == true)
+        {
+            transform.localPosition = _InterectivePosition;
+        }
+        else
+        {
+            transform.localPosition = _DefaultPosition;
+        }
     }
 
     public void SetUnitIndex()
@@ -42,8 +80,14 @@ public class Card : MonoBehaviour
 
     public void BuyUnit()   
     {
-        // debug
-        //_UnitNum = _DebugUnitNum;
+        //if (_IsCanBuy == false)
+        //{
+        //    if (_IsMosueHover == true)
+        //    {
+        //        _IsCanBuy = true;
+        //    }
+        //     return;
+        //}
 
         if (GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(_UnitNum) == false)
         {
@@ -51,8 +95,32 @@ public class Card : MonoBehaviour
         }
         else
         {
+            _IsCanBuy = false;
             gameObject.SetActive(false);
+            _IsSetPosition = false;
+            UseCardEvent?.Invoke();
+            transform.localPosition = Vector3.zero;
         }
     }
-    
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _IsMosueHover = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _IsMosueHover = false;
+    }
+
+    public void SetPosition(Vector3 pos)
+    {
+        _DefaultPosition = _InterectivePosition = pos;
+        _InterectivePosition.y += 100;
+        if (_IsSetPosition == false)
+        {
+            
+            _IsSetPosition = true;
+        }
+    }
 }

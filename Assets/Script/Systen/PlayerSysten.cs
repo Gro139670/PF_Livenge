@@ -18,6 +18,10 @@ public class PlayerSystem : MonoSystem
     [SerializeField] int _MaxLevel = 6;
     private bool _IsLevelUp = false;
 
+
+    public int HP { get { return _HP; } }
+    public int Mana { get { return _Mana; } }
+
     public int Level { get { return _Level; } }
     public int MaxLevel { get { return _MaxLevel; } }
 
@@ -30,7 +34,6 @@ public class PlayerSystem : MonoSystem
             bool result = _IsLevelUp;
             if (_IsLevelUp == true)
                 _IsLevelUp = false;
-
             return result; 
         } 
     }
@@ -58,12 +61,12 @@ public class PlayerSystem : MonoSystem
     {
         if (_Level >= _MaxLevel)
             return false;
-
         _EXP += exp;
         if(_EXP >= _NextEXP)
         {
             _EXP -= _NextEXP;
             _NextEXP *= _EXPScop;
+            _Level++;
             _IsLevelUp = true;
         }
         return true;

@@ -2,7 +2,7 @@
 
 namespace Team
 {
-    public class TeamUnit : TeamHelper
+    public class TeamUnit : TeamHelper<TeamUnit>
     {
         public override void SetEnemyID()
         {

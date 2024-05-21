@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -146,8 +147,9 @@ public class UnitHelper : MonoBehaviour
     }
 }
 
-public abstract class TeamHelper : UnitHelper, ITeamSetting
+public abstract class TeamHelper<T> : UnitHelper, ITeamSetting
 {
+    protected static List<Unit> _SearchedUnitList = new();
     public abstract void SetEnemyID();
     public abstract void SetTeamID();
 
@@ -155,6 +157,29 @@ public abstract class TeamHelper : UnitHelper, ITeamSetting
     {
         SetTeamID();
         SetEnemyID();
+    }
+
+    void FixedUpdate()
+    {
+        if(_OwnerInfo.ChaseUnit != null)
+        {
+            if (_SearchedUnitList.Contains(_OwnerInfo.ChaseUnit) == false)
+                _SearchedUnitList.Add(_OwnerInfo.ChaseUnit);
+        }
+
+        _SearchedUnitList = _SearchedUnitList.Where(unit =>
+        {
+            if (unit == null)
+                return false;
+
+            if (unit.Status.IsDead == true)
+            { return false; }
+
+            return true;
+        }).ToList();
+
+        _OwnerInfo.SearchedUnit = _SearchedUnitList;
+
     }
 
     protected int GetTeamID(string name)
@@ -173,4 +198,6 @@ public abstract class TeamHelper : UnitHelper, ITeamSetting
 
         return result;
     }
+
+
 }

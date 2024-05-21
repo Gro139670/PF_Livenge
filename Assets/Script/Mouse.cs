@@ -18,6 +18,9 @@ public class Mouse : MonoSingleton<Mouse>
     public Tile HoveredTile
     { get { return _HoveredTile; } set { _HoveredTile = value; } }
 
+    public Card SelectedCard
+    { get; set; }
+
 
     public Vector2 MousePoint { get; set; }
 

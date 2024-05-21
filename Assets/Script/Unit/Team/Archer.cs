@@ -12,7 +12,7 @@ namespace Team
             AddState<ArcherStateAttack>();
             AddState<CommonStateSearch>();
             AddState<CommonStateMove>();
-            AddState<TeamStateDefault>();
+            AddState<OurStateDefault>();
             return true;
         }
     }

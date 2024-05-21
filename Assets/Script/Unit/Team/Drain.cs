@@ -12,7 +12,7 @@ namespace Team
             AddState<DrainStateAttack>();
             AddState<CommonStateSearch>();
             AddState<DrainStateMove>();
-            AddState<TeamStateDefault>();
+            AddState<OurStateDefault>();
             return true;
         }
 

@@ -12,7 +12,7 @@ namespace Team
             AddState<CommonStateAttack>();
             AddState<CommonStateSearch>();
             AddState<CommonStateMove>();
-            AddState<TeamStateDefault>();
+            AddState<OurStateDefault>();
 
             ChangeState<SummonsStateForward>();
             return true;

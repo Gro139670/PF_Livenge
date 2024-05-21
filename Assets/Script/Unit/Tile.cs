@@ -53,7 +53,14 @@ public class Tile : MouseHover
             if (_IsMouseHover == true)
             {
                 Mouse.Instance.HoveredTile = this;
-                _SpriteRenderer.color = _HoverColor;
+                if(IsPlayerTile == true)
+                {
+                    _SpriteRenderer.color = _HoverColor;
+                }
+                else
+                {
+                    _SpriteRenderer.color = Color.red;
+                }
             }
 
             if (_IsShowRangeTogether == true)

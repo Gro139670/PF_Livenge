@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyUnit : TeamHelper
+    public class EnemyUnit : TeamHelper<EnemyUnit>
     {
         public override void SetEnemyID()
         {
@@ -22,6 +22,8 @@ namespace Enemy
             base.Start();
             _OwnerInfo.LookDir = Unit.Direction.Down;
         }
+
+
     }
 }
 

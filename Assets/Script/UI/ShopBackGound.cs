@@ -9,7 +9,7 @@ public class ShopBackGound : MonoBehaviour
     private void Awake()
     {
         _DefaultShopPosition = _InterectiveShopPosition = transform.localPosition;
-        _InterectiveShopPosition.y = -250;
+        _InterectiveShopPosition.y += 500;
     }
     void Start()
     {
@@ -18,7 +18,7 @@ public class ShopBackGound : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(GameManager.Instance.GetSystem<ShopSystem>().ShopToggle)
+        if(GameManager.Instance.GetSystem<ShopSystem>().ShopToggle == true)
         {
             gameObject.transform.localPosition = _InterectiveShopPosition;
         }

@@ -11,7 +11,7 @@ namespace Team
             AddState<ReaperStateAttack>();
             AddState<CommonStateSearch>();
             AddState<CommonStateMove>();
-            AddState<TeamStateDefault>();
+            AddState<OurStateDefault>();
 
             ChangeState<ReaperStateAttack>();
             return true;

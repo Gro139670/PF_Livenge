@@ -35,9 +35,15 @@ public class Unit : MonoBehaviour
 
     #region Debug
     [SerializeField] public state _State = 0;
+    [SerializeField] private List<Unit> _SearchedUnit;
+
 
     #endregion
-
+    public List<Unit> SearchedUnit
+    {
+        get { return _SearchedUnit; }
+        set { _SearchedUnit = value; }
+    }
     public GameObject[] SummonUnit
     { get { return _SummonUnit; } } 
 
@@ -166,6 +172,17 @@ public class Unit : MonoBehaviour
         //AttackUnit = null;
 
         MovePath = new();
+    }
+
+    private void FixedUpdate()
+    {
+        if(GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
+        {
+            if(CurrTile.GetTakedUnit() != this)
+            {
+                CurrTile.SetTakedUnit(this);
+            }
+        }
     }
 
     private void OnDestroy()

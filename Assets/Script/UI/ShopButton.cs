@@ -23,11 +23,11 @@ public class ShopButton : MonoBehaviour
     {
         var shop = GameManager.Instance.GetSystem<ShopSystem>();
 
-        GameManager.Instance.GetSystem<PlayerSystem>().BuyEXP(1.0f, shop._BuyEXPCost);
-        if (GameManager.Instance.GetSystem<PlayerSystem>().IsLevelUp == true)
-        {
-            shop.Reroll = true;
-        }
+        GameManager.Instance.GetSystem<PlayerSystem>().BuyEXP(shop._BuyEXPCost, shop._BuyEXPCost);
+        //if (GameManager.Instance.GetSystem<PlayerSystem>().IsLevelUp == true)
+        //{
+        //    shop.Reroll = true;
+        //}
     }
 
 }

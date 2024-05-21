@@ -1,5 +1,7 @@
 
 
+using System.Linq;
+
 public class CommonStateSearch : State
 {
     private Unit.Direction _Start;

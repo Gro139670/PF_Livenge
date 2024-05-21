@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyStateDefault : State
@@ -7,7 +8,7 @@ public class EnemyStateDefault : State
 
     public override string CheckTransition()
     {
-        return "Idle";
+        return "Move";
     }
 
     public override void Enter()
@@ -25,7 +26,15 @@ public class EnemyStateDefault : State
     {
         if(IsInvade == true)
         {
-            IsStateFinish = true;
+            if (_OwnerInfo.CurrTile != null)
+            {
+                _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Down];
+                if(_OwnerInfo.NextTile == null)
+                {
+                    _OwnerInfo.ChaseUnit = _OwnerInfo.SearchedUnit?.First();
+                }
+                IsStateFinish = true;
+            }
             return;
         }
         foreach(var unit in UnitManager.Instance.GetAllUnit(_OwnerInfo.EnemyTeamID))
