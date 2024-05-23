@@ -57,6 +57,7 @@ public class CommonStateSearch : State
         {
             if (_IsSearched == true && _Start == _OwnerInfo.LookDir)
             {
+                _OwnerInfo.ChaseUnit = null;
                 _IsSearchFailed = true;
                 return;
             }

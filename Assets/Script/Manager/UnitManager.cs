@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
-using UnityEditor;
 using UnityEngine;
-using System.Linq;
 
 public class UnitManager : Singleton<UnitManager>
 {
@@ -25,6 +23,10 @@ public class UnitManager : Singleton<UnitManager>
             _Units.Clear();
         }
     }
+    public void ClearTeamUnits(int num)
+    {
+        _Units[num].Clear();
+    }
 
     public void AddUnit(int teamID, Unit unit)
     {
@@ -38,15 +40,6 @@ public class UnitManager : Singleton<UnitManager>
             _Units.Add(teamID, new List<Unit>());
         }
         _Units[teamID].Add(unit);
-    }
-    public Unit GetUnit(int teamID, Func<Unit, bool> condition)
-    {
-        foreach (var item in _Units[teamID])
-        {
-            if (condition(item) == true)
-                return item;
-        }
-        return null;
     }
 
     public List<Unit> GetUnitList(int teamID, Func<Unit, bool> condition)
@@ -67,24 +60,27 @@ public class UnitManager : Singleton<UnitManager>
         return list;
     }
 
-    public List<Unit> GetAllUnit(int teamID)
+    public List<Unit> GetAllTeamUnit(int teamID)
     {
         return _Units[teamID];
     }
+
+    public Dictionary<int, List<Unit>> GetAllUnit()
+    { return _Units; }
 
     public void Logic()
     {
         foreach (var item in _Units)
         {
-            foreach (var unit in item.Value)
+            item.Value.RemoveAll(unit =>
             {
-                if (unit.gameObject.activeSelf == false)
+                if(unit.gameObject.activeSelf == false)
                 {
-                    item.Value.Remove(unit);
                     GameObject.Destroy(unit.gameObject);
-                    break;
+                    return true;
                 }
-            }
+                return false;
+            });
         }
     }
 }

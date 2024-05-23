@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ShopButton : MonoBehaviour
 {
-    protected void Update() 
-    {
-    }
-
     public void BattleStart()
     {
         GameManager.Instance.GetSystem<StageSystem>().IsBattle = true;
@@ -24,10 +20,12 @@ public class ShopButton : MonoBehaviour
         var shop = GameManager.Instance.GetSystem<ShopSystem>();
 
         GameManager.Instance.GetSystem<PlayerSystem>().BuyEXP(shop._BuyEXPCost, shop._BuyEXPCost);
-        //if (GameManager.Instance.GetSystem<PlayerSystem>().IsLevelUp == true)
-        //{
-        //    shop.Reroll = true;
-        //}
+    }
+
+    public void UnSummon()
+    {
+        Mouse.Instance.InterectiveTile?.GetTakedUnit()?.gameObject.SetActive(false);
+        Mouse.Instance.InterectiveTile = null;
     }
 
 }

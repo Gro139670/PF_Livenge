@@ -8,13 +8,13 @@ using static UnityEngine.UI.CanvasScaler;
 
 public class Mouse : MonoSingleton<Mouse>
 {
-    private Vector3 _CurrPosition;
-    private Vector3 _PrevPosition;
     private Unit _SelectedUnit;
+    private Tile _InterectiveTile;
     private Tile _SelectedTile;
     private Tile _HoveredTile;
 
-
+    public Tile InterectiveTile
+    { get { return _InterectiveTile; } set { _InterectiveTile = value; } }
     public Tile HoveredTile
     { get { return _HoveredTile; } set { _HoveredTile = value; } }
 
@@ -39,6 +39,7 @@ public class Mouse : MonoSingleton<Mouse>
         {
             _SelectedUnit.gameObject.transform.position = MousePoint;
         }
+        
     }
 
     private void LateUpdate()
@@ -49,17 +50,35 @@ public class Mouse : MonoSingleton<Mouse>
             {
                 _SelectedTile = HoveredTile;
                 _SelectedUnit = _SelectedTile.GetTakedUnit();
+                
 
             }
+            
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            
+           
 
-            if(_SelectedTile == _HoveredTile || _HoveredTile == null)
+            if (_SelectedTile == _HoveredTile)
             {
-                _SelectedTile?.SetTakedUnit(_SelectedUnit);
+                if (_SelectedTile != null)
+                {
+                    if (_InterectiveTile == _SelectedTile)
+                    {
+                        _InterectiveTile = null;
+                    }
+                    else
+                    {
+                        _InterectiveTile = _SelectedTile;
+                    }
+                }
+
+                if (_HoveredTile == null)
+                {
+                    _SelectedTile?.SetTakedUnit(_SelectedUnit);
+
+                }
             }
             else if(HoveredTile?.IsPlayerTile == true)
             {
@@ -68,8 +87,10 @@ public class Mouse : MonoSingleton<Mouse>
                 _SelectedTile?.SetTakedUnit(unit);
 
                 HoveredTile.SetTakedUnit(_SelectedUnit);
-            }
 
+                _InterectiveTile = null;
+            }
+            
 
 
             if (_SelectedTile?.GetTakedUnit() != null)

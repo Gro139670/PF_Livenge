@@ -1,3 +1,4 @@
+using Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,14 +65,24 @@ public class ShopSystem : MonoSystem
         var unit = _TeamUnits[unitNum];
         if (GameManager.Instance.GetSystem<PlayerSystem>().Add_Mana(-unit.GetComponent<Unit>().Status.ManaCost) == true)
         {
-
-            for (int height = 0; height < GameManager.Instance.GetSystem<TileSystem>().Height; height++)
+            var interectiveTile = Mouse.Instance.InterectiveTile;
+            if (interectiveTile != null)
             {
-                for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
+                if (GameManager.Instance.GetSystem<TileSystem>().SummonUnit(interectiveTile.Index.Item1, interectiveTile.Index.Item2, unit, true) == true)
                 {
-                    if (GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit,true) == true)
+                    return true;
+                }
+            }
+            else
+            {
+                for (int height = 0; height < GameManager.Instance.GetSystem<TileSystem>().Height; height++)
+                {
+                    for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
                     {
-                        return true;
+                        if (GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit, true) == true)
+                        {
+                            return true;
+                        }
                     }
                 }
             }

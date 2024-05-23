@@ -14,7 +14,7 @@ public class EnemyStateDefault : State
     public override void Enter()
     {
         _OwnerInfo._State = state.Default;
-        IsStateFinish = IsInvade;
+        IsStateFinish = false;
     }
 
     public override void Exit()
@@ -24,25 +24,31 @@ public class EnemyStateDefault : State
 
     public override void FixedLogic()
     {
-        if(IsInvade == true)
+        if (IsInvade == true)
         {
             if (_OwnerInfo.CurrTile != null)
             {
                 _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Down];
-                if(_OwnerInfo.NextTile == null)
+                if (_OwnerInfo.NextTile == null)
                 {
-                    _OwnerInfo.ChaseUnit = _OwnerInfo.SearchedUnit?.First();
+                    if (_OwnerInfo.SearchedUnit.Count > 0)
+                    {
+                        _OwnerInfo.ChaseUnit = _OwnerInfo.SearchedUnit.First();
+                    }
                 }
                 IsStateFinish = true;
             }
             return;
         }
-        foreach(var unit in UnitManager.Instance.GetAllUnit(_OwnerInfo.EnemyTeamID))
+        else
         {
-            if(unit.CurrTile.Index.Item2 > GameManager.Instance.GetSystem<TileSystem>().Height / 2)
+            foreach (var unit in UnitManager.Instance.GetAllTeamUnit(_OwnerInfo.EnemyTeamID))
             {
-                IsInvade = IsStateFinish = true;
+                if (unit.CurrTile.Index.Item2 > GameManager.Instance.GetSystem<TileSystem>().Height / 2)
+                {
+                    IsInvade = IsStateFinish = true;
 
+                }
             }
         }
     }

@@ -39,6 +39,9 @@ public class Unit : MonoBehaviour
 
 
     #endregion
+    public Tile StartTile
+    { get; private set; }
+
     public List<Unit> SearchedUnit
     {
         get { return _SearchedUnit; }
@@ -109,7 +112,6 @@ public class Unit : MonoBehaviour
         get { return _AttackUnitList; }
         set { _AttackUnitList = value; }
     }
-
 
     /// <summary>
     /// set clockwise
@@ -182,6 +184,7 @@ public class Unit : MonoBehaviour
             {
                 CurrTile.SetTakedUnit(this);
             }
+            StartTile = _CurrTile;
         }
     }
 

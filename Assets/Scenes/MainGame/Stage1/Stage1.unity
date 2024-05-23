@@ -728,6 +728,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7999218209381679945, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
   m_PrefabInstance: {fileID: 2722279511121491667}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1026623932 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7142059601303013784, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+  m_PrefabInstance: {fileID: 2722279511121491667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026623930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2485446924db7408ce4da537966403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1123036874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6662893482408385294, guid: 59e187b808f3efc4e9b04a929700bf57, type: 3}
@@ -814,6 +825,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 40725852}
     m_Modifications:
+    - target: {fileID: 2279348319640854071, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279348319640854071, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279348319640854071, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1026623932}
+    - target: {fileID: 2279348319640854071, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279348319640854071, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UnSummon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279348319640854071, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShopButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279348319640854071, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3644315954817748973, guid: bffabbb0592684d4abc54374e8d2b3bb, type: 3}
       propertyPath: m_RaycastPadding.x
       value: 50

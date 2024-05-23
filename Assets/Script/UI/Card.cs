@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
-using Unity.VisualScripting;
-using static UnityEditor.PlayerSettings;
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     #region variable
@@ -95,6 +91,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else
         {
+            Mouse.Instance.InterectiveTile = null;
             _IsCanBuy = false;
             gameObject.SetActive(false);
             _IsSetPosition = false;

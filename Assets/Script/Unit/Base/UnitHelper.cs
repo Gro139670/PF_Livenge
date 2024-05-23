@@ -167,16 +167,16 @@ public abstract class TeamHelper<T> : UnitHelper, ITeamSetting
                 _SearchedUnitList.Add(_OwnerInfo.ChaseUnit);
         }
 
-        _SearchedUnitList = _SearchedUnitList.Where(unit =>
+        _SearchedUnitList.RemoveAll(unit =>
         {
             if (unit == null)
-                return false;
+                return true;
 
             if (unit.Status.IsDead == true)
-            { return false; }
+            { return true; }
 
-            return true;
-        }).ToList();
+            return false;
+        });
 
         _OwnerInfo.SearchedUnit = _SearchedUnitList;
 

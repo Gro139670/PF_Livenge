@@ -11,6 +11,10 @@ class ProjectileUnit : Unit
         GameManager.Instance.GetSystem<StageSystem>().RoundEnd += DeleteSelf;
     }
 
+    private void FixedUpdate()
+    {
+    }
+
     private void OnDestroy()
     {
         GameManager.Instance.GetSystem<StageSystem>().RoundEnd -= DeleteSelf;

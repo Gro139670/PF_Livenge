@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BallistarProjectile : StateMachine
+public class BallistarProjectile : ProjectileStateMachine
 {
     private void OnEnable()
     {

@@ -6,6 +6,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
 {
     // Start is called before the first frame update
     private IState _CurrState = null;
+    private IState _StartState;
     private Dictionary<string,IAllianceState> _AllianceStates = new();
     private Dictionary<string, IState> _States = new Dictionary<string, IState>();
 
@@ -19,9 +20,10 @@ public abstract class StateMachine : UnitHelper, IInitializeable
                 ChangeState("Idle");
             }
         }
+        _StartState = _CurrState;
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == true)
         {
@@ -169,4 +171,16 @@ public abstract class StateMachine : UnitHelper, IInitializeable
     }
 
     public abstract bool Initialize();
+}
+
+public abstract class ProjectileStateMachine : StateMachine
+{
+    private void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

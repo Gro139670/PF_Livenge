@@ -9,8 +9,6 @@ public class Tile : MouseHover
 {
     private Tile[] _AdjacentTiles = new Tile[9];
 
-    private static readonly Color _HoverColor = Color.cyan;
-
     [SerializeField] private Unit _TakedUnit = null;
     private SpriteRenderer _SpriteRenderer = null;
 
@@ -23,12 +21,17 @@ public class Tile : MouseHover
     #region Property
     public Color BaseColor { get; set; }
     public Tile[] AdjacentTiles { get { return _AdjacentTiles; } }
+    /// <summary>
+    /// width, height
+    /// </summary>
     public Tuple<int,int> Index { get; set; }
 
 
     public float Weight {  get { return _Weight; } }
     public bool IsShowRangeTogether { get; set; }
     public bool IsPlayerTile {  get; set; }
+
+    public bool IsUnitSelected { get; set; }
 
 
 
@@ -50,12 +53,17 @@ public class Tile : MouseHover
         }
         if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
         {
+            if(Mouse.Instance.InterectiveTile == this)
+            {
+                _SpriteRenderer.color = Color.blue;
+            }
+
             if (_IsMouseHover == true)
             {
                 Mouse.Instance.HoveredTile = this;
                 if(IsPlayerTile == true)
                 {
-                    _SpriteRenderer.color = _HoverColor;
+                    _SpriteRenderer.color = Color.cyan;
                 }
                 else
                 {
@@ -72,8 +80,6 @@ public class Tile : MouseHover
     }
     private void LateUpdate()
     {
-
-
         //if (_TakedUnit != null)
         //{
 
@@ -101,8 +107,8 @@ public class Tile : MouseHover
         //    }
 
         //}
-       
-        
+
+
     }
     public Unit GetTakedUnit()
     {
