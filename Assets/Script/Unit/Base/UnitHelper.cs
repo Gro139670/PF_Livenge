@@ -11,6 +11,7 @@ public class UnitStatus : IInitializeable
     [Header("Common")]
     [SerializeField] private string _Name;
     [SerializeField] private int _UnitTear = 0;
+    [SerializeField] private int _UnitID = 0;
     [SerializeField] private int _TeamID;
 
     [Header("Status")]
@@ -51,6 +52,8 @@ public class UnitStatus : IInitializeable
 
     public int TeamID
     { get { return _TeamID; } set { _TeamID = value; } }
+    public int UnitID
+    { get { return _UnitID; }}
 
     public float Size
     { get { return _Size; } }
@@ -85,9 +88,8 @@ public class UnitStatus : IInitializeable
         get
         {
             if (_SearchSpeed == 0) _SearchSpeed = 1;
-            return 100 / (_SearchSpeed * SpeedDebuff);
+            return _SearchSpeed *(2 - SpeedDebuff) * 0.05f;
         }
-        set { _SearchSpeed = value; }
     }
 
     public float SpeedDebuff

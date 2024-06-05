@@ -25,9 +25,20 @@ public class UnitManager : Singleton<UnitManager>
     }
     public void ClearTeamUnits(int num)
     {
-        _Units[num].Clear();
+        foreach (var item in _Units[num])
+        {
+            item.gameObject.SetActive(false);
+        }
+        //_Units[num].Clear();
+        Debug.Log(_Units[num]); 
     }
-
+    public void AddTeam(int teamID)
+    {
+        if (_Units.ContainsKey(teamID) == false)
+        {
+            _Units.Add(teamID, new List<Unit>());
+        }
+    }
     public void AddUnit(int teamID, Unit unit)
     {
         if (_Units == null)

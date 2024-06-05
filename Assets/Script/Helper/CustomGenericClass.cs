@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class Singleton<T> : ISingleton<T> where T : Singleton<T>, new()
 {
@@ -60,6 +61,46 @@ public abstract class MonoSingleton<T> : MonoBehaviour, ISingleton<T> where T : 
 public abstract class MonoSystem :MonoBehaviour, ISystem
 {
     public abstract bool Initialize();
+}
+
+public abstract class ActivableUI : MonoBehaviour, IInitializeable
+{
+    void Awake()
+    {
+        Initialize();
+    }
+    protected void Active()
+    {
+        gameObject.SetActive(true);
+    }
+
+    protected void UnActive()
+    {
+        gameObject.SetActive(false);
+    }
+    public abstract bool Initialize();
+}
+
+public abstract class MouseInteractiveUI : ActivableUI, IPointerEnterHandler, IPointerExitHandler
+{
+    protected bool _IsMosueHover = false;
+
+    public bool IsMosueHover
+    { get; }
+    
+    void OnEnable()
+    {
+        _IsMosueHover = false;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _IsMosueHover = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _IsMosueHover = false;
+    }
 }
 
 

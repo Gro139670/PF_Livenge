@@ -28,10 +28,6 @@ public class OurStateDefault : State
         if(_OwnerInfo.CurrTile != null)
         {
             _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Up];
-            if (_OwnerInfo.NextTile == null)
-            {
-                _OwnerInfo.ChaseUnit = _OwnerInfo.SearchedUnit?.First();
-            }
             IsStateFinish = true;
         }
 

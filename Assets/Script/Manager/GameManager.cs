@@ -1,17 +1,17 @@
 
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
-using UnityEngine.SceneManagement;
+using System;
+using Unity.VisualScripting;
 
 
 public class GameManager : Singleton<GameManager>
 {
     #region variable
-    //public delegate void EventHandler();
 
-    //private EventHandler _SceneChanged;
-    //public EventHandler AddSceneChangeEvent { set { _SceneChanged += value; } }
+    private event Action _SceneChanged;
 
     private Dictionary<string, ISystem> _Systems;
 
@@ -23,14 +23,13 @@ public class GameManager : Singleton<GameManager>
 
     public void ChangeScene(string sceneName)
     {
-        //if (_SceneChanged != null)
-        //{
-        //    _SceneChanged();
-        //    _SceneChanged = null;
-        //}
-
+        if (_SceneChanged != null)
+        {
+            _SceneChanged();
+            _SceneChanged = null;
+        }
         _Systems.Clear();
-
+        
         SceneManager.LoadScene(sceneName);
         UnitManager.Instance.Initialize();
     }
@@ -42,7 +41,7 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    public bool RegistSystem<T>(T system) where T :class, ISystem
+    public bool RegistSystem<T>(T system) where T :MonoBehaviour, ISystem
     {
         if(system == null)
         {
@@ -53,6 +52,10 @@ public class GameManager : Singleton<GameManager>
             _Systems = new();
         }
         system.Initialize();
+        _SceneChanged += () =>
+        {
+            GameObject.Destroy(system.gameObject);
+        };
         _Systems.Add(typeof(T).Name, system);
 
         return true;

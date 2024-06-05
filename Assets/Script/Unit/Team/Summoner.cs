@@ -14,6 +14,8 @@ namespace Team
             AddState<SummonerStateIdle>();
             AddState<SummonerStateAttack>();
             AddState<CommonStateMove>();
+
+            ChangeState<SummonerStateIdle>();
             return true;
         }
 
@@ -47,16 +49,25 @@ namespace Team
             public override void FixedLogic()
             {
                 // 하드코딩..
-                if(_OwnerInfo.CurrTile.Index.Item2 < 3)
+                if(_OwnerInfo.CurrTile.Index.Item2 < GameManager.Instance.GetSystem<TileSystem>().Height/10)
                 {
                     _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Up];
                 }
                 else
                 {
                     _IsMoveFinish = true;
-                    if (_OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Down]?.GetTakedUnit() == null)
+
+                    var takeUnit = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Down]?.GetTakedUnit();
+                    if (takeUnit == null)
                     {
                         _IsCanSummon = true;
+                    }
+                    else
+                    {
+                        if(takeUnit.Status.UnitID == _OwnerInfo.Status.UnitID)
+                        {
+                            _OwnerInfo.NextTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)Unit.Direction.Up];
+                        }
                     }
                 }
             }
@@ -76,7 +87,7 @@ namespace Team
             bool[] _IsCheckTile;
             public override string CheckTransition()
             {
-                return "SummonerStateAttack";
+                return "SummonerStateIdle";
             }
 
             public override void Exit()

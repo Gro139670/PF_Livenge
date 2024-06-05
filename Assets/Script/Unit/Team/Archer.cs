@@ -25,7 +25,7 @@ public class ArcherStateAttack : StateAttack
     int _ProjectileNum = 0;
     public override string CheckTransition()
     {
-        return "Idle";
+        return "CommonStateIdle";
     }
 
     public override void Exit()

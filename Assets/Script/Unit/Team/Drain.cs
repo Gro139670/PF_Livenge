@@ -10,7 +10,7 @@ namespace Team
         {
             AddState<CommonStateIdle>();
             AddState<DrainStateAttack>();
-            AddState<CommonStateSearch>();
+            AddState<DrainStateSearch>();
             AddState<DrainStateMove>();
             AddState<OurStateDefault>();
             return true;
@@ -20,7 +20,7 @@ namespace Team
         {
             public override string CheckTransition()
             {
-                return "Idle";
+                return "CommonStateIdle";
             }
 
             public override void FixedLogic()
@@ -44,7 +44,7 @@ namespace Team
         {
             public override string CheckTransition()
             {
-                return "Idle";
+                return "CommonStateIdle";
             }
 
 
@@ -94,7 +94,37 @@ namespace Team
                 }
             }
         }
+
+        private class DrainStateSearch : State
+        {
+            public override string CheckTransition()
+            {
+                return "OurStateDefault";
+            }
+
+            public override void Enter()
+            {
+            }
+
+            public override void Exit()
+            {
+            }
+
+            public override void FixedLogic()
+            {
+            }
+
+            public override bool Initialize()
+            {
+                return true;
+            }
+
+            public override void Logic()
+            {
+            }
+        }
+
     }
 
-    
+
 }

@@ -106,6 +106,8 @@ MonoBehaviour:
   _Right: []
   _ETC:
   - {fileID: -1246769529, guid: ee07eafee9478f14688b492e86b2129d, type: 3}
+  _Effect:
+  - {fileID: 21300000, guid: 5d391d03d04300a4bb02e3b9ed9bf43a, type: 3}
 --- !u!114 &717718306111874651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,13 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _Position: {x: 0, y: 0, z: 0}
-  _EnemTeamID: 0
+  _SummonUnit: []
   _Status:
     _Name: 
     _UnitTear: 4
+    _UnitID: 2005
     _TeamID: 1
     _HP: 250
     _Damage: 20
@@ -138,7 +138,7 @@ MonoBehaviour:
     _AttackRange: 2.8
     _ChaseRange: 0
     _SightRange: 1
-  _AttackUnitList: []
+  _State: 0
 --- !u!114 &2294413273600494795
 MonoBehaviour:
   m_ObjectHideFlags: 0

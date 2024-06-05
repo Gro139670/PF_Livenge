@@ -113,6 +113,10 @@ MonoBehaviour:
   - {fileID: 1871316383, guid: 5dbc0bcda69cee64b9576437466e4ad5, type: 3}
   - {fileID: -1274367531, guid: 5dbc0bcda69cee64b9576437466e4ad5, type: 3}
   _ETC: []
+  _Effect:
+  - {fileID: 389442356, guid: 0e07665ec3c241344a58389959bc2134, type: 3}
+  - {fileID: 1745574869, guid: 0e07665ec3c241344a58389959bc2134, type: 3}
+  - {fileID: 823912394, guid: 0e07665ec3c241344a58389959bc2134, type: 3}
 --- !u!114 &1935136366036604126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,30 +141,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _AttackUnitList: []
-  _AttackUnit: {fileID: 0}
-  _LookDir: 0
-  _ChaseUnit: {fileID: 0}
   _SummonUnit: []
-  _State: 0
   _Status:
     _Name: Drain
     _UnitTear: 2
+    _UnitID: 1003
     _TeamID: 0
     _HP: 168
     _Damage: 96
     _Defense: 1
     _Size: 2
     _AttackSpeed: 2
-    _MoveSpeed: 270
-    _SearchSpeed: 12
+    _MoveSpeed: 150
+    _SearchSpeed: 0
     _ManaCost: 15
     _LifeCost: 10
     _AttackRange: 1.5
     _ChaseRange: 4.5
     _SightRange: 0
+  _State: 0
 --- !u!114 &8549525957878121761
 MonoBehaviour:
   m_ObjectHideFlags: 0

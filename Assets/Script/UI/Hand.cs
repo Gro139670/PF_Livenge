@@ -38,7 +38,7 @@ public class Hand : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameManager.Instance.GetSystem<ShopSystem>().ShopToggle == true)
+        if (GameManager.Instance.GetSystem<ShopSystem>().ShopInterective == true)
         {
             gameObject.transform.localPosition = _InterectivePosition;
         }

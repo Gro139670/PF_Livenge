@@ -12,20 +12,34 @@ public class TileSystem : MonoSystem
     [SerializeField] private int _Width = 0;
     [SerializeField] private int _Height = 0;
 
+    [SerializeField] private int _UnitNum = 0;
+
     public int Width
+    { get { return _Width; } }
+    public int WidthIndex
     {
         get { return _Width - 1; }
     }
     public int Height
+    { get { return _Height; } }
+    public int HeightIndex
     { 
         get { return _Height - 1; } 
     }
+
 
     public int GetTileNum(int widthIndex, int heightIndex)
     {
         return (heightIndex * _Width) + widthIndex;
     }
 
+    private void Update()
+    {
+        _UnitNum = 0;
+        foreach (var unit in UnitManager.Instance.GetAllUnit()) {
+            _UnitNum += unit.Value.Count;
+                }
+    }
     private void Awake()
     {
         GameManager.Instance.RegistSystem(this);
@@ -129,7 +143,7 @@ public class TileSystem : MonoSystem
     public GameObject SummonUnit(int widthIndex, int heightIndex, GameObject unit, bool isBuy)
     {
         // 예외처리
-        if( 0 > widthIndex || widthIndex > Width || 0 > heightIndex ||heightIndex > Height )
+        if( 0 > widthIndex || widthIndex > WidthIndex || 0 > heightIndex ||heightIndex > HeightIndex )
         {
             return null;
         }
@@ -140,14 +154,13 @@ public class TileSystem : MonoSystem
                 return _TileContainer[GetTileNum(widthIndex, heightIndex)].SummonUnit(unit);
             }
         }
-
         return _TileContainer[GetTileNum(widthIndex, heightIndex)].SummonUnit(unit);
     }
 
     public bool SetUnit(int widthIndex, int heightIndex, GameObject unit)
     {
         // 예외처리
-        if (0 > widthIndex || widthIndex > Width || 0 > heightIndex || heightIndex > Height || unit == null)
+        if (0 > widthIndex || widthIndex > WidthIndex || 0 > heightIndex || heightIndex > HeightIndex || unit == null)
         {
             // 오류 메세지 출력
             return false;

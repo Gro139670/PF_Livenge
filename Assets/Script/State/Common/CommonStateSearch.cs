@@ -1,11 +1,10 @@
 
-
 using System.Linq;
-
+using UnityEngine;
 public class CommonStateSearch : State
 {
     private Unit.Direction _Start;
-    private float _SearchCount = 0;
+    private float _SearchTime = 0;
     private bool _IsSearched = true;
     private bool _IsSearchFailed = false;
     public override string CheckTransition()
@@ -23,7 +22,6 @@ public class CommonStateSearch : State
         _OwnerInfo._State = state.Search;
         IsStateFinish = false;
         _Start = _OwnerInfo.LookDir;
-        _SearchCount = _OwnerInfo.Status.SearchSpeed;
         _IsSearched = _IsSearchFailed = false;
 
 
@@ -35,34 +33,30 @@ public class CommonStateSearch : State
 
     public override void FixedLogic()
     {
-
-        _SearchCount--;
-        
-    }
-
-    public override bool Initialize()
-    {
-        return true;
-    }
-
-    public override void Logic()
-    {
         if (_OwnerInfo.ChaseUnit != null || _IsSearchFailed == true)
         {
             IsStateFinish = true;
             return;
         }
 
-        if (_SearchCount <= 0)
+        int length = _OwnerInfo.SearchedUnit.Count;
+        if (length > 0)
+        {
+            _OwnerInfo.ChaseUnit = _OwnerInfo.SearchedUnit.ElementAt(Random.Range(0, length));
+            return;
+        }
+
+        if (TimeManager.Instance.SetTime(ref _SearchTime, _OwnerInfo.Status.SearchSpeed) == true)
         {
             if (_IsSearched == true && _Start == _OwnerInfo.LookDir)
             {
                 _OwnerInfo.ChaseUnit = null;
                 _IsSearchFailed = true;
+                
                 return;
             }
 
-            _SearchCount = _OwnerInfo.Status.SearchSpeed;
+            _SearchTime = 0;
 
 
 
@@ -118,6 +112,16 @@ public class CommonStateSearch : State
             _OwnerInfo.SetLookDirection();
             _IsSearched = true;
         }
+    }
+
+    public override bool Initialize()
+    {
+        return true;
+    }
+
+    public override void Logic()
+    {
+       
 
     }
 }

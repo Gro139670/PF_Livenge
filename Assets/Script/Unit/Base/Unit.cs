@@ -15,30 +15,22 @@ public class Unit : MonoBehaviour
     private event Action _DeadEvent;
     public Action AddDeadEvent { get { return _DeadEvent; } set { _DeadEvent = value; } }
 
-
-    public enum Direction : int
-    {
-        Up = 6,
-        Left = 4,
-        Right = 5,
-        Down = 0,
-        None = -1,
-    }
-    [SerializeField] private Tile _CurrTile = null;
-    [SerializeField] private Tile _NextTile = null;
-    [SerializeField] private List<Unit> _AttackUnitList = null;
-    [SerializeField] private Unit _AttackUnit = null;
-    [SerializeField] private Direction _LookDir;
-    [SerializeField] private Unit _ChaseUnit;
+    private Tile _CurrTile = null;
+    private Tile _NextTile = null;
+    private List<Unit> _AttackUnitList = null;
+    private Unit _AttackUnit = null;
+    private Direction _LookDir;
+    private Unit _ChaseUnit;
     [SerializeField] private GameObject[] _SummonUnit = null;
+    private List<Unit> _SearchedUnit;
+    [SerializeField] private UnitStatus _Status;
 
+    protected int _EnemyTeamID;
 
     #region Debug
     [SerializeField] public state _State = 0;
-    [SerializeField] private List<Unit> _SearchedUnit;
-
-
     #endregion
+    #region Property
     public Tile StartTile
     { get; private set; }
 
@@ -49,14 +41,11 @@ public class Unit : MonoBehaviour
     }
     public GameObject[] SummonUnit
     { get { return _SummonUnit; } } 
-
-
     public Tile CurrTile
     {
         get { return _CurrTile; }
         set { _CurrTile = value; }
     }
-
     public Tile NextTile
     {
         get { return _NextTile; }
@@ -71,22 +60,12 @@ public class Unit : MonoBehaviour
     public Vector3 Position
     { get; private set; }
 
-    protected int _EnemyTeamID;
 
 
-    [SerializeField]
-    private UnitStatus _Status;
 
     public UnitStatus Status
     {
-        get
-        {
-            if (_Status == null)
-            {
-                _Status = new UnitStatus();
-            }
-            return _Status;
-        }
+        get {  return _Status; }
     }
 
     public int EnemyTeamID
@@ -96,13 +75,18 @@ public class Unit : MonoBehaviour
     }
 
     public Unit ChaseUnit
-    { get { return _ChaseUnit; } set { _ChaseUnit = value; } }
+    {
+        get { return _ChaseUnit; } 
+        set { _ChaseUnit = value; }
+    }
 
-    public Unit IgnoreUnit
-    { get; set; }
+    public Unit IgnoreUnit { get; set; }
 
     public Unit AttackUnit
-    { get { return _AttackUnit; } set { _AttackUnit = value; } }
+    { 
+        get { return _AttackUnit; } 
+        set { _AttackUnit = value; }
+    }
 
     public Stack<Direction> MovePath { get; set; }
 
@@ -113,6 +97,66 @@ public class Unit : MonoBehaviour
         set { _AttackUnitList = value; }
     }
 
+    public bool IsDamaged
+    { get; set; }
+    #endregion
+
+    void Start()
+    {
+        _AttackUnitList = new List<Unit>();
+        _Status.Initialize();
+        _Status.SpeedDebuff = 0;
+        Position = transform.localPosition;
+
+        MovePath = new();
+    }
+
+    private void FixedUpdate()
+    {
+        if(GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
+        {
+            if(CurrTile.GetTakedUnit() != this)
+            {
+                CurrTile.SetTakedUnit(this);
+            }
+            StartTile = _CurrTile;
+            _NextTile = null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _DeadEvent?.Invoke();
+    }
+
+    public float AttackEnemy(Unit target,float damage = -1)
+    {
+        if (target == null)
+            return 0;
+        float result = 0;
+
+        if(damage <= 0)
+        {
+            damage = _Status.Damage;
+        }
+
+        if (target.Status.TeamID == _EnemyTeamID)
+        {
+            result = target.Status.Damaged(damage);
+            target.IsDamaged = true;
+        }
+        return result;
+    }
+
+    #region Direction
+    public enum Direction : int
+    {
+        Up = 6,
+        Left = 4,
+        Right = 5,
+        Down = 0,
+        None = -1,
+    }
     /// <summary>
     /// set clockwise
     /// </summary>
@@ -137,7 +181,7 @@ public class Unit : MonoBehaviour
 
     public void SetLookDirection(Tile tile)
     {
-        if(tile == null)
+        if (tile == null)
         {
             return;
         }
@@ -146,12 +190,12 @@ public class Unit : MonoBehaviour
         {
             if (_CurrTile.AdjacentTiles[index] == tile)
             {
-                if(index <= 3)
+                if (index <= 3)
                 {
                     LookDir = Unit.Direction.Down;
 
                 }
-                else if(index >= 6)
+                else if (index >= 6)
                 {
                     LookDir = Unit.Direction.Up;
                 }
@@ -163,63 +207,7 @@ public class Unit : MonoBehaviour
             }
         }
     }
-    void Start()
-    {
-        _AttackUnitList = new List<Unit>();
-        _Status.Initialize();
-        _Status.SpeedDebuff = 0;
-        Position = transform.localPosition;
-        //CurrTile = null;
-        //ChaseUnit = null;
-        //AttackUnit = null;
-
-        MovePath = new();
-    }
-
-    private void FixedUpdate()
-    {
-        if(GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)
-        {
-            if(CurrTile.GetTakedUnit() != this)
-            {
-                CurrTile.SetTakedUnit(this);
-            }
-            StartTile = _CurrTile;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        _DeadEvent?.Invoke();
-    }
-
-
-    public float AttackEnemy(Unit target)
-    {
-        if (target == null)
-            return 0;
-        float damage = 0;
-
-        if(target.Status.TeamID == _EnemyTeamID)
-        {
-            damage = target.Status.Damaged(_Status.Damage);
-        }
-        return damage;
-    }
-
-    public float AttackEnemy(Unit target, float damage)
-    {
-        if (target == null)
-            return 0;
-        float result = 0;
-
-        if (target.Status.TeamID == _EnemyTeamID)
-        {
-            result = target.Status.Damaged(damage);
-        }
-        return result;
-    }
-
+    #endregion
 
 }
 

@@ -110,6 +110,11 @@ MonoBehaviour:
   _Right: []
   _ETC:
   - {fileID: -784360082, guid: 13541813040dc26428785f7f73c189ed, type: 3}
+  _Effect:
+  - {fileID: 2104182883, guid: b8206319b1f565a43bfe493da64d3c18, type: 3}
+  - {fileID: 1561470001, guid: b8206319b1f565a43bfe493da64d3c18, type: 3}
+  - {fileID: 1152331484, guid: b8206319b1f565a43bfe493da64d3c18, type: 3}
+  - {fileID: -1565490185, guid: b8206319b1f565a43bfe493da64d3c18, type: 3}
 --- !u!114 &193176546819955065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,19 +139,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _AttackUnitList: []
-  _AttackUnit: {fileID: 0}
-  _LookDir: 0
-  _ChaseUnit: {fileID: 0}
   _SummonUnit:
   - {fileID: 3081465376132618191, guid: 96a67f537146a8c45a9e0518f7a69b14, type: 3}
-  _State: 0
-  _SearchedUnit: []
   _Status:
     _Name: Summoner
     _UnitTear: 4
+    _UnitID: 1005
     _TeamID: 0
     _HP: 50
     _Damage: 0
@@ -160,6 +158,7 @@ MonoBehaviour:
     _AttackRange: 1
     _ChaseRange: 0
     _SightRange: 0
+  _State: 0
 --- !u!114 &5166603682488878898
 MonoBehaviour:
   m_ObjectHideFlags: 0

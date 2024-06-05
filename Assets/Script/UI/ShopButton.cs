@@ -12,7 +12,7 @@ public class ShopButton : MonoBehaviour
     {
         var shop = GameManager.Instance.GetSystem<ShopSystem>();
 
-        shop.ShopToggle = !shop.ShopToggle;
+        shop.ShopInterective = !shop.ShopInterective;
     }
 
     public void BuyEXP()
@@ -22,10 +22,5 @@ public class ShopButton : MonoBehaviour
         GameManager.Instance.GetSystem<PlayerSystem>().BuyEXP(shop._BuyEXPCost, shop._BuyEXPCost);
     }
 
-    public void UnSummon()
-    {
-        Mouse.Instance.InterectiveTile?.GetTakedUnit()?.gameObject.SetActive(false);
-        Mouse.Instance.InterectiveTile = null;
-    }
-
+   
 }

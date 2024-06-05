@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
-public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Card : MouseInteractiveUI
 {
     #region variable
     private event Action UseCardEvent;
@@ -24,7 +24,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private static int _MaxUnitNum = 0;
     private int _UnitNum = 0;
 
-    private bool _IsMosueHover = false;
     private bool _IsCanBuy = false;
     private bool _IsSetPosition = false;
 
@@ -36,7 +35,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         _MaxUnitNum = num;
     }
-
     #endregion
     private void Awake()
     {
@@ -53,6 +51,12 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 _IsCanBuy = false;
                 _IsSetPosition = false;
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            _UnitNum = Random.Range(0, _MaxUnitNum);
+            GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(_UnitNum);
         }
     }
 
@@ -76,14 +80,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void BuyUnit()   
     {
-        //if (_IsCanBuy == false)
-        //{
-        //    if (_IsMosueHover == true)
-        //    {
-        //        _IsCanBuy = true;
-        //    }
-        //     return;
-        //}
 
         if (GameManager.Instance.GetSystem<ShopSystem>().BuyUnit(_UnitNum) == false)
         {
@@ -100,16 +96,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _IsMosueHover = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _IsMosueHover = false;
-    }
-
     public void SetPosition(Vector3 pos)
     {
         _DefaultPosition = _InterectivePosition = pos;
@@ -119,5 +105,10 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             
             _IsSetPosition = true;
         }
+    }
+
+    public override bool Initialize()
+    {
+        return true;
     }
 }

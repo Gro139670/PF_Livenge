@@ -141,9 +141,11 @@ MonoBehaviour:
   _ChaseUnit: {fileID: 0}
   _SummonUnit: []
   _State: 0
+  _SearchedUnit: []
   _Status:
     _Name: Summons
     _UnitTear: 0
+    _UnitID: 1006
     _TeamID: 0
     _HP: 80
     _Damage: 24

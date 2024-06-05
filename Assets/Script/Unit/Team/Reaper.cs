@@ -25,21 +25,13 @@ namespace Team
 
             public override string CheckTransition()
             {
-                return "Default";
-            }
-
-            public override void Enter()
-            {
+                return "CommonStateIdle";
             }
 
             public override void Exit()
             {
                 _OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir]?.SummonProjectile(_Projectile[_ProjectileNum++], _OwnerInfo.LookDir);
                 _ProjectileNum %= _Projectile.Length;
-            }
-
-            public override void FixedLogic()
-            {
             }
 
             public override bool Initialize()

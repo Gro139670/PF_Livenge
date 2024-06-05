@@ -1,10 +1,7 @@
 using Enemy;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 
 
 /// <summary>
@@ -13,10 +10,14 @@ using UnityEngine.Rendering.VirtualTexturing;
 
 public class StageSystem : MonoSystem
 {
-    public delegate void RoundEndEvent();
-    private event RoundEndEvent _RoundEnd;
-    public RoundEndEvent RoundEnd
+    private event Action _RoundStart;
+    private event Action _RoundEnd;
+    public Action RoundEnd
     { get { return _RoundEnd; } set { _RoundEnd = value; } }
+    public Action RoundStart
+    {  get { return _RoundStart; } set {_RoundStart = value; } }
+
+
 
 
 
@@ -42,21 +43,32 @@ public class StageSystem : MonoSystem
         get {return _IsBattle; }
         set
         {
+            if (value == true)
+            {
+                _RoundStart?.Invoke();
+            }
+            else
+            {
+                _RoundEnd?.Invoke();
+            }
             _IsBattle = value;
         } 
     }
     public string[] TeamIDList { get { return _TeamIDList; } }
-
-    private bool _IsOurWin = false;
     
 
     private void Awake()
     {
         GameManager.Instance.RegistSystem(this);
+        for (int i = 0; i < _TeamIDList.Length; i++)
+        {
+            UnitManager.Instance.AddTeam(i);
+        }
     }
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
         InitCurrRound();
         for (int i = 0; i < _TeamIDList.Length; i++)
         {
@@ -77,11 +89,7 @@ public class StageSystem : MonoSystem
     private void FixedUpdate()
     {
         UnitManager.Instance.Logic();
-        if (IsBattle == false)
-        {
-            _RoundEnd?.Invoke();
-        }
-        else
+        if (IsBattle == true)
         {
             for (int i = 0; i < _TeamIDList.Length; i++)
             {
@@ -102,8 +110,14 @@ public class StageSystem : MonoSystem
                 }
             }
         }
+    }
 
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameManager.Instance.ChangeScene("Stage1");
+        }
     }
 
 
@@ -129,15 +143,15 @@ public class StageSystem : MonoSystem
         else
         {
             _SummonEnemyList = new();
-            for (int y = 0; y < 5; y++)
+            for (int y = 0; y < GameManager.Instance.GetSystem<TileSystem>().HeightIndex/4; y++)
             {
-                for (int x = 0; x < GameManager.Instance.GetSystem<TileSystem>().Width; x++)
+                for (int x = 0; x < GameManager.Instance.GetSystem<TileSystem>().WidthIndex; x++)
                 {
                     int num = UnityEngine.Random.Range(0, 10);
                     if ((num & 1) == 0)
                     {
                         int width = x;
-                        int height = GameManager.Instance.GetSystem<TileSystem>().Height - y;
+                        int height = GameManager.Instance.GetSystem<TileSystem>().HeightIndex - y;
                         GameManager.Instance.GetSystem<TileSystem>().SummonUnit
                             (width, height, _EnemiesPrefab[num / 2], false);
 

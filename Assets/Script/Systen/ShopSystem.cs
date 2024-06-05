@@ -22,7 +22,7 @@ public class ShopSystem : MonoSystem
         get { return _BuyRerollCost; }
     }
 
-    public bool ShopToggle
+    public bool ShopInterective
     {  
         get { return _ShopToggle; } 
         set {  _ShopToggle = value; } 
@@ -75,9 +75,9 @@ public class ShopSystem : MonoSystem
             }
             else
             {
-                for (int height = 0; height < GameManager.Instance.GetSystem<TileSystem>().Height; height++)
+                for (int height = 0; height < GameManager.Instance.GetSystem<TileSystem>().HeightIndex; height++)
                 {
-                    for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().Width; width++)
+                    for (int width = 0; width <= GameManager.Instance.GetSystem<TileSystem>().WidthIndex; width++)
                     {
                         if (GameManager.Instance.GetSystem<TileSystem>().SummonUnit(width, height, unit, true) == true)
                         {

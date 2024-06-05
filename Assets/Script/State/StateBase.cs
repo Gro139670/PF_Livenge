@@ -115,8 +115,6 @@ public abstract class StateMove : State
     protected bool _IsMove = false;
     protected float _MoveTime = 0;
     protected Vector3 _PrevPosition;
-    protected bool _IsIgnoreUnit = false;
-    protected bool _IsIgnoreTeamUnit = false;
 
     public override void Enter()
     {
@@ -149,46 +147,7 @@ public abstract class StateMove : State
         if (_IsMove == true) return;
 
         _OwnerInfo.SetLookDirection(_OwnerInfo.NextTile);
-        if (_IsIgnoreUnit == true || _IsIgnoreTeamUnit == true)
-        {
-            if (_OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir]?.GetTakedUnit()?.Status.TeamID == _OwnerInfo.EnemyTeamID)
-            {
-                if(_IsIgnoreTeamUnit == true)
-                {
-                    IsStateFinish = true;
-                    _OwnerInfo.MovePath = null;
-                    _IsIgnoreTeamUnit = false;
-                    return;
-                }
-            }
-
-
-            if(_OwnerInfo.CurrTile.GetTakedUnit() == _OwnerInfo)
-            {
-                _OwnerInfo.CurrTile.SetTakedUnit(null);
-            }
-            if(_OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir] != null)
-            {
-                _OwnerInfo.CurrTile = _OwnerInfo.CurrTile.AdjacentTiles[(int)_OwnerInfo.LookDir];
-                if (_OwnerInfo.CurrTile.GetTakedUnit() == null && _IsIgnoreTeamUnit == true)
-                {
-                    _OwnerInfo.CurrTile.SetTakedUnit(_OwnerInfo);
-                }
-            }
-            else
-            {
-                IsStateFinish = true;
-                _OwnerInfo.MovePath = null;
-                _IsIgnoreTeamUnit = false;
-                return;
-            }
-
-
-            _Owner.transform.SetParent(_OwnerInfo.CurrTile.gameObject.transform);
-            _PrevPosition = _Owner.transform.localPosition;
-            _IsMove = true;
-        }
-        else
+       
         {
             if(_OwnerInfo.NextTile == null)
             {
@@ -256,8 +215,6 @@ public abstract class ProjectileStateMove : StateMove
         {
             _Owner.transform.rotation = Quaternion.Euler(0, 0, 270);
         }
-
-        _IsIgnoreUnit = true;
     }
 
     protected override void IsMove()

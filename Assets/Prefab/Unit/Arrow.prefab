@@ -98,30 +98,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db88e4e5faef42246bd5bbba757bb52b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _AttackUnitList: []
-  _AttackUnit: {fileID: 0}
-  _LookDir: 0
-  _ChaseUnit: {fileID: 0}
   _SummonUnit: []
-  _State: 0
   _Status:
     _Name: 
     _UnitTear: 0
+    _UnitID: 0
     _TeamID: 0
     _HP: 100
     _Damage: 1
     _Defense: 1
     _Size: 2
     _AttackSpeed: 1
-    _MoveSpeed: 100
+    _MoveSpeed: 1000
     _SearchSpeed: 1
     _ManaCost: 1
     _LifeCost: 1
     _AttackRange: 1
     _ChaseRange: 1
     _SightRange: 1
+  _State: 0
 --- !u!114 &806889020741619330
 MonoBehaviour:
   m_ObjectHideFlags: 0

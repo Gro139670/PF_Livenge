@@ -28,12 +28,12 @@ public class CameraLogic : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
-        if(_UP?.IsMouseHover == true)
+        if (_UP?.IsMouseHover == true)
         {
-            _Posistion.y += 1 * _CameraSpeed;
+
+            _Posistion.y += 1 * _CameraSpeed * Time.fixedDeltaTime;
             if (_Posistion.y > 18)
             {
                 _Posistion.y = 18;
@@ -41,15 +41,14 @@ public class CameraLogic : MonoBehaviour
             transform.position = _Posistion;
         }
 
-        if(_DOWN?.IsMouseHover == true)
-        { 
-            _Posistion.y -= 1 * _CameraSpeed;
+        if (_DOWN?.IsMouseHover == true)
+        {
+            _Posistion.y -= 1 * _CameraSpeed * Time.fixedDeltaTime;
             if (_Posistion.y < -10)
             {
                 _Posistion.y = -10;
             }
             transform.position = _Posistion;
         }
-
     }
 }

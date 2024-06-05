@@ -113,6 +113,9 @@ MonoBehaviour:
   - {fileID: 1532088802, guid: 49e2ad6f6510a414abdf0e947c001025, type: 3}
   - {fileID: 922318528, guid: 49e2ad6f6510a414abdf0e947c001025, type: 3}
   _ETC: []
+  _Effect:
+  - {fileID: -108374846, guid: a1f8e9594ec2f4f428abc78b53aaebf2, type: 3}
+  - {fileID: -1789686011, guid: a1f8e9594ec2f4f428abc78b53aaebf2, type: 3}
 --- !u!114 &6220699008127444554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,17 +140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _AttackUnitList: []
-  _AttackUnit: {fileID: 0}
-  _LookDir: 0
-  _ChaseUnit: {fileID: 0}
-  _Projectile: []
-  _State: 0
+  _SummonUnit: []
   _Status:
     _Name: SkeletonWarrior
     _UnitTear: 1
+    _UnitID: 1001
     _TeamID: 0
     _HP: 120
     _Damage: 24
@@ -155,12 +152,13 @@ MonoBehaviour:
     _Size: 2
     _AttackSpeed: 2.6
     _MoveSpeed: 250
-    _SearchSpeed: 10
+    _SearchSpeed: 8
     _ManaCost: 5
     _LifeCost: 5
     _AttackRange: 1
     _ChaseRange: 3
     _SightRange: 1
+  _State: 0
 --- !u!114 &2096204516966657784
 MonoBehaviour:
   m_ObjectHideFlags: 0

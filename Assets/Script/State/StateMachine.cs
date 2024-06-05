@@ -21,6 +21,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
             }
         }
         _StartState = _CurrState;
+        GameManager.Instance.GetSystem<StageSystem>().RoundStart += RoundStart;
     }
 
     protected void FixedUpdate()
@@ -43,7 +44,15 @@ public abstract class StateMachine : UnitHelper, IInitializeable
         }
 
     }
+    void OnDestroy()
+    {
+        GameManager.Instance.GetSystem<StageSystem>().RoundStart -= RoundStart;
+    }
 
+    private void RoundStart()
+    {
+        _CurrState = _StartState;
+    }
     private void Transition()
     {
         string transitionResult = null;
@@ -175,7 +184,7 @@ public abstract class StateMachine : UnitHelper, IInitializeable
 
 public abstract class ProjectileStateMachine : StateMachine
 {
-    private void FixedUpdate()
+    private new void FixedUpdate()
     {
         base.FixedUpdate();
         if (GameManager.Instance.GetSystem<StageSystem>().IsBattle == false)

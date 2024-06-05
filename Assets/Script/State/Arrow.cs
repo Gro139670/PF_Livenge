@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-public class Arrow : StateMachine
+public class Arrow : ProjectileStateMachine
 {
     private void OnEnable()
     {
@@ -22,7 +22,11 @@ public class Arrow : StateMachine
         public override void Exit()
         {
             base.Exit();
-            _OwnerInfo.AttackEnemy(_OwnerInfo.AttackUnit);
+            if (_OwnerInfo.AttackUnit.CurrTile == _OwnerInfo.CurrTile)
+            {
+                _OwnerInfo.AttackEnemy(_OwnerInfo.AttackUnit);
+                _Owner.SetActive(false);
+            }
             
         }
 

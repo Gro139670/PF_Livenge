@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 746438986254948359}
   - component: {fileID: -3471273328873054999}
   - component: {fileID: 8765310020240255742}
+  - component: {fileID: 6640661725237840675}
   m_Layer: 0
   m_Name: BallistarProjectile
   m_TagString: Untagged
@@ -103,7 +104,8 @@ MonoBehaviour:
   _Behind: []
   _Left: []
   _Right: []
-  _ETC:
+  _ETC: []
+  _Effect:
   - {fileID: -1581752599, guid: 0e0d0b9555e12c947bb0dde1c2c3505e, type: 3}
   - {fileID: 1840158491, guid: 0e0d0b9555e12c947bb0dde1c2c3505e, type: 3}
   - {fileID: 256150729, guid: 0e0d0b9555e12c947bb0dde1c2c3505e, type: 3}
@@ -119,17 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db88e4e5faef42246bd5bbba757bb52b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _AttackUnitList: []
-  _AttackUnit: {fileID: 0}
-  _LookDir: 0
-  _ChaseUnit: {fileID: 0}
   _SummonUnit: []
-  _State: 0
   _Status:
     _Name: 
     _UnitTear: 0
+    _UnitID: 0
     _TeamID: 0
     _HP: 100
     _Damage: 1
@@ -143,6 +139,7 @@ MonoBehaviour:
     _AttackRange: 1
     _ChaseRange: 1
     _SightRange: 1
+  _State: 0
 --- !u!114 &8765310020240255742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +152,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f394fc1a9cecde2479bdcacabc9918a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &6640661725237840675
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5929995386770506273}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

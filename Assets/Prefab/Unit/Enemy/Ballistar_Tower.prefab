@@ -127,12 +127,14 @@ MonoBehaviour:
   _SummonUnit:
   - {fileID: 5929995386770506273, guid: 75ae6dd183d9d8345a371541735f387a, type: 3}
   _State: 0
+  _SearchedUnit: []
   _Status:
     _Name: 
     _UnitTear: 3
+    _UnitID: 2004
     _TeamID: 1
     _HP: 200
-    _Damage: 100
+    _Damage: 80
     _Defense: 10
     _Size: 2
     _AttackSpeed: 3

@@ -113,6 +113,7 @@ MonoBehaviour:
   - {fileID: 42837919, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
   - {fileID: -2039097809, guid: 6323e4f9887c79d44ab0bb8f472800fe, type: 3}
   _ETC: []
+  _Effect: []
 --- !u!114 &5173633421936698779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,18 +138,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10af628b37928244d93920925a33c897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CurrTile: {fileID: 0}
-  _NextTile: {fileID: 0}
-  _AttackUnitList: []
-  _AttackUnit: {fileID: 0}
-  _LookDir: 0
-  _ChaseUnit: {fileID: 0}
   _SummonUnit:
   - {fileID: 5929995386770506273, guid: d1493f3b080e7754687273b2ab9dc8a3, type: 3}
-  _State: 0
   _Status:
     _Name: Reaper
     _UnitTear: 3
+    _UnitID: 1004
     _TeamID: 0
     _HP: 60
     _Damage: 120
@@ -156,12 +151,13 @@ MonoBehaviour:
     _Size: 2
     _AttackSpeed: 3
     _MoveSpeed: 210
-    _SearchSpeed: 8
+    _SearchSpeed: 6
     _ManaCost: 25
     _LifeCost: 20
     _AttackRange: 2.5
     _ChaseRange: 6
     _SightRange: 0
+  _State: 0
 --- !u!114 &1509782667457376430
 MonoBehaviour:
   m_ObjectHideFlags: 0

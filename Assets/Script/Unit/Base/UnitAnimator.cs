@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class UnitAnimator : UnitHelper
 {
-    [SerializeField] private Sprite[] _Front, _Behind,_Left, _Right, _ETC;
+    [SerializeField] private Sprite[] _Front, _Behind,_Left, _Right, _ETC, _Effect;
     private Sprite[] _CurrSprite = null;
     private SpriteRenderer _SpriteRenderer;
+
+    private bool _IsFinish = false;
 
 
     private void Start()
@@ -15,9 +17,24 @@ public class UnitAnimator : UnitHelper
         _SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
        
+
+    }
+
+    private void Update()
+    {
+        if (_OwnerInfo.IsDamaged == false)
+        {
+            _SpriteRenderer.color = Color.white;
+        }
+        else
+        {
+            _OwnerInfo.IsDamaged = false;
+            _SpriteRenderer.color = Color.red;
+        }
+
         Action<Sprite[]> setDir = sprite =>
         {
             if(sprite.Length > 0)
@@ -48,6 +65,9 @@ public class UnitAnimator : UnitHelper
         {
             setDir(_ETC);
         }
-        _SpriteRenderer.sprite = _CurrSprite[0];
+        else
+        {
+            _SpriteRenderer.sprite = _CurrSprite[0];
+        }
     }
 }

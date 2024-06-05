@@ -1,13 +1,26 @@
-
-
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
-using static UnityEngine.UI.CanvasScaler;
 
 public class Mouse : MonoSingleton<Mouse>
 {
+    private event Action _UnitSelect;
+    private event Action _UnitUnSelect;
+    public Action UnitSelect
+    { 
+        get { return _UnitSelect; }
+        set { _UnitSelect = value; }
+    }
+    public Action UnitUnSelect
+    {
+        get { return _UnitUnSelect; } 
+        set { _UnitUnSelect = value; }
+    }
+
+    private void Mouse__UnitUnSelect()
+    {
+        throw new NotImplementedException();
+    }
+
     private Unit _SelectedUnit;
     private Tile _InterectiveTile;
     private Tile _SelectedTile;
@@ -20,6 +33,9 @@ public class Mouse : MonoSingleton<Mouse>
 
     public Card SelectedCard
     { get; set; }
+
+    public Unit SelectedUnit
+    { get { return _SelectedUnit; } }
 
 
     public Vector2 MousePoint { get; set; }
@@ -44,22 +60,35 @@ public class Mouse : MonoSingleton<Mouse>
 
     private void LateUpdate()
     {
+        if (GameManager.Instance.GetSystem<ShopSystem>().ShopInterective == true)
+        {
+            _InterectiveTile = null;
+            _UnitUnSelect?.Invoke();
+            return;
+        }
+
+        if (_InterectiveTile?.GetTakedUnit() != null)
+        {
+            _UnitSelect?.Invoke();
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
-            if(_HoveredTile?.IsPlayerTile == true)
+            if (_HoveredTile?.IsPlayerTile == true)
             {
                 _SelectedTile = HoveredTile;
                 _SelectedUnit = _SelectedTile.GetTakedUnit();
-                
+                if(_SelectedUnit != null)
+                {
+                    _UnitSelect?.Invoke();
+                }    
 
             }
-            
+
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-           
-
             if (_SelectedTile == _HoveredTile)
             {
                 if (_SelectedTile != null)
@@ -80,6 +109,8 @@ public class Mouse : MonoSingleton<Mouse>
 
                 }
             }
+
+
             else if(HoveredTile?.IsPlayerTile == true)
             {
                 var unit = HoveredTile.GetTakedUnit();
@@ -92,7 +123,7 @@ public class Mouse : MonoSingleton<Mouse>
             }
             
 
-
+            // À¯´ÖÀÇ ÀÚ¸®¸¦ ¹Ù²Û´Ù.
             if (_SelectedTile?.GetTakedUnit() != null)
             {
                 _SelectedTile.GetTakedUnit().transform.localPosition = _SelectedTile.GetTakedUnit().Position;
@@ -105,11 +136,15 @@ public class Mouse : MonoSingleton<Mouse>
 
             _SelectedTile = null;
             _SelectedUnit = null;
+            if(_InterectiveTile?.GetTakedUnit() == null || _InterectiveTile == null)
+            {
+                _UnitUnSelect?.Invoke();
+            }
+
         }
-
-
         {
             HoveredTile = null;
         }
+
     }
 }
