@@ -29,7 +29,6 @@ public class UnitManager : Singleton<UnitManager>
         {
             item.gameObject.SetActive(false);
         }
-        //_Units[num].Clear();
         Debug.Log(_Units[num]); 
     }
     public void AddTeam(int teamID)

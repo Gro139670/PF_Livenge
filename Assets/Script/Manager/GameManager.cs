@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 using System;
-using Unity.VisualScripting;
 
 
 public class GameManager : Singleton<GameManager>
@@ -36,7 +34,10 @@ public class GameManager : Singleton<GameManager>
 
     public override bool Initialize()
     {
-        _Systems = new();
+        if(_Systems == null)
+        {
+            _Systems = new();
+        }
         return true;
     }
 

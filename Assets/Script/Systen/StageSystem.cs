@@ -112,21 +112,14 @@ public class StageSystem : MonoSystem
         }
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            GameManager.Instance.ChangeScene("Stage1");
-        }
-    }
-
-
     public void InitCurrRound()
     {
         SummonEnemy(_CurrRound);
     }
 
 
+    // 일단 적을 랜덤으로 소환한다.
+    // 나중에 기회가 되면 라운드마다 적 유닛을 배치하는 툴을 만들고 거기서 정보를 받아 유닛을 배치하고 싶다.
     private void SummonEnemy(int round)
     {
         if (_SummonEnemyList != null)
@@ -138,8 +131,7 @@ public class StageSystem : MonoSystem
             }
         }
 
-        // 일단 적을 소환한다.
-        // 나중에 기회가 되면 라운드마다 적 유닛을 배치하는 툴을 만들고 거기서 정보를 받아 유닛을 배치하고 싶다.
+
         else
         {
             _SummonEnemyList = new();
@@ -210,3 +202,16 @@ public class StageSystem : MonoSystem
         return true;
     }
 }
+
+/*
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameManager.Instance.ChangeScene("Stage1");
+        }
+    }
+ 
+ 
+
+ */

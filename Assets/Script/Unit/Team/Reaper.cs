@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Team
@@ -53,6 +54,13 @@ namespace Team
 
             public override void Logic()
             {
+                if (_Owner.gameObject.IsDestroyed() == true)
+                {
+                    foreach (var item in _Projectile)
+                    {
+                        GameObject.Destroy(item.gameObject);
+                    }
+                }
             }
         }
     }

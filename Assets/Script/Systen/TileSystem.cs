@@ -43,6 +43,7 @@ public class TileSystem : MonoSystem
     private void Awake()
     {
         GameManager.Instance.RegistSystem(this);
+        // 타일을 가로와 세로 크기에 맞게 생성한다.
         #region TileGenerator
         Vector3 tilePoint = new();
         if(_TileGeneratePoint != null)
@@ -63,10 +64,6 @@ public class TileSystem : MonoSystem
                 Tile tileComponent = tile.GetComponent<Tile>();
                 tileNum++;
                 tileNum %= _TileColor.Length;
-
-
-
-
                 tileComponent.Index = new(WidthIndex, HeightIndex);
 
                 tile.transform.localPosition = new Vector3(tile.transform.localPosition.x + (tile.transform.localScale.x * WidthIndex) + tilePoint.x,
@@ -157,6 +154,23 @@ public class TileSystem : MonoSystem
         return _TileContainer[GetTileNum(widthIndex, heightIndex)].SummonUnit(unit);
     }
 
+
+
+    public void ClearTiles()
+    {
+        foreach (var tile in _TileContainer)
+        {
+            tile.ClearTile();
+        }
+    }
+
+    public override bool Initialize()
+    {
+        return true;
+    }
+}
+
+/*
     public bool SetUnit(int widthIndex, int heightIndex, GameObject unit)
     {
         // 예외처리
@@ -176,18 +190,6 @@ public class TileSystem : MonoSystem
 
 
         return result;
-    }
+    } 
 
-    public void ClearTiles()
-    {
-        foreach (var tile in _TileContainer)
-        {
-            tile.ClearTile();
-        }
-    }
-
-    public override bool Initialize()
-    {
-        return true;
-    }
-}
+ */

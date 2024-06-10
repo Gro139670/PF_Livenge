@@ -28,9 +28,6 @@ public class ShopSystem : MonoSystem
         set {  _ShopToggle = value; } 
     }
 
-    public bool Reroll
-    { get; set; }
-
     public int UnitLegth
     {
         get { return _TeamUnits.Length; }
